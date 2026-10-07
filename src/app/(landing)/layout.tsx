@@ -2,7 +2,7 @@ import * as React from "react";
 import { PublicNavbar } from "@/components/layout/public-navbar";
 import { PublicFooter } from "@/components/layout/public-footer";
 
-export default function MarketingLayout({
+export default function LandingLayout({
   children,
 }: {
   children: React.ReactNode;
