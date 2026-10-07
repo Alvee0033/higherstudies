@@ -5,12 +5,15 @@ import Link from "next/link";
 import {
   MapPin,
   Heart,
-  SlidersHorizontal,
+  ChevronDown,
   ChevronUp,
-  Check,
   ChevronLeft,
   ChevronRight,
   Bookmark,
+  X,
+  AlertCircle,
+  FileText,
+  SlidersHorizontal,
 } from "lucide-react";
 
 interface UniversityItem {
@@ -41,10 +44,10 @@ const UNIVERSITIES: UniversityItem[] = [
     greRequired: true,
     ieltsScore: "7.0+",
     fundingAvailable: true,
-    logo: "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=120&q=80",
+    logo: "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=160&q=80",
   },
   {
-    id: "stanford",
+    id: "stanford-1",
     name: "Stanford University",
     location: "Stanford, California, United States",
     badge: "Top 3 Worldwide",
@@ -55,363 +58,649 @@ const UNIVERSITIES: UniversityItem[] = [
     greRequired: true,
     ieltsScore: "7.0+",
     fundingAvailable: true,
-    logo: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=120&q=80",
+    logo: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=160&q=80",
   },
   {
-    id: "toronto",
-    name: "University of Toronto",
-    location: "Toronto, Ontario, Canada",
-    badge: "Top 20 Worldwide",
-    qsRank: 21,
-    acceptanceRate: "43%",
-    annualTuition: "$42,500",
-    matchScore: 88,
-    greRequired: false,
-    ieltsScore: "6.5+",
+    id: "stanford-2",
+    name: "Stanford University",
+    location: "Stanford, California, United States",
+    badge: "Top 3 Worldwide",
+    qsRank: 3,
+    acceptanceRate: "4.2%",
+    annualTuition: "$58,169",
+    matchScore: 92,
+    greRequired: true,
+    ieltsScore: "7.0+",
     fundingAvailable: true,
-    logo: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=120&q=80",
+    logo: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=160&q=80",
   },
   {
-    id: "oxford",
-    name: "University of Oxford",
-    location: "Oxford, Oxfordshire, United Kingdom",
-    badge: "Top 5 Worldwide",
-    qsRank: 4,
-    acceptanceRate: "17%",
-    annualTuition: "£32,000",
-    matchScore: 90,
-    greRequired: false,
-    ieltsScore: "7.5+",
+    id: "stanford-3",
+    name: "Stanford University",
+    location: "Stanford, California, United States",
+    badge: "Top 3 Worldwide",
+    qsRank: 3,
+    acceptanceRate: "4.2%",
+    annualTuition: "$58,169",
+    matchScore: 92,
+    greRequired: true,
+    ieltsScore: "7.0+",
     fundingAvailable: true,
-    logo: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=120&q=80",
+    logo: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=160&q=80",
   },
 ];
 
 export function UniversitiesExplorerView() {
   const [mobileFilterOpen, setMobileFilterOpen] = React.useState(false);
+  const [sidebarHidden, setSidebarHidden] = React.useState(false);
   const [favorites, setFavorites] = React.useState<Record<string, boolean>>({ mit: true });
+
+  // Accordion state
+  const [academicOpen, setAcademicOpen] = React.useState(true);
+  const [locationOpen, setLocationOpen] = React.useState(true);
+  const [financialOpen, setFinancialOpen] = React.useState(false);
+  const [universityPrefOpen, setUniversityPrefOpen] = React.useState(false);
+  const [programPrefOpen, setProgramPrefOpen] = React.useState(false);
+
+  // Form values
+  const [degreeLevel, setDegreeLevel] = React.useState("Master's");
+  const [fieldOfStudy, setFieldOfStudy] = React.useState("Computer Science");
+  const [specialization, setSpecialization] = React.useState("");
   const [gpaMin, setGpaMin] = React.useState(3.0);
   const [ieltsMin, setIeltsMin] = React.useState(7.0);
+  const [studyDestination, setStudyDestination] = React.useState("Any Country");
+  const [selectedCountries, setSelectedCountries] = React.useState<string[]>([
+    "United States",
+    "Canada",
+  ]);
+  const [excludeCountry, setExcludeCountry] = React.useState("");
+  const [sortBy, setSortBy] = React.useState("Best Match");
+  const [currentPage, setCurrentPage] = React.useState(1);
 
   const toggleFavorite = (id: string) => {
     setFavorites((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
-  return (
-    <div className="space-y-6 sm:space-y-8">
-      {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight font-heading">
-            Find Universities
-          </h1>
-          <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1">
-            Discover universities that match your academic profile and preferences
-          </p>
-        </div>
+  const removeCountry = (c: string) => {
+    setSelectedCountries((prev) => prev.filter((item) => item !== c));
+  };
 
-        <div className="flex items-center gap-3 self-start sm:self-auto">
-          <span className="px-3 py-1.5 rounded-full bg-indigo-50 text-[#4F46E5] text-xs font-bold border border-indigo-100">
-            120 Results Found
-          </span>
-          <button
-            onClick={() => setMobileFilterOpen(!mobileFilterOpen)}
-            className="lg:hidden px-3.5 py-1.5 rounded-xl border border-slate-200 bg-white text-xs font-bold text-slate-700 flex items-center gap-1.5 shadow-2xs"
-          >
-            <SlidersHorizontal className="h-3.5 w-3.5 text-[#4F46E5]" />
-            <span>Filters</span>
-          </button>
+  const clearAllFilters = () => {
+    setDegreeLevel("Master's");
+    setFieldOfStudy("Computer Science");
+    setSpecialization("");
+    setGpaMin(3.0);
+    setIeltsMin(7.0);
+    setStudyDestination("Any Country");
+    setSelectedCountries(["United States", "Canada"]);
+    setExcludeCountry("");
+  };
+
+  return (
+    <div className="w-full space-y-6">
+      {/* Mobile Top Controls Bar */}
+      <div className="lg:hidden flex items-center justify-between pb-2">
+        <div>
+          <h1 className="text-xl font-bold text-slate-900 font-heading">Find Universities</h1>
+          <p className="text-xs text-slate-500">120 Results Found</p>
         </div>
+        <button
+          onClick={() => setMobileFilterOpen(!mobileFilterOpen)}
+          className="px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-xs font-bold text-slate-700 flex items-center gap-1.5 shadow-2xs cursor-pointer"
+        >
+          <SlidersHorizontal className="h-3.5 w-3.5 text-[#5D3FD3]" />
+          <span>Filters (12)</span>
+        </button>
       </div>
 
-      {/* Main Grid: Filters Sidebar + University Cards */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
-        {/* Left Filters Panel (Desktop Sticky / Mobile Collapsible) */}
+      {/* Main 2-Column Layout */}
+      <div className="flex flex-col lg:flex-row gap-8 items-start w-full">
+        {/* Left Filters Sidebar (288px in Figma) */}
         <aside
           className={`${
             mobileFilterOpen ? "block" : "hidden"
-          } lg:block lg:col-span-4 bg-white rounded-3xl p-5 sm:p-6 border border-slate-100 shadow-2xs space-y-6 sticky top-24 z-10`}
+          } lg:block w-full lg:w-[288px] shrink-0 space-y-4`}
         >
-          <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-            <h2 className="text-sm font-bold text-slate-900 font-heading">Filters</h2>
+          {/* Header Title block */}
+          <div className="text-left space-y-1">
+            <h1 className="text-2xl font-bold text-slate-900 tracking-tight font-heading leading-tight">
+              Find<br />Universities
+            </h1>
+            <p className="text-xs text-slate-500 leading-relaxed font-normal">
+              Discover universities that match your academic profile and preferences
+            </p>
+          </div>
+
+          {/* Filters Title + Hide Button */}
+          <div className="flex items-center justify-between pt-3 pb-1">
+            <h2 className="text-base font-bold text-slate-900">Filters</h2>
             <button
               type="button"
-              onClick={() => {
-                setGpaMin(3.0);
-                setIeltsMin(7.0);
-              }}
-              className="text-xs font-bold text-[#4F46E5] hover:text-[#4338CA] transition-colors cursor-pointer"
+              onClick={() => setSidebarHidden(!sidebarHidden)}
+              className="text-xs text-slate-500 hover:text-slate-800 flex items-center gap-1 cursor-pointer transition-colors"
             >
-              Clear All
+              <span>{sidebarHidden ? "Show" : "Hide"}</span>
+              <ChevronUp
+                className={`h-3.5 w-3.5 text-slate-400 transition-transform ${
+                  sidebarHidden ? "rotate-180" : ""
+                }`}
+              />
             </button>
           </div>
 
-          {/* Academic Preferences */}
-          <div className="space-y-4">
-            <div className="flex items-center justify-between text-xs font-bold text-slate-900">
-              <span>Academic Preferences</span>
-              <ChevronUp className="h-4 w-4 text-slate-400" />
-            </div>
+          {!sidebarHidden && (
+            <div className="space-y-3">
+              {/* 1. Academic Preferences Box */}
+              <div className="bg-white rounded-xl border border-slate-200 p-4 text-left space-y-4">
+                <button
+                  type="button"
+                  onClick={() => setAcademicOpen(!academicOpen)}
+                  className="w-full flex items-center justify-between text-sm font-bold text-slate-900 cursor-pointer"
+                >
+                  <span>Academic Preferences</span>
+                  <ChevronUp
+                    className={`h-4 w-4 text-slate-400 transition-transform ${
+                      academicOpen ? "" : "rotate-180"
+                    }`}
+                  />
+                </button>
 
-            <div className="space-y-3 text-xs">
-              <div>
-                <label className="block text-[11px] font-semibold text-slate-500 mb-1">
-                  Degree Level
-                </label>
-                <select className="w-full h-10 px-3 rounded-xl border border-slate-200 bg-white text-slate-800 text-xs focus:ring-2 focus:ring-[#4F46E5] focus:outline-none">
-                  <option>Master&apos;s</option>
-                  <option>PhD / Doctorate</option>
-                  <option>Undergraduate</option>
-                </select>
-              </div>
+                {academicOpen && (
+                  <div className="space-y-3.5 pt-1 text-xs">
+                    {/* Degree Level */}
+                    <div className="space-y-1">
+                      <label className="block text-xs font-normal text-slate-700">Degree Level</label>
+                      <div className="relative">
+                        <select
+                          value={degreeLevel}
+                          onChange={(e) => setDegreeLevel(e.target.value)}
+                          className="w-full h-9.5 px-3 pr-8 rounded-lg border border-slate-200 bg-white text-slate-800 text-xs focus:outline-none focus:ring-1 focus:ring-[#5D3FD3] appearance-none"
+                        >
+                          <option>Master&apos;s</option>
+                          <option>PhD / Doctorate</option>
+                          <option>Undergraduate</option>
+                        </select>
+                        <ChevronDown className="h-3.5 w-3.5 text-slate-400 absolute right-3 top-3 pointer-events-none" />
+                      </div>
+                    </div>
 
-              <div>
-                <label className="block text-[11px] font-semibold text-slate-500 mb-1">
-                  Field of Study
-                </label>
-                <select className="w-full h-10 px-3 rounded-xl border border-slate-200 bg-white text-slate-800 text-xs focus:ring-2 focus:ring-[#4F46E5] focus:outline-none">
-                  <option>Computer Science</option>
-                  <option>Data Science & AI</option>
-                  <option>Electrical Engineering</option>
-                  <option>Biomedical Sciences</option>
-                </select>
-              </div>
+                    {/* Field of Study */}
+                    <div className="space-y-1">
+                      <label className="block text-xs font-normal text-slate-700">Field of Study</label>
+                      <div className="relative">
+                        <select
+                          value={fieldOfStudy}
+                          onChange={(e) => setFieldOfStudy(e.target.value)}
+                          className="w-full h-9.5 px-3 pr-8 rounded-lg border border-slate-200 bg-white text-slate-800 text-xs focus:outline-none focus:ring-1 focus:ring-[#5D3FD3] appearance-none"
+                        >
+                          <option>Computer Science</option>
+                          <option>Data Science & AI</option>
+                          <option>Electrical Engineering</option>
+                          <option>Biomedical Sciences</option>
+                        </select>
+                        <ChevronDown className="h-3.5 w-3.5 text-slate-400 absolute right-3 top-3 pointer-events-none" />
+                      </div>
+                    </div>
 
-              {/* GPA Slider */}
-              <div className="pt-2">
-                <div className="flex justify-between text-[11px] font-bold text-slate-700 mb-1">
-                  <span>GPA (Min)</span>
-                  <span className="text-[#4F46E5]">{gpaMin.toFixed(1)}</span>
-                </div>
-                <input
-                  type="range"
-                  min="2.5"
-                  max="4.0"
-                  step="0.1"
-                  value={gpaMin}
-                  onChange={(e) => setGpaMin(parseFloat(e.target.value))}
-                  className="w-full accent-[#4F46E5] cursor-pointer"
-                />
-                <div className="flex justify-between text-[10px] text-slate-400 mt-0.5">
-                  <span>2.5</span>
-                  <span>4.0</span>
-                </div>
-              </div>
+                    {/* Specialization (Optional) */}
+                    <div className="space-y-1">
+                      <label className="block text-xs font-normal text-slate-700">
+                        Specialization <span className="text-slate-400">(Optional)</span>
+                      </label>
+                      <div className="relative">
+                        <select
+                          value={specialization}
+                          onChange={(e) => setSpecialization(e.target.value)}
+                          className="w-full h-9.5 px-3 pr-8 rounded-lg border border-slate-200 bg-white text-slate-400 text-xs focus:outline-none focus:ring-1 focus:ring-[#5D3FD3] appearance-none"
+                        >
+                          <option value="">Select specialization</option>
+                          <option value="ml">Machine Learning</option>
+                          <option value="systems">Computer Systems</option>
+                          <option value="security">Cybersecurity</option>
+                        </select>
+                        <ChevronDown className="h-3.5 w-3.5 text-slate-400 absolute right-3 top-3 pointer-events-none" />
+                      </div>
+                    </div>
 
-              {/* IELTS Slider */}
-              <div className="pt-2">
-                <div className="flex justify-between text-[11px] font-bold text-slate-700 mb-1">
-                  <span>IELTS Score (Min)</span>
-                  <span className="text-[#4F46E5]">{ieltsMin.toFixed(1)}</span>
-                </div>
-                <input
-                  type="range"
-                  min="6.0"
-                  max="8.5"
-                  step="0.5"
-                  value={ieltsMin}
-                  onChange={(e) => setIeltsMin(parseFloat(e.target.value))}
-                  className="w-full accent-[#4F46E5] cursor-pointer"
-                />
-                <div className="flex justify-between text-[10px] text-slate-400 mt-0.5">
-                  <span>6.0</span>
-                  <span>8.5</span>
-                </div>
-              </div>
-            </div>
-          </div>
+                    {/* GPA (Min) Slider */}
+                    <div className="space-y-1 pt-1">
+                      <div className="flex justify-between items-center text-xs">
+                        <span className="text-slate-700 font-normal">GPA (Min)</span>
+                        <span className="text-[#5D3FD3] font-bold">{gpaMin.toFixed(1)}</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="2.5"
+                        max="4.0"
+                        step="0.1"
+                        value={gpaMin}
+                        onChange={(e) => setGpaMin(parseFloat(e.target.value))}
+                        className="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#5D3FD3]"
+                      />
+                      <div className="flex justify-between text-[10px] text-slate-400">
+                        <span>2.5</span>
+                        <span>4.0</span>
+                      </div>
+                    </div>
 
-          {/* Location Preferences */}
-          <div className="space-y-3 pt-3 border-t border-slate-100 text-xs">
-            <div className="flex items-center justify-between font-bold text-slate-900">
-              <span>Location Preferences</span>
-              <ChevronUp className="h-4 w-4 text-slate-400" />
-            </div>
-            <div className="flex flex-wrap gap-1.5 pt-1">
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-indigo-50 border border-indigo-100 text-indigo-700 text-[11px] font-bold">
-                United States <Check className="h-3 w-3" />
-              </span>
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-indigo-50 border border-indigo-100 text-indigo-700 text-[11px] font-bold">
-                Canada <Check className="h-3 w-3" />
-              </span>
-            </div>
-          </div>
-
-          {/* Buttons */}
-          <div className="pt-4 space-y-2">
-            <button
-              type="button"
-              className="w-full h-11 rounded-xl bg-[#4F46E5] hover:bg-[#4338CA] text-white font-bold text-xs shadow-md shadow-indigo-500/20 transition-all cursor-pointer"
-            >
-              Apply Filters (12)
-            </button>
-            <button
-              type="button"
-              className="w-full h-10 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-bold text-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer"
-            >
-              <Bookmark className="h-3.5 w-3.5" />
-              <span>Save Search</span>
-            </button>
-          </div>
-        </aside>
-
-        {/* Right Cards List (lg:col-span-8) */}
-        <div className="lg:col-span-8 space-y-4">
-          {UNIVERSITIES.map((uni, idx) => {
-            const isFav = !!favorites[uni.id];
-
-            return (
-              <div
-                key={uni.id}
-                className="bg-white rounded-3xl p-5 sm:p-7 border border-slate-100 shadow-2xs hover:shadow-md transition-all duration-300 relative group flex flex-col justify-between"
-              >
-                {/* Best Match Pill on first item */}
-                {idx === 0 && (
-                  <div className="absolute -top-3 left-6">
-                    <span className="px-3 py-0.5 rounded-full bg-emerald-500 text-white text-[10px] font-black uppercase tracking-wider shadow-xs">
-                      Best Match
-                    </span>
+                    {/* IELTS Score (Min) Slider */}
+                    <div className="space-y-1 pt-1">
+                      <div className="flex justify-between items-center text-xs">
+                        <span className="text-slate-700 font-normal">IELTS Score (Min)</span>
+                        <span className="text-[#5D3FD3] font-bold">{ieltsMin.toFixed(1)}</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="6.0"
+                        max="8.5"
+                        step="0.5"
+                        value={ieltsMin}
+                        onChange={(e) => setIeltsMin(parseFloat(e.target.value))}
+                        className="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#5D3FD3]"
+                      />
+                      <div className="flex justify-between text-[10px] text-slate-400">
+                        <span>6.0</span>
+                        <span>8.5</span>
+                      </div>
+                    </div>
                   </div>
                 )}
+              </div>
 
-                <div className="space-y-4">
-                  {/* Card Header */}
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="flex items-center gap-3.5">
-                      <div className="h-12 w-12 sm:h-14 sm:w-14 rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 shrink-0">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={uni.logo} alt={uni.name} className="h-full w-full object-cover" />
+              {/* 2. Location Preferences Box */}
+              <div className="bg-white rounded-xl border border-slate-200 p-4 text-left space-y-4">
+                <button
+                  type="button"
+                  onClick={() => setLocationOpen(!locationOpen)}
+                  className="w-full flex items-center justify-between text-sm font-bold text-slate-900 cursor-pointer"
+                >
+                  <span>Location Preferences</span>
+                  <ChevronUp
+                    className={`h-4 w-4 text-slate-400 transition-transform ${
+                      locationOpen ? "" : "rotate-180"
+                    }`}
+                  />
+                </button>
+
+                {locationOpen && (
+                  <div className="space-y-3.5 pt-1 text-xs">
+                    {/* Study Destination */}
+                    <div className="space-y-1">
+                      <label className="block text-xs font-normal text-slate-700">Study Destination</label>
+                      <div className="relative">
+                        <select
+                          value={studyDestination}
+                          onChange={(e) => setStudyDestination(e.target.value)}
+                          className="w-full h-9.5 px-3 pr-8 rounded-lg border border-slate-200 bg-white text-slate-800 text-xs focus:outline-none focus:ring-1 focus:ring-[#5D3FD3] appearance-none"
+                        >
+                          <option>Any Country</option>
+                          <option>North America</option>
+                          <option>Europe</option>
+                          <option>Asia Pacific</option>
+                        </select>
+                        <ChevronDown className="h-3.5 w-3.5 text-slate-400 absolute right-3 top-3 pointer-events-none" />
                       </div>
-                      <div>
-                        <h2 className="text-base sm:text-lg font-bold text-slate-900 font-heading group-hover:text-[#4F46E5] transition-colors leading-snug">
-                          {uni.name}
-                        </h2>
-                        <div className="flex items-center gap-1 text-[11px] text-slate-500 font-medium mt-0.5">
-                          <MapPin className="h-3.5 w-3.5 text-slate-400 shrink-0" />
-                          <span>{uni.location}</span>
-                        </div>
-                        {uni.badge && (
-                          <span className="inline-block mt-2 px-2.5 py-0.5 rounded-full bg-indigo-50 border border-indigo-100/80 text-[#4F46E5] text-[10px] font-bold">
+                    </div>
+
+                    {/* Preferred Countries with chips */}
+                    <div className="space-y-1">
+                      <label className="block text-xs font-normal text-slate-700">Preferred Countries</label>
+                      <div className="min-h-9.5 p-1.5 rounded-lg border border-slate-200 bg-white flex flex-wrap items-center gap-1.5">
+                        {selectedCountries.map((country) => (
+                          <span
+                            key={country}
+                            className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-[#EDE9FE] text-[#5D3FD3] text-[11px] font-medium"
+                          >
+                            <span>{country}</span>
+                            <button
+                              type="button"
+                              onClick={() => removeCountry(country)}
+                              className="hover:text-indigo-900 cursor-pointer"
+                            >
+                              <X className="h-3 w-3" />
+                            </button>
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Exclude Countries (Optional) */}
+                    <div className="space-y-1">
+                      <label className="block text-xs font-normal text-slate-700">
+                        Exclude Countries <span className="text-slate-400">(Optional)</span>
+                      </label>
+                      <div className="relative">
+                        <select
+                          value={excludeCountry}
+                          onChange={(e) => setExcludeCountry(e.target.value)}
+                          className="w-full h-9.5 px-3 pr-8 rounded-lg border border-slate-200 bg-white text-slate-400 text-xs focus:outline-none focus:ring-1 focus:ring-[#5D3FD3] appearance-none"
+                        >
+                          <option value="">Select countries</option>
+                          <option value="none">None</option>
+                        </select>
+                        <ChevronDown className="h-3.5 w-3.5 text-slate-400 absolute right-3 top-3 pointer-events-none" />
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* 3. Financial Preferences Box (Accordion) */}
+              <div className="bg-white rounded-xl border border-slate-200 p-4 text-left">
+                <button
+                  type="button"
+                  onClick={() => setFinancialOpen(!financialOpen)}
+                  className="w-full flex items-center justify-between text-sm font-bold text-slate-900 cursor-pointer"
+                >
+                  <span>Financial Preferences</span>
+                  <ChevronDown
+                    className={`h-4 w-4 text-slate-400 transition-transform ${
+                      financialOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+                {financialOpen && (
+                  <div className="pt-3 text-xs text-slate-500 space-y-2">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input type="checkbox" defaultChecked className="rounded text-[#5D3FD3] accent-[#5D3FD3]" />
+                      <span>Full Tuition Waiver</span>
+                    </label>
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input type="checkbox" defaultChecked className="rounded text-[#5D3FD3] accent-[#5D3FD3]" />
+                      <span>Assistantship (RA/TA) Available</span>
+                    </label>
+                  </div>
+                )}
+              </div>
+
+              {/* 4. University Preferences Box (Accordion) */}
+              <div className="bg-white rounded-xl border border-slate-200 p-4 text-left">
+                <button
+                  type="button"
+                  onClick={() => setUniversityPrefOpen(!universityPrefOpen)}
+                  className="w-full flex items-center justify-between text-sm font-bold text-slate-900 cursor-pointer"
+                >
+                  <span>University Preferences</span>
+                  <ChevronDown
+                    className={`h-4 w-4 text-slate-400 transition-transform ${
+                      universityPrefOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+                {universityPrefOpen && (
+                  <div className="pt-3 text-xs text-slate-500 space-y-2">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input type="checkbox" defaultChecked className="rounded text-[#5D3FD3] accent-[#5D3FD3]" />
+                      <span>Top 100 QS Ranked</span>
+                    </label>
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input type="checkbox" defaultChecked className="rounded text-[#5D3FD3] accent-[#5D3FD3]" />
+                      <span>High Research Output (R1)</span>
+                    </label>
+                  </div>
+                )}
+              </div>
+
+              {/* 5. Program Preferences Box (Accordion) */}
+              <div className="bg-white rounded-xl border border-slate-200 p-4 text-left">
+                <button
+                  type="button"
+                  onClick={() => setProgramPrefOpen(!programPrefOpen)}
+                  className="w-full flex items-center justify-between text-sm font-bold text-slate-900 cursor-pointer"
+                >
+                  <span>Program Preferences</span>
+                  <ChevronDown
+                    className={`h-4 w-4 text-slate-400 transition-transform ${
+                      programPrefOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+                {programPrefOpen && (
+                  <div className="pt-3 text-xs text-slate-500 space-y-2">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input type="checkbox" defaultChecked className="rounded text-[#5D3FD3] accent-[#5D3FD3]" />
+                      <span>Fall 2025 Intake</span>
+                    </label>
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input type="checkbox" className="rounded text-[#5D3FD3] accent-[#5D3FD3]" />
+                      <span>Spring 2026 Intake</span>
+                    </label>
+                  </div>
+                )}
+              </div>
+
+              {/* Sidebar Action Buttons */}
+              <div className="pt-2 space-y-2.5">
+                <button
+                  type="button"
+                  className="w-full h-10 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-medium text-xs flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                >
+                  <Bookmark className="h-3.5 w-3.5 text-slate-400" />
+                  <span>Save Search</span>
+                </button>
+                <button
+                  type="button"
+                  className="w-full h-10 rounded-lg bg-[#5D3FD3] hover:bg-[#4E34B5] text-white font-medium text-xs shadow-xs transition-colors cursor-pointer"
+                >
+                  Apply Filters (12)
+                </button>
+              </div>
+            </div>
+          )}
+        </aside>
+
+        {/* Right University Cards Area (640px in Figma) */}
+        <section className="flex-1 w-full max-w-[640px] space-y-4">
+          {/* Top Results Header: Clear All, 120 Results Found, Sort by */}
+          <div className="flex items-center justify-between pb-1">
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={clearAllFilters}
+                className="text-xs font-normal text-[#5D3FD3] hover:underline cursor-pointer"
+              >
+                Clear All
+              </button>
+              <div className="h-8 px-3.5 rounded-lg bg-[#E8E4FF] border border-[#C7D2FE] flex items-center text-xs font-medium text-[#5D3FD3]">
+                120 Results Found
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-slate-500">Sort by:</span>
+              <div className="relative">
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value)}
+                  className="h-8 pl-3 pr-7 rounded-lg border border-slate-200 bg-white text-xs font-medium text-slate-800 focus:outline-none cursor-pointer appearance-none"
+                >
+                  <option>Best Match</option>
+                  <option>QS Rank: Low to High</option>
+                  <option>Tuition: Low to High</option>
+                  <option>Acceptance Rate</option>
+                </select>
+                <ChevronDown className="h-3.5 w-3.5 text-slate-400 absolute right-2 top-2.5 pointer-events-none" />
+              </div>
+            </div>
+          </div>
+
+          {/* Cards List */}
+          <div className="space-y-4">
+            {UNIVERSITIES.map((uni, idx) => {
+              const isFav = !!favorites[uni.id];
+              const isFirst = idx === 0;
+
+              return (
+                <div
+                  key={uni.id}
+                  className={`bg-white rounded-2xl p-6 border shadow-2xs relative text-left transition-all ${
+                    isFirst ? "border-[#5D3FD3] ring-1 ring-[#5D3FD3]/30" : "border-slate-200 hover:border-slate-300"
+                  }`}
+                >
+                  {/* Best Match Pill on MIT card */}
+                  {isFirst && (
+                    <div className="absolute -top-3 left-6">
+                      <span className="px-3 py-1 rounded-full bg-[#DCFCE7] border border-[#BBF7D0] text-[#15803D] text-xs font-bold shadow-2xs">
+                        Best Match
+                      </span>
+                    </div>
+                  )}
+
+                  {/* Bookmark Heart Top-Right */}
+                  <button
+                    type="button"
+                    onClick={() => toggleFavorite(uni.id)}
+                    className="absolute top-6 right-6 p-1 text-slate-300 hover:text-slate-500 transition-colors cursor-pointer"
+                    aria-label="Save university"
+                  >
+                    <Heart
+                      className={`h-5 w-5 ${
+                        isFav ? "fill-[#EF4444] text-[#EF4444]" : "text-slate-300"
+                      }`}
+                    />
+                  </button>
+
+                  {/* University Profile Info */}
+                  <div className="flex items-start gap-4">
+                    {/* Logo container (96x96 with 12px corner radius in Figma) */}
+                    <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-xl border border-slate-100 bg-white p-2 shrink-0 flex items-center justify-center overflow-hidden">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={uni.logo}
+                        alt={uni.name}
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+
+                    <div className="flex-1 min-w-0 pr-8">
+                      <h3 className="text-lg sm:text-xl font-bold text-slate-900 font-heading leading-tight truncate">
+                        {uni.name}
+                      </h3>
+                      <div className="flex items-center gap-1.5 text-xs text-slate-500 mt-1">
+                        <MapPin className="h-3 w-3 text-slate-400 shrink-0" />
+                        <span className="truncate">{uni.location}</span>
+                      </div>
+
+                      {uni.badge && (
+                        <div className="mt-2.5">
+                          <span className="inline-block px-2.5 py-0.5 rounded-md bg-[#F3E8FF] text-[#5D3FD3] text-xs font-medium">
                             {uni.badge}
                           </span>
-                        )}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* 4 Metrics Columns */}
+                  <div className="grid grid-cols-4 gap-2 pt-4 pb-4 border-b border-slate-100 text-left">
+                    <div>
+                      <p className="text-xs text-slate-500 font-normal">QS Ranking</p>
+                      <p className="text-base font-bold text-slate-900 mt-0.5">{uni.qsRank}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-slate-500 font-normal">Acceptance Rate</p>
+                      <p className="text-base font-bold text-slate-900 mt-0.5">{uni.acceptanceRate}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-slate-500 font-normal">Annual Tuition</p>
+                      <p className="text-base font-bold text-slate-900 mt-0.5">{uni.annualTuition}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-slate-500 font-normal">Match Score</p>
+                      <div className="flex items-center gap-1.5 mt-0.5">
+                        <span className="text-base font-bold text-slate-900">{uni.matchScore}%</span>
+                        <div className="w-4 h-4 rounded-full border-2 border-emerald-500 border-t-transparent -rotate-45 shrink-0" />
                       </div>
                     </div>
-
-                    {/* Bookmark Heart */}
-                    <button
-                      type="button"
-                      onClick={() => toggleFavorite(uni.id)}
-                      className={`p-2 rounded-xl transition-all cursor-pointer ${
-                        isFav
-                          ? "text-rose-500 bg-rose-50"
-                          : "text-slate-400 hover:text-slate-600 hover:bg-slate-50"
-                      }`}
-                      aria-label="Save university"
-                    >
-                      <Heart className={`h-5 w-5 ${isFav ? "fill-current" : ""}`} />
-                    </button>
                   </div>
 
-                  {/* Metrics Row */}
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 py-3 border-y border-slate-100 text-left">
-                    <div>
-                      <p className="text-[10.5px] font-semibold text-slate-400 uppercase tracking-wider">
-                        QS Ranking
-                      </p>
-                      <p className="text-base font-extrabold text-slate-900 mt-0.5">{uni.qsRank}</p>
-                    </div>
-                    <div>
-                      <p className="text-[10.5px] font-semibold text-slate-400 uppercase tracking-wider">
-                        Acceptance Rate
-                      </p>
-                      <p className="text-base font-extrabold text-slate-900 mt-0.5">
-                        {uni.acceptanceRate}
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-[10.5px] font-semibold text-slate-400 uppercase tracking-wider">
-                        Annual Tuition
-                      </p>
-                      <p className="text-base font-extrabold text-slate-900 mt-0.5">
-                        {uni.annualTuition}
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-[10.5px] font-semibold text-slate-400 uppercase tracking-wider">
-                        Match Score
-                      </p>
-                      <p className="text-base font-extrabold text-emerald-600 mt-0.5">
-                        {uni.matchScore}%
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Badges & Actions */}
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
-                    <div className="flex flex-wrap items-center gap-2">
+                  {/* Bottom Row: 3 Badges + View Professors Button */}
+                  <div className="flex items-center justify-between pt-4 gap-3">
+                    {/* 3 Requirement Badges */}
+                    <div className="flex items-center gap-2 flex-wrap">
                       {uni.greRequired && (
-                        <span className="px-2.5 py-1 rounded-lg bg-rose-50 border border-rose-100 text-rose-700 text-[11px] font-bold">
-                          GRE Required
-                        </span>
+                        <div className="h-10 px-2.5 rounded-md bg-[#FEF2F2] border border-[#FEE2E2] flex items-center gap-1.5 text-[11px] leading-tight font-medium text-[#DC2626]">
+                          <AlertCircle className="h-3 w-3 shrink-0" />
+                          <span>GRE<br />Required</span>
+                        </div>
                       )}
-                      <span className="px-2.5 py-1 rounded-lg bg-blue-50 border border-blue-100 text-blue-700 text-[11px] font-bold">
-                        IELTS {uni.ieltsScore}
-                      </span>
+
+                      <div className="h-10 px-2.5 rounded-md bg-[#EFF6FF] border border-[#DBEAFE] flex items-center gap-1.5 text-[11px] leading-tight font-medium text-[#2563EB]">
+                        <FileText className="h-3 w-3 shrink-0" />
+                        <span>IELTS<br />{uni.ieltsScore}</span>
+                      </div>
+
                       {uni.fundingAvailable && (
-                        <span className="px-2.5 py-1 rounded-lg bg-emerald-50 border border-emerald-100 text-emerald-700 text-[11px] font-bold">
-                          Funding Available
-                        </span>
+                        <div className="h-10 px-2.5 rounded-md bg-[#F0FDF4] border border-[#DCFCE7] flex items-center text-[11px] leading-tight font-medium text-[#16A34A]">
+                          <span>Funding<br />Available</span>
+                        </div>
                       )}
                     </div>
 
+                    {/* View Professors Button */}
                     <Link
                       href="/professors"
-                      className="px-5 py-2.5 rounded-xl bg-[#4F46E5] hover:bg-[#4338CA] text-white text-xs font-bold shadow-md shadow-indigo-500/20 transition-all text-center shrink-0 cursor-pointer"
+                      className="w-[140px] h-12 rounded-lg bg-[#5D3FD3] hover:bg-[#4E34B5] text-white text-xs sm:text-sm font-medium flex items-center justify-center text-center leading-tight shadow-xs transition-colors shrink-0 cursor-pointer"
                     >
-                      View Professors
+                      View<br />Professors
                     </Link>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
 
-          {/* Pagination Controls */}
-          <div className="flex items-center justify-between pt-4">
+          {/* Pagination Controls matching Figma */}
+          <div className="flex items-center justify-between pt-3">
             <button
               type="button"
-              className="px-3.5 py-2 rounded-xl border border-slate-200 bg-white text-xs font-bold text-slate-600 hover:bg-slate-50 transition-colors shadow-2xs flex items-center gap-1"
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+              className="h-9 px-3 rounded-lg border border-slate-200 bg-white text-xs font-normal text-slate-700 hover:bg-slate-50 flex items-center gap-1 cursor-pointer disabled:opacity-50"
             >
-              <ChevronLeft className="h-4 w-4" />
+              <ChevronLeft className="h-3.5 w-3.5" />
               <span>Previous</span>
             </button>
 
-            <div className="flex items-center gap-1.5 text-xs font-bold">
-              <span className="h-8 w-8 rounded-xl bg-[#4F46E5] text-white flex items-center justify-center">
-                1
-              </span>
-              <span className="h-8 w-8 rounded-xl hover:bg-slate-100 text-slate-600 flex items-center justify-center cursor-pointer">
-                2
-              </span>
-              <span className="h-8 w-8 rounded-xl hover:bg-slate-100 text-slate-600 flex items-center justify-center cursor-pointer">
-                3
-              </span>
+            <div className="flex items-center gap-1 text-xs">
+              {[1, 2, 3, 4, 5].map((pageNum) => (
+                <button
+                  key={pageNum}
+                  type="button"
+                  onClick={() => setCurrentPage(pageNum)}
+                  className={`w-8 h-8 rounded-lg flex items-center justify-center font-medium cursor-pointer transition-colors ${
+                    currentPage === pageNum
+                      ? "bg-[#5D3FD3] text-white"
+                      : "text-slate-700 hover:bg-slate-100"
+                  }`}
+                >
+                  {pageNum}
+                </button>
+              ))}
               <span className="px-1 text-slate-400">...</span>
-              <span className="h-8 w-8 rounded-xl hover:bg-slate-100 text-slate-600 flex items-center justify-center cursor-pointer">
+              <button
+                type="button"
+                onClick={() => setCurrentPage(12)}
+                className={`w-8 h-8 rounded-lg flex items-center justify-center font-medium cursor-pointer ${
+                  currentPage === 12
+                    ? "bg-[#5D3FD3] text-white"
+                    : "text-slate-700 hover:bg-slate-100"
+                }`}
+              >
                 12
-              </span>
+              </button>
             </div>
 
             <button
               type="button"
-              className="px-3.5 py-2 rounded-xl border border-slate-200 bg-white text-xs font-bold text-slate-600 hover:bg-slate-50 transition-colors shadow-2xs flex items-center gap-1"
+              onClick={() => setCurrentPage((p) => Math.min(12, p + 1))}
+              className="h-9 px-3 rounded-lg border border-slate-200 bg-white text-xs font-normal text-slate-700 hover:bg-slate-50 flex items-center gap-1 cursor-pointer"
             >
               <span>Next</span>
-              <ChevronRight className="h-4 w-4" />
+              <ChevronRight className="h-3.5 w-3.5" />
             </button>
           </div>
-        </div>
+        </section>
       </div>
     </div>
   );
