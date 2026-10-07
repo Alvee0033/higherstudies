@@ -262,9 +262,6 @@ export function PublicFooter() {
         {/* Bottom Bar */}
         <div className="pt-6 sm:pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-indigo-200/70 gap-3 sm:gap-0 text-center sm:text-left">
           <p>{FOOTER_CONTENT.copyright}</p>
-          <div className="flex items-center gap-2 opacity-70">
-            <span>🎓 Built for aspiring scholars worldwide</span>
-          </div>
         </div>
       </div>
     </footer>
