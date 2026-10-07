@@ -561,7 +561,7 @@ export function ProfessorListView() {
         <aside
           className={`${
             mobileFilterOpen ? "block" : "hidden"
-          } lg:block w-full lg:w-[288px] shrink-0 space-y-4 lg:sticky lg:top-24 lg:max-h-[calc(100vh-110px)] lg:overflow-y-auto pr-1 pb-4`}
+          } lg:block w-full lg:w-[288px] shrink-0 space-y-4 pr-1 pb-4`}
         >
           <div className="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-xs space-y-5">
             <div className="flex items-center justify-between pb-1 border-b border-slate-100">

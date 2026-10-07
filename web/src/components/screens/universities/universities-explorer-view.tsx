@@ -155,11 +155,11 @@ export function UniversitiesExplorerView() {
 
       {/* Main 2-Column Layout */}
       <div className="flex flex-col lg:flex-row gap-6 xl:gap-8 items-start w-full">
-        {/* Left Filters Sidebar (Sticky & Separately Scrollable) */}
+        {/* Left Filters Sidebar */}
         <aside
           className={`${
             mobileFilterOpen ? "block" : "hidden"
-          } lg:block w-full lg:w-[300px] xl:w-[320px] shrink-0 space-y-3 lg:sticky lg:top-24 lg:max-h-[calc(100vh-110px)] lg:overflow-y-auto pr-1 pb-4`}
+          } lg:block w-full lg:w-[300px] xl:w-[320px] shrink-0 space-y-3 pr-1 pb-4`}
         >
           {/* Header Title block */}
           <div className="text-left space-y-1">
