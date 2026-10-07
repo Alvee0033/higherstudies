@@ -154,26 +154,26 @@ export function UniversitiesExplorerView() {
       </div>
 
       {/* Main 2-Column Layout */}
-      <div className="flex flex-col lg:flex-row gap-8 items-start w-full">
-        {/* Left Filters Sidebar (288px in Figma) */}
+      <div className="flex flex-col lg:flex-row gap-6 xl:gap-8 items-start w-full">
+        {/* Left Filters Sidebar (Sticky & Separately Scrollable) */}
         <aside
           className={`${
             mobileFilterOpen ? "block" : "hidden"
-          } lg:block w-full lg:w-[288px] shrink-0 space-y-4`}
+          } lg:block w-full lg:w-[300px] xl:w-[320px] shrink-0 space-y-3 lg:sticky lg:top-24 lg:max-h-[calc(100vh-110px)] lg:overflow-y-auto pr-1 pb-4`}
         >
           {/* Header Title block */}
           <div className="text-left space-y-1">
-            <h1 className="text-2xl font-bold text-slate-900 tracking-tight font-heading leading-tight">
-              Find<br />Universities
+            <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight font-heading leading-tight">
+              Find Universities
             </h1>
             <p className="text-xs text-slate-500 leading-relaxed font-normal">
-              Discover universities that match your academic profile and preferences
+              Discover universities matching your academic profile
             </p>
           </div>
 
           {/* Filters Title + Hide Button */}
-          <div className="flex items-center justify-between pt-3 pb-1">
-            <h2 className="text-base font-bold text-slate-900">Filters</h2>
+          <div className="flex items-center justify-between pt-1">
+            <h2 className="text-sm font-bold text-slate-900">Filters</h2>
             <button
               type="button"
               onClick={() => setSidebarHidden(!sidebarHidden)}
@@ -189,124 +189,126 @@ export function UniversitiesExplorerView() {
           </div>
 
           {!sidebarHidden && (
-            <div className="space-y-3">
+            <div className="space-y-2.5">
               {/* 1. Academic Preferences Box */}
-              <div className="bg-white rounded-xl border border-slate-200 p-4 text-left space-y-4">
+              <div className="bg-white rounded-xl border border-slate-200 p-3.5 text-left space-y-2.5 shadow-2xs">
                 <button
                   type="button"
                   onClick={() => setAcademicOpen(!academicOpen)}
-                  className="w-full flex items-center justify-between text-sm font-bold text-slate-900 cursor-pointer"
+                  className="w-full flex items-center justify-between text-xs font-bold text-slate-900 cursor-pointer"
                 >
                   <span>Academic Preferences</span>
                   <ChevronUp
-                    className={`h-4 w-4 text-slate-400 transition-transform ${
+                    className={`h-3.5 w-3.5 text-slate-400 transition-transform ${
                       academicOpen ? "" : "rotate-180"
                     }`}
                   />
                 </button>
 
                 {academicOpen && (
-                  <div className="space-y-3.5 pt-1 text-xs">
+                  <div className="space-y-2.5 pt-0.5 text-xs">
                     {/* Degree Level */}
                     <div className="space-y-1">
-                      <label className="block text-xs font-normal text-slate-700">Degree Level</label>
+                      <label className="block text-[11px] font-medium text-slate-600">Degree Level</label>
                       <div className="relative">
                         <select
                           value={degreeLevel}
                           onChange={(e) => setDegreeLevel(e.target.value)}
-                          className="w-full h-9.5 px-3 pr-8 rounded-lg border border-slate-200 bg-white text-slate-800 text-xs focus:outline-none focus:ring-1 focus:ring-[#5D3FD3] appearance-none"
+                          className="w-full h-8 px-2.5 pr-7 rounded-lg border border-slate-200 bg-white text-slate-800 text-xs focus:outline-none focus:ring-1 focus:ring-[#5D3FD3] appearance-none"
                         >
                           <option>Master&apos;s</option>
                           <option>PhD / Doctorate</option>
                           <option>Undergraduate</option>
                         </select>
-                        <ChevronDown className="h-3.5 w-3.5 text-slate-400 absolute right-3 top-3 pointer-events-none" />
+                        <ChevronDown className="h-3 w-3 text-slate-400 absolute right-2.5 top-2.5 pointer-events-none" />
                       </div>
                     </div>
 
                     {/* Field of Study */}
                     <div className="space-y-1">
-                      <label className="block text-xs font-normal text-slate-700">Field of Study</label>
+                      <label className="block text-[11px] font-medium text-slate-600">Field of Study</label>
                       <div className="relative">
                         <select
                           value={fieldOfStudy}
                           onChange={(e) => setFieldOfStudy(e.target.value)}
-                          className="w-full h-9.5 px-3 pr-8 rounded-lg border border-slate-200 bg-white text-slate-800 text-xs focus:outline-none focus:ring-1 focus:ring-[#5D3FD3] appearance-none"
+                          className="w-full h-8 px-2.5 pr-7 rounded-lg border border-slate-200 bg-white text-slate-800 text-xs focus:outline-none focus:ring-1 focus:ring-[#5D3FD3] appearance-none"
                         >
                           <option>Computer Science</option>
                           <option>Data Science & AI</option>
                           <option>Electrical Engineering</option>
                           <option>Biomedical Sciences</option>
                         </select>
-                        <ChevronDown className="h-3.5 w-3.5 text-slate-400 absolute right-3 top-3 pointer-events-none" />
+                        <ChevronDown className="h-3 w-3 text-slate-400 absolute right-2.5 top-2.5 pointer-events-none" />
                       </div>
                     </div>
 
                     {/* Specialization (Optional) */}
                     <div className="space-y-1">
-                      <label className="block text-xs font-normal text-slate-700">
+                      <label className="block text-[11px] font-medium text-slate-600">
                         Specialization <span className="text-slate-400">(Optional)</span>
                       </label>
                       <div className="relative">
                         <select
                           value={specialization}
                           onChange={(e) => setSpecialization(e.target.value)}
-                          className="w-full h-9.5 px-3 pr-8 rounded-lg border border-slate-200 bg-white text-slate-400 text-xs focus:outline-none focus:ring-1 focus:ring-[#5D3FD3] appearance-none"
+                          className="w-full h-8 px-2.5 pr-7 rounded-lg border border-slate-200 bg-white text-slate-400 text-xs focus:outline-none focus:ring-1 focus:ring-[#5D3FD3] appearance-none"
                         >
                           <option value="">Select specialization</option>
                           <option value="ml">Machine Learning</option>
                           <option value="systems">Computer Systems</option>
                           <option value="security">Cybersecurity</option>
                         </select>
-                        <ChevronDown className="h-3.5 w-3.5 text-slate-400 absolute right-3 top-3 pointer-events-none" />
+                        <ChevronDown className="h-3 w-3 text-slate-400 absolute right-2.5 top-2.5 pointer-events-none" />
                       </div>
                     </div>
 
-                    {/* GPA (Min) Slider */}
-                    <div className="space-y-1 pt-1">
-                      <div className="flex justify-between items-center text-xs">
-                        <span className="text-slate-700 font-normal">GPA (Min)</span>
-                        <span className="text-[#5D3FD3] font-bold">{gpaMin.toFixed(1)}</span>
+                    {/* Sliders in a tight 2-column on compact view */}
+                    <div className="grid grid-cols-2 gap-2 pt-0.5">
+                      {/* GPA Slider */}
+                      <div className="space-y-0.5">
+                        <div className="flex justify-between items-center text-[11px]">
+                          <span className="text-slate-600">GPA (Min)</span>
+                          <span className="text-[#5D3FD3] font-bold">{gpaMin.toFixed(1)}</span>
+                        </div>
+                        <input
+                          type="range"
+                          min="2.5"
+                          max="4.0"
+                          step="0.1"
+                          value={gpaMin}
+                          onChange={(e) => setGpaMin(parseFloat(e.target.value))}
+                          className="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#5D3FD3]"
+                        />
+                        <div className="flex justify-between text-[9px] text-slate-400">
+                          <span>2.5</span>
+                          <span>4.0</span>
+                        </div>
                       </div>
-                      <input
-                        type="range"
-                        min="2.5"
-                        max="4.0"
-                        step="0.1"
-                        value={gpaMin}
-                        onChange={(e) => setGpaMin(parseFloat(e.target.value))}
-                        className="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#5D3FD3]"
-                      />
-                      <div className="flex justify-between text-[10px] text-slate-400">
-                        <span>2.5</span>
-                        <span>4.0</span>
-                      </div>
-                    </div>
 
-                    {/* IELTS Score (Min) Slider */}
-                    <div className="space-y-1 pt-1">
-                      <div className="flex justify-between items-center text-xs">
-                        <span className="text-slate-700 font-normal">IELTS Score (Min)</span>
-                        <span className="text-[#5D3FD3] font-bold">{ieltsMin.toFixed(1)}</span>
-                      </div>
-                      <input
-                        type="range"
-                        min="6.0"
-                        max="8.5"
-                        step="0.5"
-                        value={ieltsMin}
-                        onChange={(e) => setIeltsMin(parseFloat(e.target.value))}
-                        className="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#5D3FD3]"
-                      />
-                      <div className="flex justify-between text-[10px] text-slate-400">
-                        <span>6.0</span>
-                        <span>8.5</span>
+                      {/* IELTS Slider */}
+                      <div className="space-y-0.5">
+                        <div className="flex justify-between items-center text-[11px]">
+                          <span className="text-slate-600">IELTS (Min)</span>
+                          <span className="text-[#5D3FD3] font-bold">{ieltsMin.toFixed(1)}</span>
+                        </div>
+                        <input
+                          type="range"
+                          min="6.0"
+                          max="8.5"
+                          step="0.5"
+                          value={ieltsMin}
+                          onChange={(e) => setIeltsMin(parseFloat(e.target.value))}
+                          className="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#5D3FD3]"
+                        />
+                        <div className="flex justify-between text-[9px] text-slate-400">
+                          <span>6.0</span>
+                          <span>8.5</span>
+                        </div>
                       </div>
                     </div>
                   </div>
                 )}
               </div>
-
               {/* 2. Location Preferences Box */}
               <div className="bg-white rounded-xl border border-slate-200 p-4 text-left space-y-4">
                 <button
@@ -489,8 +491,8 @@ export function UniversitiesExplorerView() {
           )}
         </aside>
 
-        {/* Right University Cards Area (640px in Figma) */}
-        <section className="flex-1 w-full max-w-[640px] space-y-4">
+        {/* Right University Cards Area - expands responsively to eliminate right dead space */}
+        <section className="flex-1 w-full space-y-4 min-w-0">
           {/* Top Results Header: Clear All, 120 Results Found, Sort by */}
           <div className="flex items-center justify-between pb-1">
             <div className="flex items-center gap-3">
@@ -615,24 +617,24 @@ export function UniversitiesExplorerView() {
                   </div>
 
                   {/* Bottom Row: 3 Badges + View Professors Button */}
-                  <div className="flex items-center justify-between pt-4 gap-3">
-                    {/* 3 Requirement Badges */}
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between pt-4 gap-3">
+                    {/* 3 Requirement Badges - clean single-line badges with comfortable padding */}
                     <div className="flex items-center gap-2 flex-wrap">
                       {uni.greRequired && (
-                        <div className="h-10 px-2.5 rounded-md bg-[#FEF2F2] border border-[#FEE2E2] flex items-center gap-1.5 text-[11px] leading-tight font-medium text-[#DC2626]">
-                          <AlertCircle className="h-3 w-3 shrink-0" />
-                          <span>GRE<br />Required</span>
+                        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#FEF2F2] border border-[#FEE2E2] text-xs font-semibold text-[#DC2626]">
+                          <AlertCircle className="h-3.5 w-3.5 shrink-0" />
+                          <span>GRE Required</span>
                         </div>
                       )}
 
-                      <div className="h-10 px-2.5 rounded-md bg-[#EFF6FF] border border-[#DBEAFE] flex items-center gap-1.5 text-[11px] leading-tight font-medium text-[#2563EB]">
-                        <FileText className="h-3 w-3 shrink-0" />
-                        <span>IELTS<br />{uni.ieltsScore}</span>
+                      <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#EFF6FF] border border-[#DBEAFE] text-xs font-semibold text-[#2563EB]">
+                        <FileText className="h-3.5 w-3.5 shrink-0" />
+                        <span>IELTS {uni.ieltsScore}</span>
                       </div>
 
                       {uni.fundingAvailable && (
-                        <div className="h-10 px-2.5 rounded-md bg-[#F0FDF4] border border-[#DCFCE7] flex items-center text-[11px] leading-tight font-medium text-[#16A34A]">
-                          <span>Funding<br />Available</span>
+                        <div className="inline-flex items-center px-3 py-1.5 rounded-lg bg-[#F0FDF4] border border-[#DCFCE7] text-xs font-semibold text-[#16A34A]">
+                          <span>Funding Available</span>
                         </div>
                       )}
                     </div>
@@ -640,9 +642,9 @@ export function UniversitiesExplorerView() {
                     {/* View Professors Button */}
                     <Link
                       href="/professors"
-                      className="w-[140px] h-12 rounded-lg bg-[#5D3FD3] hover:bg-[#4E34B5] text-white text-xs sm:text-sm font-medium flex items-center justify-center text-center leading-tight shadow-xs transition-colors shrink-0 cursor-pointer"
+                      className="px-5 py-2.5 rounded-xl bg-[#5D3FD3] hover:bg-[#4E34B5] text-white text-xs sm:text-sm font-semibold flex items-center justify-center text-center shadow-xs transition-colors shrink-0 cursor-pointer"
                     >
-                      View<br />Professors
+                      View Professors
                     </Link>
                   </div>
                 </div>
