@@ -10,7 +10,7 @@ export default function LandingLayout({
   return (
     <div className="relative flex min-h-screen flex-col bg-[#FAF9FE] overflow-hidden">
       {/* Global Continuous Animated Aurora Mesh Gradient Canopy across the whole landing page */}
-      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden select-none">
+      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden select-none">
         {/* Continuous Soft Lavender/Indigo Base */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#EDE9FE]/40 via-[#F5F3FF]/30 to-[#EEF2FF]/40" />
 

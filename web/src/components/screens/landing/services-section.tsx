@@ -14,7 +14,7 @@ export function ServicesSection() {
       {/* Background Architectural Grid Pattern */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden select-none">
         <div
-          className="absolute inset-0 opacity-[0.3]"
+          className="absolute inset-0 opacity-[0.3] [mask-image:linear-gradient(to_bottom,transparent_0%,black_16%,black_84%,transparent_100%)]"
           style={{
             backgroundImage: `
               linear-gradient(to right, rgba(199, 210, 254, 0.45) 1px, transparent 1px),
