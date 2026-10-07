@@ -180,7 +180,7 @@ export function MissionAndCTASection() {
           
           {/* Main Campus Photography - Clean, Clear, Open & Visible */}
           <Image
-            src="/images/campus-hq.png"
+            src="/images/landing/campus-hq.png"
             alt="World Class University Campus"
             fill
             priority

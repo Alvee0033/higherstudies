@@ -60,7 +60,7 @@ export function HeroSection() {
                 <div className="flex -space-x-2.5 overflow-hidden">
                   <div className="inline-block h-9 w-9 rounded-full ring-2 ring-white overflow-hidden bg-indigo-100 shadow-2xs hover:scale-110 hover:z-10 transition-transform duration-200">
                     <Image
-                      src="/images/avatar-arshi.png"
+                      src="/images/avatars/avatar-arshi.png"
                       alt="Student"
                       width={36}
                       height={36}
@@ -69,7 +69,7 @@ export function HeroSection() {
                   </div>
                   <div className="inline-block h-9 w-9 rounded-full ring-2 ring-white overflow-hidden bg-purple-100 shadow-2xs hover:scale-110 hover:z-10 transition-transform duration-200">
                     <Image
-                      src="/images/avatar-nusrat.png"
+                      src="/images/avatars/avatar-nusrat.png"
                       alt="Student"
                       width={36}
                       height={36}
@@ -78,7 +78,7 @@ export function HeroSection() {
                   </div>
                   <div className="inline-block h-9 w-9 rounded-full ring-2 ring-white overflow-hidden bg-blue-100 shadow-2xs hover:scale-110 hover:z-10 transition-transform duration-200">
                     <Image
-                      src="/images/avatar-tanvir.png"
+                      src="/images/avatars/avatar-tanvir.png"
                       alt="Student"
                       width={36}
                       height={36}

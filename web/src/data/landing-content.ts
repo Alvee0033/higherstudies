@@ -208,7 +208,7 @@ export const TESTIMONIALS_SECTION = {
       university: "University of Munich",
       quote: "HigherStudy helped me find the perfect professor and got admission to my dream university. So convenient!",
       rating: 5,
-      avatarSrc: "/images/avatar-arshi.png",
+      avatarSrc: "/images/avatars/avatar-arshi.png",
     },
     {
       id: "nusrat",
@@ -216,7 +216,7 @@ export const TESTIMONIALS_SECTION = {
       university: "Leeds University",
       quote: "The email tracker and templates saved me so much time. I got my replies rather weekly!",
       rating: 5,
-      avatarSrc: "/images/avatar-nusrat.png",
+      avatarSrc: "/images/avatars/avatar-nusrat.png",
     },
     {
       id: "tanvir",
@@ -224,7 +224,7 @@ export const TESTIMONIALS_SECTION = {
       university: "University of Toronto",
       quote: "The SOP review and guidance were top-notch. Highly recommended for any student!",
       rating: 5,
-      avatarSrc: "/images/avatar-tanvir.png",
+      avatarSrc: "/images/avatars/avatar-tanvir.png",
     },
   ] as TestimonialItem[],
 };

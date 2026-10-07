@@ -172,7 +172,7 @@ export function TrustAndReviewsSection() {
                   {/* Giant Graphic with extruded 3D effect */}
                   <div className="relative w-[280px] xs:w-[340px] sm:w-[440px] md:w-[500px] lg:w-[570px] xl:w-[630px] aspect-square -mt-2 sm:mt-0 lg:mt-2 -mb-6 sm:-mb-10 lg:-mb-12 mr-0 sm:-mr-8 lg:-mr-12 xl:-mr-14 select-none pointer-events-none group">
                     <Image
-                      src="/images/review.png"
+                      src="/images/landing/reviews-showcase.png"
                       alt="HigherStudy Student - Dream Study Achieve"
                       fill
                       sizes="(max-width: 640px) 340px, (max-width: 1024px) 500px, 630px"

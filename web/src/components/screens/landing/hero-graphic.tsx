@@ -41,7 +41,7 @@ export function HeroGraphic() {
       {/* Main 3D Hero Graphic - Enlarged and positioned right */}
       <div className="relative z-10 w-full flex items-center justify-center lg:justify-end">
         <Image
-          src="/images/hero-illustration-cropped.png"
+          src="/images/hero/hero-illustration.png"
           alt="HigherStudy Student Success Illustration"
           width={1898}
           height={1302}

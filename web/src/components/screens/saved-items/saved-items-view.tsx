@@ -81,7 +81,7 @@ const SAVED_PROFS: SavedProfessor[] = [
     citations: 12450,
     funding: true,
     research: ["Deep Learning", "Computer Vision", "Robotics"],
-    avatar: "/images/prof-jonathan-smith.png",
+    avatar: "/images/avatars/prof-jonathan-smith.png",
   },
   {
     id: "david-lee",

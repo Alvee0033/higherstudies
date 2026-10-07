@@ -166,7 +166,7 @@ export function AiToolsView() {
                   <div className="w-6 h-6 rounded-full overflow-hidden shrink-0 border border-slate-200 bg-slate-100">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src="/images/prof-jonathan-smith.png"
+                      src="/images/avatars/prof-jonathan-smith.png"
                       alt="John Smith"
                       className="w-full h-full object-cover"
                       onError={(e) => {

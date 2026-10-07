@@ -7,7 +7,7 @@ export const JONATHAN_SMITH_PROFILE: ProfessorProfileData = {
   title: "Professor of Computer Science and Engineering",
   university: "Massachusetts Institute of Technology (MIT)",
   department: "Department of Electrical Engineering & Computer Science",
-  avatar: "/images/prof-jonathan-smith.png",
+  avatar: "/images/avatars/prof-jonathan-smith.png",
   acceptingStudents: true,
   tags: ["Machine Learning", "Deep Learning", "Computer Vision", "Human-AI Interaction"],
   metrics: {

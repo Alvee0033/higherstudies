@@ -210,7 +210,7 @@ export function ServicesSection() {
               {/* The BIG Extruding 3D Image popping out from the top & side (z-10 layer) */}
               <div className="pointer-events-none absolute -top-8 xs:-top-14 sm:-top-32 lg:-top-36 -right-2 xs:-right-4 sm:-right-10 lg:-right-12 w-[330px] xs:w-[380px] sm:w-[450px] lg:w-[500px] xl:w-[540px] aspect-square z-10 select-none">
                 <Image
-                  src="/images/down-cropped.png"
+                  src="/images/landing/services-banner.png"
                   alt="Visa & Pre-Departure Assistance"
                   fill
                   priority
