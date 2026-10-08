@@ -59,27 +59,31 @@ higher-studies/
 │   │   │   └── not-found.tsx           # Custom 404 page
 │   │   │
 │   │   ├── components/                 # Reusable React components
-│   │   │   ├── screens/                # Full screen/section implementations
-│   │   │   │   └── landing/            # Landing page sections:
-│   │   │   │       ├── hero-section.tsx        # Hero banner with headlines and CTAs
-│   │   │   │       ├── hero-graphic.tsx        # Hero 3D floating visual and stat cards
-│   │   │   │       ├── services-section.tsx    # Bento-grid 5 advisory pillars
-│   │   │   │       ├── animated-service-icons.tsx # Custom micro-animated SVG icons
-│   │   │   │       ├── pricing-section.tsx     # Seasonal/Annual pricing with swipe carousel
-│   │   │   │       ├── trust-reviews-section.tsx # Why Choose Us + student review wall
-│   │   │   │       └── mission-cta-section.tsx # Mission banner, FAQ accordion & final CTA
+│   │   │   ├── ui/                     # Design System Primitives
+│   │   │   │   ├── card.tsx            # Compound Card (CardHeader, CardTitle, CardContent, CardFooter)
+│   │   │   │   ├── button.tsx          # Design token variants (brand, brand-outline, rounded options)
+│   │   │   │   ├── stat-card.tsx       # Reusable KPI StatCard primitive
+│   │   │   │   ├── badge.tsx           # Pill badges and indicator chips
+│   │   │   │   └── scroll-reveal.tsx   # IntersectionObserver scroll entrance animations
 │   │   │   │
-│   │   │   ├── layout/                 # Site shell components
+│   │   │   ├── layout/                 # Site shell navigation components
+│   │   │   │   ├── dashboard-nav.tsx   # Sidebar navigation and header
 │   │   │   │   ├── public-navbar.tsx   # Glassmorphic header navigation bar
 │   │   │   │   └── public-footer.tsx   # Global footer with link columns
 │   │   │   │
-│   │   │   ├── ui/                     # Atomic UI primitives
-│   │   │   │   ├── button.tsx          # Button component with variants
-│   │   │   │   ├── badge.tsx           # Pill badges and indicator chips
-│   │   │   │   ├── card.tsx            # Card containers
-│   │   │   │   └── scroll-reveal.tsx   # IntersectionObserver scroll entrance animations
-│   │   │   │
-│   │   │   └── feedback/               # Modals, toasts, empty states, skeletons
+│   │   │   └── screens/                # Modular Screen Implementations (High Cohesion, Low Coupling)
+│   │   │       ├── dashboard/          # Student Dashboard (components/, types, data, coordinator)
+│   │   │       ├── universities/       # Universities Explorer (components/, types, data, coordinator)
+│   │   │       ├── professors/         # Professor Directory & Profiles (components/, profile/, types, data)
+│   │   │       ├── applications/       # Application Pipeline Tracker (form/, kanban, metrics, modals)
+│   │   │       ├── email-tracker/      # Outreach Email CRM (table, metrics, modals, types, data)
+│   │   │       ├── landing/            # Landing page modular sections (hero, services, pricing, reviews, CTA)
+│   │   │       ├── auth/               # Student authentication form
+│   │   │       ├── ai-tools/           # AI academic tools view
+│   │   │       ├── profile/            # Student academic profile view
+│   │   │       ├── saved-items/        # Shortlist programs & faculty view
+│   │   │       ├── pricing/            # In-app pricing & tier checkout view
+│   │   │       └── settings/           # Account settings view
 │   │   │
 │   │   ├── data/                       # Centralized data definitions & content copy
 │   │   │   └── landing-content.ts      # Single source of truth for packages, features, reviews

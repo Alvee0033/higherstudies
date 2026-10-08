@@ -89,21 +89,49 @@ higherstudies/
         │   │   ├── public-navbar.tsx          # Public navbar
         │   │   └── public-footer.tsx          # Public footer
         │   │
-        │   ├── screens/                       # Screen Implementations
-        │   │   ├── auth/                      # Authentication components
-        │   │   ├── dashboard/                 # Dashboard views and widgets
-        │   │   ├── landing/                   # Landing page sections
-        │   │   ├── universities/              # University search and filters
-        │   │   ├── professors/                # Professor directory and profiles
-        │   │   ├── applications/              # Kanban board and modals
-        │   │   ├── email-tracker/             # Outreach table and modals
-        │   │   ├── ai-tools/                  # AI academic tools
-        │   │   ├── saved-items/               # Shortlisted programs
-        │   │   ├── pricing/                   # Pricing and plan tables
-        │   │   ├── profile/                   # Academic profile editor
+        │   ├── screens/                       # High-Cohesion, Modular Screen Implementations
+        │   │   ├── dashboard/                 # Student dashboard modular widgets
+        │   │   │   ├── components/            # KPI grid, reminders card, donut chart, recent emails
+        │   │   │   ├── dashboard-data.ts      # Isolated mock data
+        │   │   │   ├── dashboard-types.ts     # TypeScript interfaces
+        │   │   │   └── student-dashboard-view.tsx
+        │   │   ├── universities/              # University explorer and facet search
+        │   │   │   ├── components/            # Filter sidebar, university card, results header, pagination
+        │   │   │   ├── university-data.ts     # Database of universities & programs
+        │   │   │   ├── university-types.ts    # Filter & institution models
+        │   │   │   └── universities-explorer-view.tsx
+        │   │   ├── professors/                # Professor directory & profiles
+        │   │   │   ├── components/            # Institution header, search controls, professor card, filters
+        │   │   │   ├── profile/               # Modular profile cards (hero, publications, research, etc.)
+        │   │   │   ├── professor-data.ts      # Faculty database
+        │   │   │   ├── professor-types.ts     # Faculty models
+        │   │   │   ├── professor-list-view.tsx
+        │   │   │   └── professor-profile-view.tsx
+        │   │   ├── applications/              # Application pipeline CRM
+        │   │   │   ├── form/                  # Multi-step application submission components
+        │   │   │   ├── application-kanban-board.tsx
+        │   │   │   ├── application-metrics.tsx
+        │   │   │   ├── application-details-view.tsx
+        │   │   │   └── application-tracker-view.tsx
+        │   │   ├── email-tracker/             # Faculty cold email tracker
+        │   │   │   ├── email-tracker-table.tsx
+        │   │   │   ├── email-tracker-metrics.tsx
+        │   │   │   ├── email-add-modal.tsx
+        │   │   │   └── email-tracker-view.tsx
+        │   │   ├── landing/                   # Landing page sections (hero, services bento, pricing, reviews, CTA)
+        │   │   ├── auth/                      # Student authentication form & validation
+        │   │   ├── ai-tools/                  # Academic AI tools suite
+        │   │   ├── saved-items/               # Shortlisted programs & mentors
+        │   │   ├── pricing/                   # In-app subscription plan management
+        │   │   ├── profile/                   # Student academic profile editor
         │   │   └── settings/                  # User preference forms
         │   │
-        │   └── ui/                            # Base UI components
+        │   └── ui/                            # Atomic UI Design System Primitives
+        │       ├── card.tsx                   # Compound Card system (Header, Title, Content, Footer)
+        │       ├── button.tsx                 # Button design tokens (brand, brand-outline, sizes)
+        │       ├── stat-card.tsx              # Standalone KPI metric card primitive
+        │       ├── badge.tsx                  # Status badges and indicators
+        │       └── scroll-reveal.tsx          # IntersectionObserver animations
         │
         ├── data/                              # Static content and mock data
         └── lib/                               # Utilities and helper functions
