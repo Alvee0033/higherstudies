@@ -1,0 +1,37 @@
+[
+  {
+    "label": "Saved Universities",
+    "count": "24",
+    "iconName": "Building2",
+    "color": "text-indigo-600",
+    "bg": "bg-indigo-50"
+  },
+  {
+    "label": "Saved Professors",
+    "count": "36",
+    "iconName": "Users",
+    "color": "text-purple-600",
+    "bg": "bg-purple-50"
+  },
+  {
+    "label": "Emails Sent",
+    "count": "128",
+    "iconName": "Mail",
+    "color": "text-blue-600",
+    "bg": "bg-blue-50"
+  },
+  {
+    "label": "Replies Received",
+    "count": "15",
+    "iconName": "MessageSquare",
+    "color": "text-emerald-600",
+    "bg": "bg-emerald-50"
+  },
+  {
+    "label": "Applications",
+    "count": "8",
+    "iconName": "FileText",
+    "color": "text-amber-600",
+    "bg": "bg-amber-50"
+  }
+]

@@ -1,0 +1,49 @@
+{
+  "tabs": [
+    { "id": "personal", "label": "Personal" },
+    { "id": "academic", "label": "Academic" },
+    { "id": "testscores", "label": "Test Scores" },
+    { "id": "research", "label": "Research" },
+    { "id": "experience", "label": "Experience" },
+    { "id": "preferences", "label": "Preferences" }
+  ],
+  "preferences": {
+    "fundingOptions": ["Fully Funded", "Partial Funded", "Self Funded"],
+    "defaultFunding": "Fully Funded",
+    "intakeOptions": ["Fall", "Spring"],
+    "defaultIntake": "Fall",
+    "countries": [
+      "United States",
+      "Canada",
+      "Germany",
+      "UK",
+      "Australia"
+    ]
+  },
+  "personal": {
+    "fullName": "Ahmed Rahman",
+    "email": "ahmed.rahman@email.com",
+    "phone": "+880 1712 345678"
+  },
+  "academic": {
+    "university": "BRAC University",
+    "degree": "BSc in Computer Science",
+    "cgpa": "3.85"
+  },
+  "testScores": {
+    "greScore": "328 (Q:166, V:162)",
+    "ieltsScore": "8.0 (L:8.5, R:8.5, W:7.5, S:7.5)"
+  },
+  "research": [
+    {
+      "title": "Efficient Vision Attention Distillation (IEEE 2024)",
+      "subtitle": "Ahmed Rahman, BRAC University CSAIL Lab"
+    }
+  ],
+  "experience": [
+    {
+      "title": "Undergraduate Research Assistant",
+      "subtitle": "BRAC University • 2023 - Present"
+    }
+  ]
+}

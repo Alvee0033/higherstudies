@@ -1,0 +1,44 @@
+{
+  "institutionName": "Massachusetts Institute of Technology",
+  "shortName": "MIT",
+  "logoColor": "#A31F34",
+  "title": "Professors at MIT",
+  "badge": "Top 1 Worldwide",
+  "stats": [
+    {
+      "label": "Total Professors",
+      "value": "1,247",
+      "iconName": "Users",
+      "iconColor": "text-[#2563EB]",
+      "iconBg": "bg-[#EFF6FF]"
+    },
+    {
+      "label": "Departments",
+      "value": "33",
+      "iconName": "Building2",
+      "iconColor": "text-[#16A34A]",
+      "iconBg": "bg-[#F0FDF4]"
+    },
+    {
+      "label": "Research Areas",
+      "value": "120+",
+      "iconName": "Compass",
+      "iconColor": "text-[#9333EA]",
+      "iconBg": "bg-[#FAF5FF]"
+    },
+    {
+      "label": "Active Researchers",
+      "value": "892",
+      "iconName": "Activity",
+      "iconColor": "text-[#EA580C]",
+      "iconBg": "bg-[#FFF7ED]"
+    },
+    {
+      "label": "Avg h-index",
+      "value": "45",
+      "iconName": "Award",
+      "iconColor": "text-[#4B5563]",
+      "iconBg": "bg-[#F3F4F6]"
+    }
+  ]
+}

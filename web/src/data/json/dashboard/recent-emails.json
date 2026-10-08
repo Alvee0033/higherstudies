@@ -1,0 +1,29 @@
+[
+  {
+    "id": "1",
+    "professor": "Prof. Emma Brown",
+    "university": "University of Toronto",
+    "subject": "AI & ML",
+    "date": "May 10, 2024",
+    "status": "Replied",
+    "statusColor": "bg-emerald-50 text-emerald-700 border-emerald-200/80"
+  },
+  {
+    "id": "2",
+    "professor": "Prof. Michael Chen",
+    "university": "UC Berkeley",
+    "subject": "Computer Vision",
+    "date": "May 8, 2024",
+    "status": "Waiting",
+    "statusColor": "bg-amber-50 text-amber-700 border-amber-200/80"
+  },
+  {
+    "id": "3",
+    "professor": "Prof. John Smith",
+    "university": "MIT",
+    "subject": "Robotics",
+    "date": "May 5, 2024",
+    "status": "Reminder Due",
+    "statusColor": "bg-rose-50 text-rose-700 border-rose-200/80"
+  }
+]

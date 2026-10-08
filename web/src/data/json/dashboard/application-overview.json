@@ -1,0 +1,8 @@
+[
+  { "label": "Not Started", "count": 2, "color": "#6366F1" },
+  { "label": "Preparing", "count": 1, "color": "#94A3B8" },
+  { "label": "Submitted", "count": 3, "color": "#4F46E5" },
+  { "label": "Interview", "count": 1, "color": "#F59E0B" },
+  { "label": "Accepted", "count": 1, "color": "#10B981" },
+  { "label": "Rejected", "count": 0, "color": "#EF4444" }
+]

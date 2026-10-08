@@ -1,0 +1,16 @@
+[
+  {
+    "id": "1",
+    "name": "Prof. John Smith",
+    "university": "MIT",
+    "dueText": "Reminder due in 2 days",
+    "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80"
+  },
+  {
+    "id": "2",
+    "name": "Prof. David Lee",
+    "university": "Stanford University",
+    "dueText": "Reminder due in 3 days",
+    "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80"
+  }
+]

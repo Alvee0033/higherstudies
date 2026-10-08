@@ -15,6 +15,8 @@ import {
   Sparkles,
 } from "lucide-react";
 
+import rawSavedItems from "@/data/json/saved-items/saved-items.json";
+
 interface SavedUniversity {
   id: string;
   name: string;
@@ -38,74 +40,8 @@ interface SavedProfessor {
   avatar: string;
 }
 
-const SAVED_UNIS: SavedUniversity[] = [
-  {
-    id: "mit",
-    name: "Massachusetts Institute of Technology (MIT)",
-    location: "Cambridge, USA",
-    ranking: "#1 QS World",
-    acceptanceRate: "4.0%",
-    minGpa: "3.8/4.0",
-    deadline: "Dec 15, 2024",
-    logo: "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=120&q=80",
-  },
-  {
-    id: "stanford",
-    name: "Stanford University",
-    location: "Stanford, CA, USA",
-    ranking: "#5 QS World",
-    acceptanceRate: "3.9%",
-    minGpa: "3.75/4.0",
-    deadline: "Dec 1, 2024",
-    logo: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=120&q=80",
-  },
-  {
-    id: "oxford",
-    name: "University of Oxford",
-    location: "Oxford, United Kingdom",
-    ranking: "#3 QS World",
-    acceptanceRate: "14.5%",
-    minGpa: "3.7/4.0",
-    deadline: "Jan 10, 2025",
-    logo: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=120&q=80",
-  },
-];
-
-const SAVED_PROFS: SavedProfessor[] = [
-  {
-    id: "jonathan-smith",
-    name: "Prof. John Smith",
-    university: "MIT",
-    department: "EECS & CSAIL",
-    hIndex: 48,
-    citations: 12450,
-    funding: true,
-    research: ["Deep Learning", "Computer Vision", "Robotics"],
-    avatar: "/images/avatars/prof-jonathan-smith.png",
-  },
-  {
-    id: "david-lee",
-    name: "Prof. David Lee",
-    university: "Stanford University",
-    department: "Computer Science",
-    hIndex: 52,
-    citations: 18200,
-    funding: true,
-    research: ["Foundation Models", "NLP", "Machine Learning"],
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80",
-  },
-  {
-    id: "emma-brown",
-    name: "Prof. Emma Brown",
-    university: "University of Toronto",
-    department: "Computer Science & Vector Institute",
-    hIndex: 39,
-    citations: 8900,
-    funding: false,
-    research: ["AI & ML", "Reinforcement Learning"],
-    avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=120&q=80",
-  },
-];
+const SAVED_UNIS: SavedUniversity[] = rawSavedItems.savedUniversities;
+const SAVED_PROFS: SavedProfessor[] = rawSavedItems.savedProfessors;
 
 export function SavedItemsView() {
   const [activeTab, setActiveTab] = React.useState<"all" | "unis" | "profs">("all");

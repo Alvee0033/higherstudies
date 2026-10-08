@@ -13,67 +13,34 @@ import {
   ChevronDown,
   GraduationCap,
   Sparkles,
+  LucideIcon,
 } from "lucide-react";
+import rawAiToolsData from "@/data/json/ai-tools/email-templates.json";
+
+const ICON_MAP: Record<string, LucideIcon> = {
+  Mail,
+  Clock,
+  Send,
+  Heart,
+};
 
 interface EmailTemplate {
   subject: string;
   paragraphs: string[];
 }
 
-const EMAIL_TEMPLATES: Record<string, EmailTemplate> = {
-  initial: {
-    subject: "Subject: PhD Application Inquiry - Fall 2025",
-    paragraphs: [
-      "Dear Prof. John Smith,",
-      "I hope this email finds you well. My name is Ahmed Rahman, and I am currently a final year student in Computer Science at BRAC University, Bangladesh. I am very interested in pursuing a PhD under your supervision at MIT, specifically in the areas of deep learning and computer vision.",
-      "I have attached my CV for your kind consideration. I would be grateful for the opportunity to contribute to your lab.",
-      "Thank you for your time and consideration.",
-      "Best regards,\nAhmed Rahman",
-    ],
-  },
-  reminder: {
-    subject: "Subject: Gentle Follow-up: PhD Inquiry - Fall 2025 - Ahmed Rahman",
-    paragraphs: [
-      "Dear Prof. John Smith,",
-      "I hope you are having a pleasant week. I am writing to gently follow up on my email sent last week regarding potential PhD openings in your lab for Fall 2025.",
-      "I remain deeply interested in your team's research on multimodal architectures. I have attached my CV again for your convenience.",
-      "Thank you once again for your valuable time.",
-      "Best regards,\nAhmed Rahman",
-    ],
-  },
-  followup: {
-    subject: "Subject: Follow-up & Recent Research Update - Ahmed Rahman",
-    paragraphs: [
-      "Dear Prof. John Smith,",
-      "I hope all is well with you. Following up on my prospective application, I wanted to share that our recent preprint on neural vision distillation has just been published.",
-      "I believe the findings closely align with the computational goals of your lab. I would welcome the opportunity to discuss this further if you have openings for Fall 2025.",
-      "Thank you for your consideration.",
-      "Best regards,\nAhmed Rahman",
-    ],
-  },
-  thankyou: {
-    subject: "Subject: Thank You for the Discussion - Ahmed Rahman",
-    paragraphs: [
-      "Dear Prof. John Smith,",
-      "Thank you very much for taking the time to speak with me today about potential research opportunities in your laboratory at MIT.",
-      "The discussion reinforced my enthusiasm for joining your group. Please let me know if any additional documentation or references are needed.",
-      "Thank you once again for your time and mentorship.",
-      "Best regards,\nAhmed Rahman",
-    ],
-  },
-};
+const EMAIL_TEMPLATES: Record<string, EmailTemplate> = rawAiToolsData.templates;
 
-const TABS = [
-  { id: "initial", label: "Initial Email", icon: Mail },
-  { id: "reminder", label: "Reminder Email", icon: Clock },
-  { id: "followup", label: "Follow-up Email", icon: Send },
-  { id: "thankyou", label: "Thank You Email", icon: Heart },
-];
+const TABS = rawAiToolsData.tabs.map((tab) => ({
+  id: tab.id,
+  label: tab.label,
+  icon: ICON_MAP[tab.iconName] || Mail,
+}));
 
 export function AiToolsView() {
   const [activeTab, setActiveTab] = React.useState("initial");
-  const [selectedProf, setSelectedProf] = React.useState("John Smith (MIT)");
-  const [selectedProgram, setSelectedProgram] = React.useState("PhD in Electrical Engineering");
+  const [selectedProf, setSelectedProf] = React.useState(rawAiToolsData.professorsList[0] || "John Smith (MIT)");
+  const [selectedProgram, setSelectedProgram] = React.useState(rawAiToolsData.programsList[0] || "PhD in Electrical Engineering");
   const [researchInterest, setResearchInterest] = React.useState("Deep Learning, Computer Vision");
   
   const [isGenerating, setIsGenerating] = React.useState(false);
@@ -185,10 +152,11 @@ export function AiToolsView() {
                 onChange={(e) => setSelectedProf(e.target.value)}
                 className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
               >
-                <option value="John Smith (MIT)">John Smith (MIT)</option>
-                <option value="David Lee (Stanford)">David Lee (Stanford)</option>
-                <option value="Emma Brown (Toronto)">Emma Brown (Toronto)</option>
-                <option value="Michael Chen (Berkeley)">Michael Chen (Berkeley)</option>
+                {rawAiToolsData.professorsList.map((prof) => (
+                  <option key={prof} value={prof}>
+                    {prof}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
@@ -215,10 +183,11 @@ export function AiToolsView() {
                 onChange={(e) => setSelectedProgram(e.target.value)}
                 className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
               >
-                <option value="PhD in Electrical Engineering">PhD in Electrical Engineering</option>
-                <option value="PhD in Computer Science">PhD in Computer Science</option>
-                <option value="MS in Artificial Intelligence">MS in Artificial Intelligence</option>
-                <option value="PhD in Robotics">PhD in Robotics</option>
+                {rawAiToolsData.programsList.map((prog) => (
+                  <option key={prog} value={prog}>
+                    {prog}
+                  </option>
+                ))}
               </select>
             </div>
           </div>

@@ -1,0 +1,35 @@
+{
+  "degreeLevels": [
+    "Master's",
+    "PhD / Doctorate",
+    "Undergraduate"
+  ],
+  "fieldsOfStudy": [
+    "Computer Science",
+    "Data Science & AI",
+    "Electrical Engineering",
+    "Biomedical Sciences"
+  ],
+  "specializations": [
+    { "value": "", "label": "Select specialization" },
+    { "value": "ml", "label": "Machine Learning & Deep Learning" },
+    { "value": "systems", "label": "Distributed Systems & Cloud" },
+    { "value": "security", "label": "Cybersecurity & Cryptography" },
+    { "value": "robotics", "label": "Robotics & Autonomous Systems" }
+  ],
+  "studyDestinations": [
+    "Any Country",
+    "North America",
+    "Europe",
+    "Asia Pacific"
+  ],
+  "defaultCountries": ["United States", "Canada"],
+  "excludeOptions": [
+    { "value": "", "label": "Select countries" },
+    { "value": "none", "label": "None" }
+  ],
+  "sliderDefaults": {
+    "gpa": { "min": 2.5, "max": 4.0, "step": 0.1, "default": 3.0 },
+    "ielts": { "min": 6.0, "max": 8.5, "step": 0.5, "default": 7.0 }
+  }
+}

@@ -10,34 +10,39 @@ import {
   CreditCard,
   Check,
   Save,
-  KeyRound,
-  Mail,
-  Smartphone,
   ExternalLink,
+  LucideIcon,
 } from "lucide-react";
+import rawSettingsData from "@/data/json/settings/settings-config.json";
 
-const SETTINGS_TABS = [
-  { id: "general", label: "General & Account", icon: User },
-  { id: "notifications", label: "Notifications", icon: Bell },
-  { id: "security", label: "Security & Passwords", icon: Shield },
-  { id: "billing", label: "Billing & Plans", icon: CreditCard },
-];
+const ICON_MAP: Record<string, LucideIcon> = {
+  User,
+  Bell,
+  Shield,
+  CreditCard,
+};
+
+const SETTINGS_TABS = rawSettingsData.tabs.map((tab) => ({
+  id: tab.id,
+  label: tab.label,
+  icon: ICON_MAP[tab.iconName] || User,
+}));
 
 export function SettingsView() {
   const [activeTab, setActiveTab] = React.useState("general");
   const [savedSuccess, setSavedSuccess] = React.useState(false);
 
   // Form State
-  const [name, setName] = React.useState("John Doe");
-  const [email, setEmail] = React.useState("johndoe@email.com");
-  const [phone, setPhone] = React.useState("+880 1712 345678");
-  const [timezone, setTimezone] = React.useState("Asia/Dhaka (GMT+6)");
+  const [name, setName] = React.useState(rawSettingsData.defaultAccount.name);
+  const [email, setEmail] = React.useState(rawSettingsData.defaultAccount.email);
+  const [phone, setPhone] = React.useState(rawSettingsData.defaultAccount.phone);
+  const [timezone, setTimezone] = React.useState(rawSettingsData.defaultAccount.timezone);
 
   // Notification Toggles
-  const [emailAlerts, setEmailAlerts] = React.useState(true);
-  const [deadlineReminders, setDeadlineReminders] = React.useState(true);
-  const [weeklyDigest, setWeeklyDigest] = React.useState(false);
-  const [professorReplies, setProfessorReplies] = React.useState(true);
+  const [emailAlerts, setEmailAlerts] = React.useState(rawSettingsData.defaultNotifications.emailAlerts);
+  const [deadlineReminders, setDeadlineReminders] = React.useState(rawSettingsData.defaultNotifications.deadlineReminders);
+  const [weeklyDigest, setWeeklyDigest] = React.useState(rawSettingsData.defaultNotifications.weeklyDigest);
+  const [professorReplies, setProfessorReplies] = React.useState(rawSettingsData.defaultNotifications.professorReplies);
 
   // Password
   const [currentPassword, setCurrentPassword] = React.useState("");
@@ -120,8 +125,8 @@ export function SettingsView() {
               <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-indigo-200 shrink-0">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80"
-                  alt="John Doe"
+                  src={rawSettingsData.defaultAccount.avatar}
+                  alt={name}
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -182,10 +187,9 @@ export function SettingsView() {
                   onChange={(e) => setTimezone(e.target.value)}
                   className="w-full h-10 px-3 rounded-xl border border-slate-200 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-[#4F46E5] bg-white"
                 >
-                  <option value="Asia/Dhaka (GMT+6)">Asia/Dhaka (GMT+6)</option>
-                  <option value="America/New_York (GMT-5)">America/New_York (GMT-5)</option>
-                  <option value="Europe/London (GMT+0)">Europe/London (GMT+0)</option>
-                  <option value="Asia/Singapore (GMT+8)">Asia/Singapore (GMT+8)</option>
+                  {rawSettingsData.timezoneOptions.map((tz) => (
+                    <option key={tz} value={tz}>{tz}</option>
+                  ))}
                 </select>
               </div>
             </div>
@@ -234,7 +238,7 @@ export function SettingsView() {
               <div className="flex items-center justify-between pt-3">
                 <div className="space-y-0.5">
                   <span className="font-semibold text-slate-900 block">Email Notifications</span>
-                  <p className="text-slate-500 text-[11px]">Send summaries to johndoe@email.com.</p>
+                  <p className="text-slate-500 text-[11px]">Send summaries to {email}.</p>
                 </div>
                 <input
                   type="checkbox"
@@ -327,20 +331,20 @@ export function SettingsView() {
                 Subscription Plan & Invoicing
               </h2>
               <p className="text-xs text-slate-500 mt-0.5">
-                You are currently on the Free Tier plan.
+                You are currently on the {rawSettingsData.billing.currentPlan}.
               </p>
             </div>
 
             <div className="p-5 rounded-2xl border border-indigo-200 bg-indigo-50/50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
                 <span className="px-2.5 py-0.5 rounded-full bg-indigo-100 text-[#4F46E5] text-[10px] font-bold">
-                  Active
+                  {rawSettingsData.billing.status}
                 </span>
                 <h3 className="text-lg font-bold text-slate-900 mt-1 font-heading">
-                  Free Student Plan
+                  {rawSettingsData.billing.currentPlan}
                 </h3>
                 <p className="text-xs text-slate-500 mt-0.5">
-                  Track up to 3 applications • 500+ universities
+                  {rawSettingsData.billing.summary}
                 </p>
               </div>
 
@@ -348,7 +352,7 @@ export function SettingsView() {
                 href="/pricing"
                 className="h-10 px-4 rounded-xl bg-[#4F46E5] hover:bg-[#4338CA] text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors shadow-xs"
               >
-                <span>Upgrade to Starter</span>
+                <span>Upgrade to {rawSettingsData.billing.upgradeTarget}</span>
                 <ExternalLink className="h-3.5 w-3.5" />
               </Link>
             </div>

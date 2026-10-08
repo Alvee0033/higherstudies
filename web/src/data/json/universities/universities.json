@@ -1,0 +1,58 @@
+[
+  {
+    "id": "mit",
+    "name": "Massachusetts Institute of Technology",
+    "location": "Cambridge, Massachusetts, United States",
+    "badge": "Top 1 Worldwide",
+    "qsRank": 1,
+    "acceptanceRate": "4%",
+    "annualTuition": "$55,878",
+    "matchScore": 95,
+    "greRequired": true,
+    "ieltsScore": "7.0+",
+    "fundingAvailable": true,
+    "logo": "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=160&q=80"
+  },
+  {
+    "id": "stanford-1",
+    "name": "Stanford University",
+    "location": "Stanford, California, United States",
+    "badge": "Top 3 Worldwide",
+    "qsRank": 3,
+    "acceptanceRate": "4.2%",
+    "annualTuition": "$58,169",
+    "matchScore": 92,
+    "greRequired": true,
+    "ieltsScore": "7.0+",
+    "fundingAvailable": true,
+    "logo": "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=160&q=80"
+  },
+  {
+    "id": "stanford-2",
+    "name": "Stanford University",
+    "location": "Stanford, California, United States",
+    "badge": "Top 3 Worldwide",
+    "qsRank": 3,
+    "acceptanceRate": "4.2%",
+    "annualTuition": "$58,169",
+    "matchScore": 92,
+    "greRequired": true,
+    "ieltsScore": "7.0+",
+    "fundingAvailable": true,
+    "logo": "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=160&q=80"
+  },
+  {
+    "id": "stanford-3",
+    "name": "Stanford University",
+    "location": "Stanford, California, United States",
+    "badge": "Top 3 Worldwide",
+    "qsRank": 3,
+    "acceptanceRate": "4.2%",
+    "annualTuition": "$58,169",
+    "matchScore": 92,
+    "greRequired": true,
+    "ieltsScore": "7.0+",
+    "fundingAvailable": true,
+    "logo": "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=160&q=80"
+  }
+]

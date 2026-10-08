@@ -1,5 +1,6 @@
 import * as React from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import { UNIVERSITY_FILTER_OPTIONS } from "../university-data";
 
 export interface FilterAcademicPreferencesProps {
   isOpen: boolean;
@@ -56,9 +57,9 @@ export function FilterAcademicPreferences({
                 onChange={(e) => onDegreeLevelChange(e.target.value)}
                 className="w-full h-8 px-2.5 pr-7 rounded-lg border border-slate-200 bg-white text-slate-800 text-xs focus:outline-none focus:ring-1 focus:ring-[#5D3FD3] appearance-none"
               >
-                <option>Master&apos;s</option>
-                <option>PhD / Doctorate</option>
-                <option>Undergraduate</option>
+                {UNIVERSITY_FILTER_OPTIONS.degreeLevels.map((lvl) => (
+                  <option key={lvl}>{lvl}</option>
+                ))}
               </select>
               <ChevronDown className="h-3 w-3 text-slate-400 absolute right-2.5 top-2.5 pointer-events-none" />
             </div>
@@ -73,10 +74,9 @@ export function FilterAcademicPreferences({
                 onChange={(e) => onFieldOfStudyChange(e.target.value)}
                 className="w-full h-8 px-2.5 pr-7 rounded-lg border border-slate-200 bg-white text-slate-800 text-xs focus:outline-none focus:ring-1 focus:ring-[#5D3FD3] appearance-none"
               >
-                <option>Computer Science</option>
-                <option>Data Science & AI</option>
-                <option>Electrical Engineering</option>
-                <option>Biomedical Sciences</option>
+                {UNIVERSITY_FILTER_OPTIONS.fieldsOfStudy.map((fld) => (
+                  <option key={fld}>{fld}</option>
+                ))}
               </select>
               <ChevronDown className="h-3 w-3 text-slate-400 absolute right-2.5 top-2.5 pointer-events-none" />
             </div>
@@ -93,11 +93,11 @@ export function FilterAcademicPreferences({
                 onChange={(e) => onSpecializationChange(e.target.value)}
                 className="w-full h-8 px-2.5 pr-7 rounded-lg border border-slate-200 bg-white text-slate-400 text-xs focus:outline-none focus:ring-1 focus:ring-[#5D3FD3] appearance-none"
               >
-                <option value="">Select specialization</option>
-                <option value="ml">Machine Learning & Deep Learning</option>
-                <option value="systems">Distributed Systems & Cloud</option>
-                <option value="security">Cybersecurity & Cryptography</option>
-                <option value="robotics">Robotics & Autonomous Systems</option>
+                {UNIVERSITY_FILTER_OPTIONS.specializations.map((spec) => (
+                  <option key={spec.value} value={spec.value}>
+                    {spec.label}
+                  </option>
+                ))}
               </select>
               <ChevronDown className="h-3 w-3 text-slate-400 absolute right-2.5 top-2.5 pointer-events-none" />
             </div>

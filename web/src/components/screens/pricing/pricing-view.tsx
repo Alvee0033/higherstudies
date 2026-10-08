@@ -11,6 +11,8 @@ function BlueCheckIcon({ className = "w-4 h-4 text-[#493EE5] shrink-0" }: { clas
   );
 }
 
+import rawPlans from "@/data/json/pricing/pricing-plans.json";
+
 interface PlanItem {
   id: string;
   name: string;
@@ -23,74 +25,7 @@ interface PlanItem {
   features: string[];
 }
 
-const PLANS: PlanItem[] = [
-  {
-    id: "free",
-    name: "Free",
-    subtitle: "Get started with basic tools.",
-    price: "0 BDT",
-    buttonText: "Current Plan",
-    isCurrent: true,
-    featuresTitle: "Includes:",
-    features: [
-      "Track up to 3 applications",
-      "Access to 500+ universities",
-      "Basic email tracking",
-      "AI Tools (Limited)",
-      "Community support",
-    ],
-  },
-  {
-    id: "starter",
-    name: "Starter",
-    subtitle: "For serious applicants.",
-    price: "2000 BDT",
-    isPopular: true,
-    buttonText: "Purchase Now",
-    featuresTitle: "Everything in Free, plus:",
-    features: [
-      "Track up to 20 applications",
-      "Advanced email tracker",
-      "AI Tools (Standard)",
-      "Document templates",
-      "Application deadline alerts",
-      "Priority support",
-    ],
-  },
-  {
-    id: "pro",
-    name: "Pro",
-    subtitle: "For advanced planning.",
-    price: "5000 BDT",
-    buttonText: "Purchase Now",
-    featuresTitle: "Everything in Starter, plus:",
-    features: [
-      "Unlimited applications",
-      "Professor & university insights",
-      "AI Tools (Advanced)",
-      "Personalized recommendations",
-      "Visa tracking",
-      "Custom reminders",
-      "Priority support",
-    ],
-  },
-  {
-    id: "premium",
-    name: "Premium",
-    subtitle: "For complete success.",
-    price: "10,000 BDT",
-    buttonText: "Purchase Now",
-    featuresTitle: "Everything in Pro, plus:",
-    features: [
-      "1-on-1 expert consultation",
-      "SOP & LOR review (2x/month)",
-      "Interview preparation",
-      "Application review",
-      "Dedicated success manager",
-      "24/7 premium support",
-    ],
-  },
-];
+const PLANS: PlanItem[] = rawPlans;
 
 export function PurchasePlanView() {
   const [selectedPlan, setSelectedPlan] = React.useState<string | null>(null);

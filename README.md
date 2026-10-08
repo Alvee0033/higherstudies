@@ -133,7 +133,20 @@ higherstudies/
         │       ├── badge.tsx                  # Status badges and indicators
         │       └── scroll-reveal.tsx          # IntersectionObserver animations
         │
-        ├── data/                              # Static content and mock data
+        ├── data/                              # Content, data models & decoupled JSON stores
+        │   ├── json/                          # Structured JSON Data Stores (Zero Hardcoding)
+        │   │   ├── ai-tools/                  # Email templates & AI configurations
+        │   │   ├── applications/              # Application pipeline CRM records
+        │   │   ├── dashboard/                 # KPI metrics, reminders, emails, status counts
+        │   │   ├── email-tracker/             # Faculty outreach history & records
+        │   │   ├── landing/                   # Landing page services, features, hero & reviews
+        │   │   ├── pricing/                   # Subscription plans, features & tiers
+        │   │   ├── professors/                # Professor catalog, institution stats & full profiles
+        │   │   ├── profile/                   # Student academic profile data
+        │   │   ├── saved-items/               # Shortlisted programs & mentors
+        │   │   ├── settings/                  # Account preferences & security options
+        │   │   └── universities/              # University catalog & search filter facets
+        │   └── landing-content.ts             # Landing page data contracts
         └── lib/                               # Utilities and helper functions
 ```
 

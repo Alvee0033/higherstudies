@@ -2,42 +2,30 @@
 
 import * as React from "react";
 import { Plus, X, Check } from "lucide-react";
+import rawProfileData from "@/data/json/profile/student-profile.json";
 
-const PROFILE_TABS = [
-  { id: "personal", label: "Personal" },
-  { id: "academic", label: "Academic" },
-  { id: "testscores", label: "Test Scores" },
-  { id: "research", label: "Research" },
-  { id: "experience", label: "Experience" },
-  { id: "preferences", label: "Preferences" },
-];
+const PROFILE_TABS = rawProfileData.tabs;
 
 export function StudentProfileView() {
   const [activeTab, setActiveTab] = React.useState("preferences");
 
   // Preferences Form State matching Figma
-  const [fundingPref, setFundingPref] = React.useState<"Fully Funded" | "Partial Funded" | "Self Funded">("Fully Funded");
-  const [targetIntake, setTargetIntake] = React.useState<"Fall" | "Spring">("Fall");
-  const [countries, setCountries] = React.useState<string[]>([
-    "United States",
-    "Canada",
-    "Germany",
-    "UK",
-    "Australia",
-  ]);
+  const [fundingPref, setFundingPref] = React.useState(rawProfileData.preferences.defaultFunding);
+  const [targetIntake, setTargetIntake] = React.useState(rawProfileData.preferences.defaultIntake);
+  const [countries, setCountries] = React.useState<string[]>(rawProfileData.preferences.countries);
   const [isAddingCountry, setIsAddingCountry] = React.useState(false);
   const [newCountryName, setNewCountryName] = React.useState("");
   const [saved, setSaved] = React.useState(false);
 
   // Other Tabs State
-  const [fullName, setFullName] = React.useState("Ahmed Rahman");
-  const [email, setEmail] = React.useState("ahmed.rahman@email.com");
-  const [phone, setPhone] = React.useState("+880 1712 345678");
-  const [university, setUniversity] = React.useState("BRAC University");
-  const [degree, setDegree] = React.useState("BSc in Computer Science");
-  const [cgpa, setCgpa] = React.useState("3.85");
-  const [greScore, setGreScore] = React.useState("328 (Q:166, V:162)");
-  const [ieltsScore, setIeltsScore] = React.useState("8.0 (L:8.5, R:8.5, W:7.5, S:7.5)");
+  const [fullName, setFullName] = React.useState(rawProfileData.personal.fullName);
+  const [email, setEmail] = React.useState(rawProfileData.personal.email);
+  const [phone, setPhone] = React.useState(rawProfileData.personal.phone);
+  const [university, setUniversity] = React.useState(rawProfileData.academic.university);
+  const [degree, setDegree] = React.useState(rawProfileData.academic.degree);
+  const [cgpa, setCgpa] = React.useState(rawProfileData.academic.cgpa);
+  const [greScore, setGreScore] = React.useState(rawProfileData.testScores.greScore);
+  const [ieltsScore, setIeltsScore] = React.useState(rawProfileData.testScores.ieltsScore);
 
   const handleAddCountry = () => {
     if (newCountryName.trim() && !countries.includes(newCountryName.trim())) {
@@ -100,7 +88,7 @@ export function StudentProfileView() {
                 FUNDING PREFERENCE
               </h2>
               <div className="flex flex-wrap items-center gap-4">
-                {(["Fully Funded", "Partial Funded", "Self Funded"] as const).map((opt) => {
+                {rawProfileData.preferences.fundingOptions.map((opt) => {
                   const isSelected = fundingPref === opt;
 
                   return (
@@ -140,7 +128,7 @@ export function StudentProfileView() {
                 TARGET INTAKE
               </h2>
               <div className="flex flex-wrap items-center gap-4">
-                {(["Fall", "Spring"] as const).map((opt) => {
+                {rawProfileData.preferences.intakeOptions.map((opt) => {
                   const isSelected = targetIntake === opt;
 
                   return (
@@ -385,20 +373,24 @@ export function StudentProfileView() {
         {activeTab === "research" && (
           <div className="space-y-6">
             <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Research & Publications</h1>
-            <div className="p-4 bg-slate-50 rounded-lg border border-slate-200 text-sm text-slate-700 space-y-2 max-w-xl">
-              <p className="font-semibold text-slate-900">Efficient Vision Attention Distillation (IEEE 2024)</p>
-              <p className="text-xs text-slate-500">Ahmed Rahman, BRAC University CSAIL Lab</p>
-            </div>
+            {rawProfileData.research.map((item, idx) => (
+              <div key={idx} className="p-4 bg-slate-50 rounded-lg border border-slate-200 text-sm text-slate-700 space-y-2 max-w-xl">
+                <p className="font-semibold text-slate-900">{item.title}</p>
+                <p className="text-xs text-slate-500">{item.subtitle}</p>
+              </div>
+            ))}
           </div>
         )}
 
         {activeTab === "experience" && (
           <div className="space-y-6">
             <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Experience</h1>
-            <div className="p-4 bg-slate-50 rounded-lg border border-slate-200 text-sm text-slate-700 space-y-2 max-w-xl">
-              <p className="font-semibold text-slate-900">Undergraduate Research Assistant</p>
-              <p className="text-xs text-slate-500">BRAC University • 2023 - Present</p>
-            </div>
+            {rawProfileData.experience.map((item, idx) => (
+              <div key={idx} className="p-4 bg-slate-50 rounded-lg border border-slate-200 text-sm text-slate-700 space-y-2 max-w-xl">
+                <p className="font-semibold text-slate-900">{item.title}</p>
+                <p className="text-xs text-slate-500">{item.subtitle}</p>
+              </div>
+            ))}
           </div>
         )}
       </div>

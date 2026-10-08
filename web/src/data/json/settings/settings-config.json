@@ -1,0 +1,33 @@
+{
+  "tabs": [
+    { "id": "general", "label": "General & Account", "iconName": "User" },
+    { "id": "notifications", "label": "Notifications", "iconName": "Bell" },
+    { "id": "security", "label": "Security & Passwords", "iconName": "Shield" },
+    { "id": "billing", "label": "Billing & Plans", "iconName": "CreditCard" }
+  ],
+  "defaultAccount": {
+    "name": "John Doe",
+    "email": "johndoe@email.com",
+    "phone": "+880 1712 345678",
+    "timezone": "Asia/Dhaka (GMT+6)",
+    "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80"
+  },
+  "timezoneOptions": [
+    "Asia/Dhaka (GMT+6)",
+    "America/New_York (GMT-5)",
+    "Europe/London (GMT+0)",
+    "Asia/Singapore (GMT+8)"
+  ],
+  "defaultNotifications": {
+    "emailAlerts": true,
+    "deadlineReminders": true,
+    "weeklyDigest": false,
+    "professorReplies": true
+  },
+  "billing": {
+    "currentPlan": "Free Student Plan",
+    "status": "Active",
+    "summary": "Track up to 3 applications • 500+ universities",
+    "upgradeTarget": "Starter"
+  }
+}

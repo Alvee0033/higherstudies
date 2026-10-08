@@ -1,5 +1,6 @@
 import * as React from "react";
 import { ChevronDown, ChevronUp, X } from "lucide-react";
+import { UNIVERSITY_FILTER_OPTIONS } from "../university-data";
 
 export interface FilterLocationPreferencesProps {
   isOpen: boolean;
@@ -48,10 +49,9 @@ export function FilterLocationPreferences({
                 onChange={(e) => onStudyDestinationChange(e.target.value)}
                 className="w-full h-9.5 px-3 pr-8 rounded-lg border border-slate-200 bg-white text-slate-800 text-xs focus:outline-none focus:ring-1 focus:ring-[#5D3FD3] appearance-none"
               >
-                <option>Any Country</option>
-                <option>North America</option>
-                <option>Europe</option>
-                <option>Asia Pacific</option>
+                {UNIVERSITY_FILTER_OPTIONS.studyDestinations.map((dest) => (
+                  <option key={dest}>{dest}</option>
+                ))}
               </select>
               <ChevronDown className="h-3.5 w-3.5 text-slate-400 absolute right-3 top-3 pointer-events-none" />
             </div>
@@ -90,8 +90,11 @@ export function FilterLocationPreferences({
                 onChange={(e) => onExcludeCountryChange(e.target.value)}
                 className="w-full h-9.5 px-3 pr-8 rounded-lg border border-slate-200 bg-white text-slate-400 text-xs focus:outline-none focus:ring-1 focus:ring-[#5D3FD3] appearance-none"
               >
-                <option value="">Select countries</option>
-                <option value="none">None</option>
+                {UNIVERSITY_FILTER_OPTIONS.excludeOptions.map((opt) => (
+                  <option key={opt.value} value={opt.value}>
+                    {opt.label}
+                  </option>
+                ))}
               </select>
               <ChevronDown className="h-3.5 w-3.5 text-slate-400 absolute right-3 top-3 pointer-events-none" />
             </div>
