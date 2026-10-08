@@ -9,6 +9,12 @@ export const buttonVariants = cva(
       variant: {
         primary:
           "bg-[#4F46E5] text-white hover:bg-[#4338CA] shadow-[0_4px_14px_rgba(79,70,229,0.35)] hover:shadow-[0_6px_20px_rgba(79,70,229,0.45)] active:scale-[0.98]",
+        brand:
+          "bg-[#5D3FD3] text-white hover:bg-[#4E34B5] shadow-2xs active:scale-[0.98]",
+        "brand-outline":
+          "border border-[#5D3FD3] text-[#5D3FD3] hover:bg-[#5D3FD3] hover:text-white transition-colors active:scale-[0.98]",
+        "indigo-outline":
+          "border border-indigo-200 bg-white hover:bg-indigo-50 text-[#4F46E5] shadow-2xs active:scale-[0.98]",
         secondary:
           "bg-[#EEF2FF] text-[#4F46E5] hover:bg-[#E0E7FF] active:scale-[0.98]",
         outline:
@@ -19,15 +25,24 @@ export const buttonVariants = cva(
           "bg-white text-slate-800 hover:bg-slate-50 shadow-md",
       },
       size: {
-        sm: "h-8 px-3.5 text-xs rounded-full",
-        md: "h-10 px-5 text-sm rounded-full",
-        lg: "h-12 px-7 text-base rounded-full",
-        icon: "h-9 w-9 rounded-full",
+        xs: "h-7 px-2.5 text-[11px]",
+        sm: "h-8 px-3.5 text-xs",
+        md: "h-10 px-5 text-sm",
+        lg: "h-12 px-7 text-base",
+        icon: "h-9 w-9",
+        "icon-sm": "h-8 w-8",
+      },
+      rounded: {
+        full: "rounded-full",
+        xl: "rounded-xl",
+        lg: "rounded-lg",
+        md: "rounded-md",
       },
     },
     defaultVariants: {
       variant: "primary",
       size: "md",
+      rounded: "full",
     },
   }
 );
