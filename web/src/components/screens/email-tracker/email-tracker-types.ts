@@ -14,7 +14,8 @@ export interface EmailRecord {
   avatar: string;
   universityName: string;
   universitySub: string;
-  universityLogoType: "stanford" | "mit" | "toronto" | "berkeley" | "eth";
+  universityLogoType: "generic" | "stanford" | "mit" | "toronto" | "berkeley" | "eth";
+  universityUrl?: string;
   email: string;
   sentDate: string;
   sentTime: string;

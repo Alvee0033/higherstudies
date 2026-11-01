@@ -1,0 +1,145 @@
+/* ==========================================================================
+   Authentication & Login View
+   ========================================================================== */
+
+.login-screen {
+  min-height: 100dvh;
+  display: grid;
+  grid-template-columns: minmax(340px, 1.1fr) minmax(420px, 0.9fr);
+  background: #fff;
+}
+
+/* Visual Hero Left Section */
+.login-visual {
+  min-height: 100%;
+  position: relative;
+  overflow: hidden;
+  padding: clamp(32px, 7vw, 86px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #f8fbff;
+  background:
+    radial-gradient(circle at 10% 5%, #347ef0 0, transparent 35%),
+    radial-gradient(circle at 90% 85%, #123d87 0, transparent 38%), #0c2b62;
+}
+
+.login-visual::after {
+  content: "";
+  position: absolute;
+  width: 480px;
+  height: 480px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  right: -210px;
+  top: 20%;
+}
+
+.login-brand,
+.login-message,
+.login-visual > small {
+  position: relative;
+  z-index: 1;
+}
+
+.login-brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  font-size: 17px;
+}
+
+.login-brand strong span {
+  opacity: 0.66;
+  font-weight: 500;
+}
+
+.login-mark {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  font-size: 16px;
+  background: #fff;
+  color: var(--blue);
+  box-shadow: none;
+}
+
+.login-message {
+  max-width: 470px;
+}
+
+.login-message h1 {
+  margin: 14px 0;
+  font-size: clamp(38px, 4vw, 58px);
+  line-height: 1.04;
+  letter-spacing: -0.055em;
+}
+
+.login-message p {
+  max-width: 420px;
+  margin: 0;
+  color: #c6dafa;
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.login-proof {
+  margin-top: 30px;
+  display: flex;
+  gap: 11px;
+  align-items: center;
+  color: #e2edff;
+  font-size: 13px;
+}
+
+.login-visual > small {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  color: #aac7f4;
+}
+
+/* Login Panel & Form Right Section */
+.login-panel {
+  display: grid;
+  place-content: center;
+  padding: 36px;
+  background: #f8faff;
+}
+
+.login-card {
+  width: min(100%, 390px);
+}
+
+.login-card h2 {
+  margin: 10px 0 6px;
+  font-size: 28px;
+  letter-spacing: -0.04em;
+}
+
+.login-card > p {
+  margin: 0 0 27px;
+  color: var(--muted);
+}
+
+.login-card form {
+  display: grid;
+  gap: 9px;
+}
+
+.secure-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin-top: 20px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.login-help {
+  display: block;
+  margin-top: 24px;
+  color: var(--muted);
+  text-align: center;
+  font-size: 12px;
+}

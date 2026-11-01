@@ -6,11 +6,11 @@ export function HeroGraphic() {
   return (
     <div className="relative w-full max-w-[760px] lg:max-w-none flex items-center justify-center lg:justify-end select-none">
       {/* Background organic lavender/indigo fluid glow */}
-      <div className="absolute inset-0 -m-10 rounded-[64px] bg-gradient-to-tr from-[#EDE9FE]/90 via-[#F5F3FF]/90 to-[#EEF2FF]/80 blur-3xl pointer-events-none" />
+      <div className="absolute inset-0 -m-10 rounded-[64px] bg-gradient-to-tr from-[#E1F0FF]/90 via-[#F5F3FF]/90 to-[#EAF5FF]/80 blur-3xl pointer-events-none" />
 
       {/* Floating Badge 1: Top Universities Worldwide */}
       <div className="absolute top-1 left-1 sm:top-2 sm:left-4 lg:left-6 z-20 flex items-center gap-2 sm:gap-3 rounded-xl sm:rounded-2xl bg-white/95 backdrop-blur-md p-2.5 sm:px-4.5 sm:py-3 shadow-[0_12px_32px_rgba(79,70,229,0.18)] border border-white/90 animate-bounce [animation-duration:4s]">
-        <div className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-lg sm:rounded-xl bg-[#EDE9FE] text-[#4F46E5] shadow-2xs">
+        <div className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-lg sm:rounded-xl bg-[#E1F0FF] text-[#1476F2] shadow-2xs">
           <Globe className="h-4 w-4 sm:h-5.5 sm:w-5.5" />
         </div>
         <div className="text-left">
@@ -25,7 +25,7 @@ export function HeroGraphic() {
 
       {/* Floating Badge 2: AI Powered Recommendations */}
       <div className="absolute bottom-2 right-1 sm:bottom-4 sm:right-4 lg:right-2 z-20 flex items-center gap-2 sm:gap-3 rounded-xl sm:rounded-2xl bg-white/95 backdrop-blur-md p-2.5 sm:px-4.5 sm:py-3 shadow-[0_12px_32px_rgba(79,70,229,0.18)] border border-white/90 animate-bounce [animation-duration:5s]">
-        <div className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-lg sm:rounded-xl bg-[#EDE9FE] text-[#4F46E5] shadow-2xs">
+        <div className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-lg sm:rounded-xl bg-[#E1F0FF] text-[#1476F2] shadow-2xs">
           <Cpu className="h-4 w-4 sm:h-5.5 sm:w-5.5" />
         </div>
         <div className="text-left">

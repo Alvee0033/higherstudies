@@ -6,6 +6,8 @@ export const metadata = {
   description: "Track and manage your university applications in one Kanban pipeline.",
 };
 
+export const instant = false;
+
 export default function ApplicationsPage() {
   return <ApplicationTrackerView />;
 }

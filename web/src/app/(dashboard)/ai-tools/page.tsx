@@ -6,6 +6,8 @@ export const metadata = {
   description: "AI-powered cold email and document generator for prospective graduate applicants.",
 };
 
+export const instant = false;
+
 export default function AiToolsPage() {
   return <AiToolsView />;
 }

@@ -1,31 +1,38 @@
 "use client";
 
 import * as React from "react";
+import {useApi} from "@/hooks/use-api";
+import {useStudent} from "@/components/layout/student-session";
+import {api,workspace} from "@/lib/student-api";
 import { Plus, X, Check } from "lucide-react";
 import rawProfileData from "@/data/json/profile/student-profile.json";
 
 const PROFILE_TABS = rawProfileData.tabs;
 
 export function StudentProfileView() {
+  const {user,refresh}=useStudent();
+  const result=useApi<{data:Record<string,unknown>}>(`${workspace}/profile`);
+  const [error,setError]=React.useState("");
+  const [saving,setSaving]=React.useState(false);
   const [activeTab, setActiveTab] = React.useState("preferences");
 
   // Preferences Form State matching Figma
-  const [fundingPref, setFundingPref] = React.useState(rawProfileData.preferences.defaultFunding);
-  const [targetIntake, setTargetIntake] = React.useState(rawProfileData.preferences.defaultIntake);
-  const [countries, setCountries] = React.useState<string[]>(rawProfileData.preferences.countries);
+  const [fundingPref, setFundingPref] = React.useState("");
+  const [targetIntake, setTargetIntake] = React.useState("");
+  const [countries, setCountries] = React.useState<string[]>([]);
   const [isAddingCountry, setIsAddingCountry] = React.useState(false);
   const [newCountryName, setNewCountryName] = React.useState("");
   const [saved, setSaved] = React.useState(false);
 
   // Other Tabs State
-  const [fullName, setFullName] = React.useState(rawProfileData.personal.fullName);
-  const [email, setEmail] = React.useState(rawProfileData.personal.email);
-  const [phone, setPhone] = React.useState(rawProfileData.personal.phone);
-  const [university, setUniversity] = React.useState(rawProfileData.academic.university);
-  const [degree, setDegree] = React.useState(rawProfileData.academic.degree);
-  const [cgpa, setCgpa] = React.useState(rawProfileData.academic.cgpa);
-  const [greScore, setGreScore] = React.useState(rawProfileData.testScores.greScore);
-  const [ieltsScore, setIeltsScore] = React.useState(rawProfileData.testScores.ieltsScore);
+  const [fullName, setFullName] = React.useState("");
+  const email=user.email;
+  const [phone, setPhone] = React.useState("");
+  const [university, setUniversity] = React.useState("");
+  const [degree, setDegree] = React.useState("");
+  const [cgpa, setCgpa] = React.useState("");
+  const [greScore, setGreScore] = React.useState("");
+  const [ieltsScore, setIeltsScore] = React.useState("");
 
   const handleAddCountry = () => {
     if (newCountryName.trim() && !countries.includes(newCountryName.trim())) {
@@ -39,13 +46,27 @@ export function StudentProfileView() {
     setCountries(countries.filter((item) => item !== c));
   };
 
-  const handleSave = () => {
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2500);
+  React.useEffect(()=>{if(!result.data)return;const data=result.data.data;const frame=requestAnimationFrame(()=>{setFundingPref(typeof data.fundingPref==='string'?data.fundingPref : '');
+setTargetIntake(typeof data.targetIntake==='string'?data.targetIntake : '');
+setFullName(typeof data.fullName==='string'?data.fullName : user.displayName);
+setPhone(typeof data.phone==='string'?data.phone : '');
+setUniversity(typeof data.university==='string'?data.university : '');
+setDegree(typeof data.degree==='string'?data.degree : '');
+setCgpa(typeof data.cgpa==='string'?data.cgpa : '');
+setGreScore(typeof data.greScore==='string'?data.greScore : '');
+setIeltsScore(typeof data.ieltsScore==='string'?data.ieltsScore : '');setCountries(Array.isArray(data.countries)?data.countries as string[]:[]);});return ()=>cancelAnimationFrame(frame);},[result.data,user.displayName]);
+  const handleSave = async () => {
+    setSaving(true);setError('');
+    try {
+      await api(`${workspace}/profile`,{method:'PUT',body:JSON.stringify({data:{fundingPref,targetIntake,countries,fullName,phone,university,degree,cgpa,greScore,ieltsScore}})});
+      refresh();setSaved(true);
+    }catch(e){setError(e instanceof Error?e.message:'Unable to save');}finally{setSaving(false);}
   };
 
   return (
     <div className="w-full space-y-6 text-left max-w-5xl">
+      {(error||result.error)&&<p role="alert" className="text-sm text-rose-600">{error||result.error}</p>}
+      {result.loading&&<p role="status">Loading profile…</p>}
       {/* 1. Profile Tabs matching Figma 08_Student_Profile (960x55) */}
       <div className="flex items-center gap-6 border-b border-slate-200 overflow-x-auto pb-0">
         {PROFILE_TABS.map((tab) => {
@@ -58,13 +79,13 @@ export function StudentProfileView() {
               onClick={() => setActiveTab(tab.id)}
               className={`pb-3.5 pt-1 text-sm font-medium transition-all cursor-pointer whitespace-nowrap relative ${
                 isActive
-                  ? "text-[#4F46E5] font-semibold"
+                  ? "text-[#1476F2] font-semibold"
                   : "text-slate-500 hover:text-slate-800"
               }`}
             >
               <span>{tab.label}</span>
               {isActive && (
-                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#4F46E5] rounded-full" />
+                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#1476F2] rounded-full" />
               )}
             </button>
           );
@@ -98,14 +119,14 @@ export function StudentProfileView() {
                       onClick={() => setFundingPref(opt)}
                       className={`w-[192px] h-[54px] rounded-lg border px-4 flex items-center gap-3 transition-all cursor-pointer ${
                         isSelected
-                          ? "bg-[#F5F5FF] border-[#4F46E5] text-[#4F46E5]"
+                          ? "bg-[#F5F5FF] border-[#1476F2] text-[#1476F2]"
                           : "bg-white border-slate-200 text-slate-700 hover:bg-slate-50"
                       }`}
                     >
                       <div
                         className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 ${
                           isSelected
-                            ? "border-[#4F46E5] bg-[#4F46E5]"
+                            ? "border-[#1476F2] bg-[#1476F2]"
                             : "border-slate-300 bg-white"
                         }`}
                       >
@@ -128,7 +149,7 @@ export function StudentProfileView() {
                 TARGET INTAKE
               </h2>
               <div className="flex flex-wrap items-center gap-4">
-                {rawProfileData.preferences.intakeOptions.map((opt) => {
+                {rawProfileData.preferences.intakeOptions.filter(value=>!value.includes("2025")).map((opt) => {
                   const isSelected = targetIntake === opt;
 
                   return (
@@ -138,14 +159,14 @@ export function StudentProfileView() {
                       onClick={() => setTargetIntake(opt)}
                       className={`w-[192px] h-[54px] rounded-lg border px-4 flex items-center gap-3 transition-all cursor-pointer ${
                         isSelected
-                          ? "bg-[#F5F5FF] border-[#4F46E5] text-[#4F46E5]"
+                          ? "bg-[#F5F5FF] border-[#1476F2] text-[#1476F2]"
                           : "bg-white border-slate-200 text-slate-700 hover:bg-slate-50"
                       }`}
                     >
                       <div
                         className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 ${
                           isSelected
-                            ? "border-[#4F46E5] bg-[#4F46E5]"
+                            ? "border-[#1476F2] bg-[#1476F2]"
                             : "border-slate-300 bg-white"
                         }`}
                       >
@@ -171,7 +192,7 @@ export function StudentProfileView() {
                 {countries.map((country) => (
                   <span
                     key={country}
-                    className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-[#4F46E5]/30 text-[#4F46E5] text-xs font-medium shadow-2xs"
+                    className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-[#1476F2]/30 text-[#1476F2] text-xs font-medium shadow-2xs"
                   >
                     <span>{country}</span>
                     <button
@@ -201,7 +222,7 @@ export function StudentProfileView() {
                     <button
                       type="button"
                       onClick={handleAddCountry}
-                      className="text-[#4F46E5] hover:text-[#4338CA] text-xs font-bold"
+                      className="text-[#1476F2] hover:text-[#0963D6] text-xs font-bold"
                     >
                       Add
                     </button>
@@ -230,8 +251,9 @@ export function StudentProfileView() {
             <div className="pt-4 border-t border-slate-100 flex items-center justify-start">
               <button
                 type="button"
-                onClick={handleSave}
-                className="w-[176px] h-[48px] rounded-lg bg-[#4F46E5] hover:bg-[#4338CA] text-white text-sm font-medium shadow-xs transition-colors flex items-center justify-center gap-2 cursor-pointer"
+                disabled={saving||result.loading}
+          onClick={handleSave}
+                className="w-[176px] h-[48px] rounded-lg bg-[#1476F2] hover:bg-[#0963D6] text-white text-sm font-medium shadow-xs transition-colors flex items-center justify-center gap-2 cursor-pointer"
               >
                 {saved ? (
                   <>
@@ -257,7 +279,7 @@ export function StudentProfileView() {
                   type="text"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  className="w-full h-10 px-3 border border-slate-200 rounded-md text-slate-900 focus:outline-none focus:ring-1 focus:ring-[#4F46E5]"
+                  className="w-full h-10 px-3 border border-slate-200 rounded-md text-slate-900 focus:outline-none focus:ring-1 focus:ring-[#1476F2]"
                 />
               </div>
               <div className="space-y-1">
@@ -265,8 +287,8 @@ export function StudentProfileView() {
                 <input
                   type="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full h-10 px-3 border border-slate-200 rounded-md text-slate-900 focus:outline-none focus:ring-1 focus:ring-[#4F46E5]"
+                  readOnly
+                  className="w-full h-10 px-3 border border-slate-200 rounded-md text-slate-900 focus:outline-none focus:ring-1 focus:ring-[#1476F2]"
                 />
               </div>
               <div className="space-y-1">
@@ -275,15 +297,16 @@ export function StudentProfileView() {
                   type="text"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="w-full h-10 px-3 border border-slate-200 rounded-md text-slate-900 focus:outline-none focus:ring-1 focus:ring-[#4F46E5]"
+                  className="w-full h-10 px-3 border border-slate-200 rounded-md text-slate-900 focus:outline-none focus:ring-1 focus:ring-[#1476F2]"
                 />
               </div>
             </div>
             <div className="pt-4 border-t border-slate-100">
               <button
                 type="button"
-                onClick={handleSave}
-                className="w-[176px] h-[48px] rounded-lg bg-[#4F46E5] hover:bg-[#4338CA] text-white text-sm font-medium shadow-xs"
+                disabled={saving||result.loading}
+          onClick={handleSave}
+                className="w-[176px] h-[48px] rounded-lg bg-[#1476F2] hover:bg-[#0963D6] text-white text-sm font-medium shadow-xs"
               >
                 {saved ? "Saved!" : "Save Changes"}
               </button>
@@ -301,7 +324,7 @@ export function StudentProfileView() {
                   type="text"
                   value={university}
                   onChange={(e) => setUniversity(e.target.value)}
-                  className="w-full h-10 px-3 border border-slate-200 rounded-md text-slate-900 focus:outline-none focus:ring-1 focus:ring-[#4F46E5]"
+                  className="w-full h-10 px-3 border border-slate-200 rounded-md text-slate-900 focus:outline-none focus:ring-1 focus:ring-[#1476F2]"
                 />
               </div>
               <div className="space-y-1">
@@ -310,7 +333,7 @@ export function StudentProfileView() {
                   type="text"
                   value={degree}
                   onChange={(e) => setDegree(e.target.value)}
-                  className="w-full h-10 px-3 border border-slate-200 rounded-md text-slate-900 focus:outline-none focus:ring-1 focus:ring-[#4F46E5]"
+                  className="w-full h-10 px-3 border border-slate-200 rounded-md text-slate-900 focus:outline-none focus:ring-1 focus:ring-[#1476F2]"
                 />
               </div>
               <div className="space-y-1">
@@ -319,15 +342,16 @@ export function StudentProfileView() {
                   type="text"
                   value={cgpa}
                   onChange={(e) => setCgpa(e.target.value)}
-                  className="w-full h-10 px-3 border border-slate-200 rounded-md text-slate-900 focus:outline-none focus:ring-1 focus:ring-[#4F46E5]"
+                  className="w-full h-10 px-3 border border-slate-200 rounded-md text-slate-900 focus:outline-none focus:ring-1 focus:ring-[#1476F2]"
                 />
               </div>
             </div>
             <div className="pt-4 border-t border-slate-100">
               <button
                 type="button"
-                onClick={handleSave}
-                className="w-[176px] h-[48px] rounded-lg bg-[#4F46E5] hover:bg-[#4338CA] text-white text-sm font-medium shadow-xs"
+                disabled={saving||result.loading}
+          onClick={handleSave}
+                className="w-[176px] h-[48px] rounded-lg bg-[#1476F2] hover:bg-[#0963D6] text-white text-sm font-medium shadow-xs"
               >
                 {saved ? "Saved!" : "Save Changes"}
               </button>
@@ -345,7 +369,7 @@ export function StudentProfileView() {
                   type="text"
                   value={greScore}
                   onChange={(e) => setGreScore(e.target.value)}
-                  className="w-full h-10 px-3 border border-slate-200 rounded-md text-slate-900 focus:outline-none focus:ring-1 focus:ring-[#4F46E5]"
+                  className="w-full h-10 px-3 border border-slate-200 rounded-md text-slate-900 focus:outline-none focus:ring-1 focus:ring-[#1476F2]"
                 />
               </div>
               <div className="space-y-1">
@@ -354,15 +378,16 @@ export function StudentProfileView() {
                   type="text"
                   value={ieltsScore}
                   onChange={(e) => setIeltsScore(e.target.value)}
-                  className="w-full h-10 px-3 border border-slate-200 rounded-md text-slate-900 focus:outline-none focus:ring-1 focus:ring-[#4F46E5]"
+                  className="w-full h-10 px-3 border border-slate-200 rounded-md text-slate-900 focus:outline-none focus:ring-1 focus:ring-[#1476F2]"
                 />
               </div>
             </div>
             <div className="pt-4 border-t border-slate-100">
               <button
                 type="button"
-                onClick={handleSave}
-                className="w-[176px] h-[48px] rounded-lg bg-[#4F46E5] hover:bg-[#4338CA] text-white text-sm font-medium shadow-xs"
+                disabled={saving||result.loading}
+          onClick={handleSave}
+                className="w-[176px] h-[48px] rounded-lg bg-[#1476F2] hover:bg-[#0963D6] text-white text-sm font-medium shadow-xs"
               >
                 {saved ? "Saved!" : "Save Changes"}
               </button>
@@ -373,24 +398,14 @@ export function StudentProfileView() {
         {activeTab === "research" && (
           <div className="space-y-6">
             <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Research & Publications</h1>
-            {rawProfileData.research.map((item, idx) => (
-              <div key={idx} className="p-4 bg-slate-50 rounded-lg border border-slate-200 text-sm text-slate-700 space-y-2 max-w-xl">
-                <p className="font-semibold text-slate-900">{item.title}</p>
-                <p className="text-xs text-slate-500">{item.subtitle}</p>
-              </div>
-            ))}
+            <p className="text-sm text-slate-500">No research details have been added to this profile.</p>
           </div>
         )}
 
         {activeTab === "experience" && (
           <div className="space-y-6">
             <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Experience</h1>
-            {rawProfileData.experience.map((item, idx) => (
-              <div key={idx} className="p-4 bg-slate-50 rounded-lg border border-slate-200 text-sm text-slate-700 space-y-2 max-w-xl">
-                <p className="font-semibold text-slate-900">{item.title}</p>
-                <p className="text-xs text-slate-500">{item.subtitle}</p>
-              </div>
-            ))}
+            <p className="text-sm text-slate-500">No experience has been added to this profile.</p>
           </div>
         )}
       </div>

@@ -86,7 +86,7 @@ export function TrustAndReviewsSection() {
                   <stop offset="1" stopColor="#A855F7" stopOpacity="0.05" />
                 </linearGradient>
                 <linearGradient id="cornerGrad3" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
-                  <stop stopColor="#4F46E5" stopOpacity="0.25" />
+                  <stop stopColor="#1476F2" stopOpacity="0.25" />
                   <stop offset="1" stopColor="#EC4899" stopOpacity="0.0" />
                 </linearGradient>
               </defs>
@@ -135,8 +135,8 @@ export function TrustAndReviewsSection() {
                 <div className="sm:col-span-5 space-y-3 relative z-20 text-center sm:text-left">
                   <div className="space-y-1.5">
                     {/* Badge */}
-                    <div className="inline-flex items-center gap-1.5 rounded-full bg-white/95 border border-indigo-200/90 px-3 py-0.5 text-[10.5px] font-black text-[#4F46E5] tracking-wider uppercase shadow-2xs backdrop-blur-md">
-                      <span className="h-1.5 w-1.5 rounded-full bg-[#4F46E5]" />
+                    <div className="inline-flex items-center gap-1.5 rounded-full bg-white/95 border border-indigo-200/90 px-3 py-0.5 text-[10.5px] font-black text-[#1476F2] tracking-wider uppercase shadow-2xs backdrop-blur-md">
+                      <span className="h-1.5 w-1.5 rounded-full bg-[#1476F2]" />
                       <span>WHY CHOOSE US</span>
                     </div>
 
@@ -153,10 +153,10 @@ export function TrustAndReviewsSection() {
                         key={item.id} 
                         className="flex items-center gap-2.5 group p-2 sm:p-0.5 rounded-xl bg-white/70 sm:bg-transparent border border-indigo-100/70 sm:border-transparent hover:bg-white/90 transition-all duration-200"
                       >
-                        <div className="h-7 w-7 sm:h-6.5 sm:w-6.5 rounded-lg bg-white border border-indigo-100 text-[#4F46E5] flex items-center justify-center shrink-0 shadow-xs group-hover:scale-105 group-hover:bg-[#4F46E5] group-hover:text-white transition-all duration-200">
+                        <div className="h-7 w-7 sm:h-6.5 sm:w-6.5 rounded-lg bg-white border border-indigo-100 text-[#1476F2] flex items-center justify-center shrink-0 shadow-xs group-hover:scale-105 group-hover:bg-[#1476F2] group-hover:text-white transition-all duration-200">
                           {getWhyChooseIcon(idx % 5)}
                         </div>
-                        <span className="text-[12px] sm:text-[12px] font-bold text-slate-800 leading-snug group-hover:text-[#4F46E5] transition-colors">
+                        <span className="text-[12px] sm:text-[12px] font-bold text-slate-800 leading-snug group-hover:text-[#1476F2] transition-colors">
                           {item.text}
                         </span>
                       </div>
@@ -191,7 +191,7 @@ export function TrustAndReviewsSection() {
               <div className="flex items-center justify-between">
                 <div className="space-y-1">
                   {/* Badge */}
-                  <div className="inline-flex items-center gap-1.5 rounded-full bg-white/95 border border-indigo-200/90 px-3 py-0.5 text-[10.5px] font-black text-[#4F46E5] tracking-wider uppercase shadow-2xs backdrop-blur-md">
+                  <div className="inline-flex items-center gap-1.5 rounded-full bg-white/95 border border-indigo-200/90 px-3 py-0.5 text-[10.5px] font-black text-[#1476F2] tracking-wider uppercase shadow-2xs backdrop-blur-md">
                     <span>{TESTIMONIALS_SECTION.badge}</span>
                   </div>
 
@@ -326,7 +326,7 @@ export function TrustAndReviewsSection() {
                   >
                     <span className={`h-1.5 rounded-full transition-all duration-500 ${
                       activeSlide === idx
-                        ? "w-7 bg-[#4F46E5] shadow-[0_0_10px_rgba(79,70,229,0.7)]"
+                        ? "w-7 bg-[#1476F2] shadow-[0_0_10px_rgba(79,70,229,0.7)]"
                         : "w-2 bg-indigo-200/80 hover:bg-indigo-300"
                     }`} />
                   </button>

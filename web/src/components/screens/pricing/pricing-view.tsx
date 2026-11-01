@@ -25,7 +25,7 @@ interface PlanItem {
   features: string[];
 }
 
-const PLANS: PlanItem[] = rawPlans;
+const PLANS: PlanItem[] = rawPlans.map(plan=>({...plan,isCurrent:false,isPopular:false}));
 
 export function PurchasePlanView() {
   const [selectedPlan, setSelectedPlan] = React.useState<string | null>(null);
@@ -89,7 +89,7 @@ export function PurchasePlanView() {
                     <button
                       type="button"
                       disabled
-                      className="w-full h-10 rounded-lg bg-[#EEF2FF] border border-[#6366F1]/40 text-[#1E1B4B] text-xs font-semibold flex items-center justify-center cursor-default text-center shadow-2xs"
+                      className="w-full h-10 rounded-lg bg-[#EAF5FF] border border-[#6366F1]/40 text-[#1E1B4B] text-xs font-semibold flex items-center justify-center cursor-default text-center shadow-2xs"
                     >
                       {plan.buttonText}
                     </button>
@@ -132,7 +132,7 @@ export function PurchasePlanView() {
               Upgrade to {selectedPlan}
             </h3>
             <p className="text-xs text-slate-600">
-              You are about to subscribe to the {selectedPlan} plan. Secure payment processing is simulated in this preview.
+              You selected the {selectedPlan} plan. Checkout is not configured. No payment will be taken.
             </p>
             <div className="flex items-center justify-end gap-3 pt-2">
               <button
@@ -142,14 +142,8 @@ export function PurchasePlanView() {
               >
                 Cancel
               </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setSelectedPlan(null);
-                }}
-                className="px-4 py-2 rounded-lg bg-[#493EE5] hover:bg-[#3E34C7] text-xs font-medium text-white shadow-xs cursor-pointer"
-              >
-                Proceed to Checkout
+              <button type="button" disabled className="px-4 py-2 rounded-lg bg-slate-200 text-xs font-medium text-slate-500 cursor-not-allowed">
+                Checkout unavailable
               </button>
             </div>
           </div>

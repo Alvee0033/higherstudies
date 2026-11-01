@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+
 import { Landmark, Calendar, ChevronDown } from "lucide-react";
 
 interface FormUniversityDetailsProps {
@@ -42,7 +43,7 @@ export function FormUniversityDetails({
 }: FormUniversityDetailsProps) {
   return (
     <div className="bg-white rounded-2xl border border-slate-200/90 p-6 shadow-2xs space-y-4 text-left">
-      <div className="flex items-center gap-2 text-[#4F46E5] font-bold text-sm">
+      <div className="flex items-center gap-2 text-[#1476F2] font-bold text-sm">
         <Landmark className="h-4 w-4" />
         <span>1. University &amp; Program Details</span>
       </div>
@@ -54,21 +55,9 @@ export function FormUniversityDetails({
             University Name <span className="text-red-500">*</span>
           </label>
           <div className="relative">
-            <select
-              value={university}
+            <input required value={university}
               onChange={(e) => setUniversity(e.target.value)}
-              className="w-full h-10 pl-3.5 pr-8 rounded-xl border border-slate-200 text-xs text-slate-800 bg-white appearance-none focus:outline-none focus:ring-1 focus:ring-[#4F46E5]"
-            >
-              <option value="">Search and select university</option>
-              <option value="Harvard University">Harvard University</option>
-              <option value="MIT">Massachusetts Institute of Technology (MIT)</option>
-              <option value="Stanford University">Stanford University</option>
-              <option value="University of Oxford">University of Oxford</option>
-              <option value="University of Toronto">University of Toronto</option>
-              <option value="ETH Zurich">ETH Zurich</option>
-              <option value="Georgia Tech">Georgia Tech</option>
-              <option value="TUM Munich">TUM Munich</option>
-            </select>
+              className="w-full h-10 px-3.5 rounded-xl border border-slate-200 text-xs" />
             <ChevronDown className="h-4 w-4 text-slate-400 absolute right-3 top-3 pointer-events-none" />
           </div>
         </div>
@@ -81,7 +70,7 @@ export function FormUniversityDetails({
             <select
               value={country}
               onChange={(e) => setCountry(e.target.value)}
-              className="w-full h-10 pl-3.5 pr-8 rounded-xl border border-slate-200 text-xs text-slate-800 bg-white appearance-none focus:outline-none focus:ring-1 focus:ring-[#4F46E5]"
+              className="w-full h-10 pl-3.5 pr-8 rounded-xl border border-slate-200 text-xs text-slate-800 bg-white appearance-none focus:outline-none focus:ring-1 focus:ring-[#1476F2]"
             >
               <option value="">Select country</option>
               <option value="United States">United States</option>
@@ -103,18 +92,9 @@ export function FormUniversityDetails({
             Program / Subject <span className="text-red-500">*</span>
           </label>
           <div className="relative">
-            <select
-              value={program}
+            <input required value={program}
               onChange={(e) => setProgram(e.target.value)}
-              className="w-full h-10 pl-3.5 pr-8 rounded-xl border border-slate-200 text-xs text-slate-800 bg-white appearance-none focus:outline-none focus:ring-1 focus:ring-[#4F46E5]"
-            >
-              <option value="">Select program or subject</option>
-              <option value="PhD in Computer Science">PhD in Computer Science</option>
-              <option value="PhD in EECS">PhD in EECS</option>
-              <option value="PhD in AI">PhD in AI</option>
-              <option value="PhD in Robotics">PhD in Robotics</option>
-              <option value="PhD in Data Science">PhD in Data Science</option>
-            </select>
+              className="w-full h-10 px-3.5 rounded-xl border border-slate-200 text-xs" />
             <ChevronDown className="h-4 w-4 text-slate-400 absolute right-3 top-3 pointer-events-none" />
           </div>
         </div>
@@ -127,7 +107,7 @@ export function FormUniversityDetails({
             <select
               value={degreeLevel}
               onChange={(e) => setDegreeLevel(e.target.value)}
-              className="w-full h-10 pl-3.5 pr-8 rounded-xl border border-slate-200 text-xs text-slate-800 bg-white appearance-none focus:outline-none focus:ring-1 focus:ring-[#4F46E5]"
+              className="w-full h-10 pl-3.5 pr-8 rounded-xl border border-slate-200 text-xs text-slate-800 bg-white appearance-none focus:outline-none focus:ring-1 focus:ring-[#1476F2]"
             >
               <option value="">Select degree level</option>
               <option value="Doctorate / PhD">Doctorate / PhD</option>
@@ -150,7 +130,7 @@ export function FormUniversityDetails({
             value={department}
             onChange={(e) => setDepartment(e.target.value)}
             placeholder="Enter department"
-            className="w-full h-10 px-3.5 rounded-xl border border-slate-200 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-[#4F46E5]"
+            className="w-full h-10 px-3.5 rounded-xl border border-slate-200 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-[#1476F2]"
           />
         </div>
 
@@ -162,7 +142,7 @@ export function FormUniversityDetails({
             <select
               value={programType}
               onChange={(e) => setProgramType(e.target.value)}
-              className="w-full h-10 pl-3.5 pr-8 rounded-xl border border-slate-200 text-xs text-slate-800 bg-white appearance-none focus:outline-none focus:ring-1 focus:ring-[#4F46E5]"
+              className="w-full h-10 pl-3.5 pr-8 rounded-xl border border-slate-200 text-xs text-slate-800 bg-white appearance-none focus:outline-none focus:ring-1 focus:ring-[#1476F2]"
             >
               <option value="">Select program type</option>
               <option value="Full-time">Full-time</option>
@@ -186,7 +166,7 @@ export function FormUniversityDetails({
               value={intake}
               onChange={(e) => setIntake(e.target.value)}
               placeholder="Select intake / term"
-              className="w-full h-10 pl-3.5 pr-8 rounded-xl border border-slate-200 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-[#4F46E5]"
+              className="w-full h-10 pl-3.5 pr-8 rounded-xl border border-slate-200 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-[#1476F2]"
             />
             <Calendar className="h-4 w-4 text-slate-400 absolute right-3 top-3 pointer-events-none" />
           </div>
@@ -200,7 +180,7 @@ export function FormUniversityDetails({
             <select
               value={round}
               onChange={(e) => setRound(e.target.value)}
-              className="w-full h-10 pl-3.5 pr-8 rounded-xl border border-slate-200 text-xs text-slate-800 bg-white appearance-none focus:outline-none focus:ring-1 focus:ring-[#4F46E5]"
+              className="w-full h-10 pl-3.5 pr-8 rounded-xl border border-slate-200 text-xs text-slate-800 bg-white appearance-none focus:outline-none focus:ring-1 focus:ring-[#1476F2]"
             >
               <option value="">Select round</option>
               <option value="Round 1">Round 1 (Fall)</option>

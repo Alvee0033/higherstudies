@@ -22,7 +22,7 @@ export function FormApplicationProgress({
 }: FormApplicationProgressProps) {
   return (
     <div className="bg-white rounded-2xl border border-slate-200/90 p-6 shadow-2xs space-y-5 text-left">
-      <div className="flex items-center gap-2 text-[#4F46E5] font-bold text-sm">
+      <div className="flex items-center gap-2 text-[#1476F2] font-bold text-sm">
         <Flag className="h-4 w-4" />
         <span>3. Application Progress</span>
       </div>
@@ -39,7 +39,7 @@ export function FormApplicationProgress({
               onChange={(e) =>
                 onChangeStage(e.target.value as ApplicationProgressStage)
               }
-              className="w-full h-10 pl-3.5 pr-8 rounded-xl border border-slate-200 text-xs text-slate-800 bg-white appearance-none focus:outline-none focus:ring-1 focus:ring-[#4F46E5]"
+              className="w-full h-10 pl-3.5 pr-8 rounded-xl border border-slate-200 text-xs text-slate-800 bg-white appearance-none focus:outline-none focus:ring-1 focus:ring-[#1476F2]"
             >
               <option value="Not Started">Not Started</option>
               <option value="Preparing">Preparing</option>
@@ -64,7 +64,7 @@ export function FormApplicationProgress({
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             placeholder="Add any notes about your application progress..."
-            className="w-full p-3 rounded-xl border border-slate-200 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-[#4F46E5] resize-none"
+            className="w-full p-3 rounded-xl border border-slate-200 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-[#1476F2] resize-none"
           />
         </div>
       </div>

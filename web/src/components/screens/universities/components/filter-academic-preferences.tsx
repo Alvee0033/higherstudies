@@ -74,6 +74,7 @@ export function FilterAcademicPreferences({
                 onChange={(e) => onFieldOfStudyChange(e.target.value)}
                 className="w-full h-8 px-2.5 pr-7 rounded-lg border border-slate-200 bg-white text-slate-800 text-xs focus:outline-none focus:ring-1 focus:ring-[#5D3FD3] appearance-none"
               >
+                <option value="">All subjects</option>
                 {UNIVERSITY_FILTER_OPTIONS.fieldsOfStudy.map((fld) => (
                   <option key={fld}>{fld}</option>
                 ))}
@@ -113,7 +114,7 @@ export function FilterAcademicPreferences({
               </div>
               <input
                 type="range"
-                min="2.5"
+                min="0"
                 max="4.0"
                 step="0.1"
                 value={gpaMin}
@@ -121,7 +122,7 @@ export function FilterAcademicPreferences({
                 className="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#5D3FD3]"
               />
               <div className="flex justify-between text-[9px] text-slate-400">
-                <span>2.5</span>
+                <span>Any</span>
                 <span>4.0</span>
               </div>
             </div>
@@ -134,7 +135,7 @@ export function FilterAcademicPreferences({
               </div>
               <input
                 type="range"
-                min="6.0"
+                min="0"
                 max="8.5"
                 step="0.5"
                 value={ieltsMin}
@@ -142,7 +143,7 @@ export function FilterAcademicPreferences({
                 className="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#5D3FD3]"
               />
               <div className="flex justify-between text-[9px] text-slate-400">
-                <span>6.0</span>
+                <span>Any</span>
                 <span>8.5</span>
               </div>
             </div>

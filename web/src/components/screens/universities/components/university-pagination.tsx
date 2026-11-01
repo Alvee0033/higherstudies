@@ -9,9 +9,12 @@ export interface UniversityPaginationProps {
 
 export function UniversityPagination({
   currentPage,
-  totalPages = 12,
+  totalPages = 1,
   onPageChange,
 }: UniversityPaginationProps) {
+  const pages = Array.from({ length: Math.min(5, totalPages) }, (_, index) =>
+    Math.max(1, Math.min(currentPage - 2, totalPages - 4)) + index,
+  );
   return (
     <div className="flex items-center justify-between pt-3">
       <button
@@ -25,7 +28,7 @@ export function UniversityPagination({
       </button>
 
       <div className="flex items-center gap-1 text-xs">
-        {[1, 2, 3, 4, 5].map((pageNum) => (
+        {pages.map((pageNum) => (
           <button
             key={pageNum}
             type="button"
@@ -41,8 +44,8 @@ export function UniversityPagination({
             {pageNum}
           </button>
         ))}
-        <span className="hidden sm:inline px-1 text-slate-400">...</span>
-        <button
+        {pages.at(-1)! < totalPages && <span className="hidden sm:inline px-1 text-slate-400">...</span>}
+        {pages.at(-1)! < totalPages && <button
           type="button"
           onClick={() => onPageChange(totalPages)}
           className={`hidden sm:flex w-8 h-8 rounded-lg items-center justify-center font-medium cursor-pointer ${
@@ -52,13 +55,14 @@ export function UniversityPagination({
           }`}
         >
           {totalPages}
-        </button>
+        </button>}
       </div>
 
       <button
         type="button"
+        disabled={currentPage >= totalPages}
         onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
-        className="h-9 px-3 rounded-lg border border-slate-200 bg-white text-xs font-normal text-slate-700 hover:bg-slate-50 flex items-center gap-1 cursor-pointer"
+        className="h-9 px-3 rounded-lg border border-slate-200 bg-white text-xs font-normal text-slate-700 hover:bg-slate-50 flex items-center gap-1 cursor-pointer disabled:opacity-50"
       >
         <span>Next</span>
         <ChevronRight className="h-3.5 w-3.5" />

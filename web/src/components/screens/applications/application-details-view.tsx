@@ -1,6 +1,9 @@
 "use client";
 
 import * as React from "react";
+import {useApi} from "@/hooks/use-api";
+import {workspace} from "@/lib/student-api";
+import type {ApplicationItem} from "./application-types";
 import Link from "next/link";
 import {
   Download,
@@ -18,33 +21,12 @@ import {
 } from "lucide-react";
 
 export function ApplicationDetailsView({ id }: { id?: string }) {
-  const application = {
-    id: id || "1",
-    university: "Massachusetts Institute of Technology (MIT)",
-    program: "PhD in EECS",
-    department: "Electrical Engineering & Computer Science",
-    status: "Preparing",
-    intake: "Fall 2025",
-    deadline: "Dec 15, 2024",
-    daysLeft: 30,
-    applicationId: "MIT-F25-EECS-1024",
-    progressPercent: 60,
-    checklist: [
-      { task: "Create Account", status: "Completed", date: "Nov 15, 2024" },
-      { task: "Personal Information", status: "Completed", date: "Nov 15, 2024" },
-      { task: "Academic History", status: "Completed", date: "Nov 16, 2024" },
-      { task: "Test Scores", status: "Completed", date: "Nov 16, 2024" },
-      { task: "Statement of Purpose", status: "Completed", date: "Nov 20, 2024" },
-      { task: "LOR 1", status: "Completed", date: "Nov 18, 2024" },
-      { task: "LOR 2", status: "Pending" },
-      { task: "CV/Resume", status: "Pending" },
-      { task: "Review & Submit", status: "Pending" },
-    ],
-  };
-
-  const handleDownloadPdf = () => {
-    alert("Downloading Application Summary PDF...");
-  };
+  const [now]=React.useState(()=>Date.now());
+  const result=useApi<{data:ApplicationItem}>(id?`${workspace}/applications/${id}`:null);
+  if(!result.data)return <p role={result.error?'alert':'status'}>{result.error||'Loading application…'}</p>;
+  const row=result.data.data;
+  const application={...row,university:row.universityName,daysLeft:row.deadline&&!Number.isNaN(Date.parse(row.deadline))?Math.ceil((Date.parse(row.deadline)-now)/86400000):null,checklist:row.checklist??[]};
+  const handleDownloadPdf=()=>window.print();
 
   return (
     <div className="w-full max-w-6xl mx-auto space-y-6 text-left">

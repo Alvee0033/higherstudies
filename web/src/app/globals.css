@@ -102,3 +102,120 @@ body {
   background-size: 200% 200%;
   animation: gradientShift 10s ease infinite;
 }
+
+/* Student workspace visual system */
+.client-workspace {
+  --client-blue: #1476f2;
+  --client-navy: #092653;
+  background: radial-gradient(circle at 80% 0%, #e0efff 0, transparent 34%), #eaf4ff;
+  color: var(--client-navy);
+}
+.client-sidebar {
+  border-right: 1px solid #d9e9fa;
+  box-shadow: 8px 0 28px rgba(52, 116, 188, .04);
+}
+.client-header {
+  border-bottom: 1px solid #e1edfb;
+}
+.client-workspace-main {
+  max-width: 1720px;
+  margin-inline: auto;
+}
+.client-workspace-main > div:not(.client-page-banner) {
+  width: 100%;
+}
+.client-workspace-main :is(h1,h2,h3) {
+  color: #092653;
+  letter-spacing: -.025em;
+}
+.client-workspace-main :is(input,select,textarea) {
+  accent-color: #1476f2;
+}
+.client-workspace-main :is(input,select,textarea):focus-visible,
+.client-workspace :is(button,a):focus-visible {
+  outline: 2px solid #1476f2;
+  outline-offset: 2px;
+}
+.client-workspace-main :is(.bg-white) {
+  border-color: #dce9f8;
+}
+.client-workspace-main :is(.rounded-xl,.rounded-2xl) {
+  box-shadow: 0 8px 30px rgba(41, 98, 167, .055);
+}
+.client-workspace-main :is(.bg-indigo-50,.bg-violet-50) {
+  background-color: #eaf5ff;
+}
+.client-workspace-main :is(.text-indigo-600,.text-indigo-700,.text-violet-600) {
+  color: #116bdf;
+}
+.client-workspace-main :is(.border-indigo-100,.border-indigo-200,.border-indigo-300) {
+  border-color: #c9e3ff;
+}
+.client-eyebrow {
+  display: inline-block;
+  color: #116bdf;
+  font-size: .76rem;
+  font-weight: 800;
+  letter-spacing: .025em;
+}
+.client-dashboard-hero,
+.client-page-banner {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  border: 1px solid #d9eafa;
+  border-radius: 22px;
+  box-shadow: 0 14px 38px rgba(43, 110, 185, .11);
+  background: linear-gradient(90deg, #e8f4ff 0%, #eaf4ff 40%, rgba(232,244,255,.47) 67%, rgba(232,244,255,.1) 100%), url('/images/dashboard/campus-hero.webp') right 42% / auto 160% no-repeat, #eaf4ff;
+}
+.client-dashboard-hero { min-height: 265px; }
+.client-page-banner { min-height: 140px; padding: 28px 34px; }
+.client-page-banner h1 {
+  margin-top: 4px;
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+  font-weight: 800;
+  line-height: 1.12;
+}
+.client-page-banner p { margin-top: 8px; color: #41658f; font-size: .9rem; }
+.client-primary-action {
+  background: linear-gradient(110deg, #2086ff, #116be7);
+  box-shadow: 0 8px 17px rgba(27, 116, 235, .26);
+}
+.client-primary-action:hover { filter: brightness(.96); transform: translateY(-1px); }
+@media (max-width: 640px) {
+  .client-dashboard-hero,
+  .client-page-banner {
+    background: linear-gradient(90deg, rgba(232,244,255,.96), rgba(232,244,255,.78)), url('/images/dashboard/campus-hero.webp') center / cover no-repeat;
+  }
+  .client-dashboard-hero { min-height: 300px; }
+  .client-page-banner { min-height: 135px; padding: 22px; }
+}
+.client-university-card {
+  overflow: hidden;
+  min-width: 0;
+  box-shadow: 0 8px 24px rgba(35, 104, 184, .075);
+}
+.client-university-card:hover,
+.client-program-card:hover {
+  border-color: #acd4ff;
+  box-shadow: 0 16px 32px rgba(36, 109, 193, .14);
+  transform: translateY(-2px);
+}
+.client-university-image { height: 150px; background: #d8eaff; }
+.client-university-card h3 { font-size: .94rem; }
+@media (max-width: 480px) {
+  .client-program-card > div.flex { flex-direction: column; }
+}
+.client-page-banner[data-page="professors"] {
+  background: url('/images/dashboard/research-banner.webp') right center / auto 180% no-repeat, #f4faff;
+}
+/* Catalogue banners use design-only shapes; campus photography belongs to sourced records. */
+.client-page-banner[data-page="universities"],
+.client-page-banner[data-page="programs"] {
+  background:
+    radial-gradient(circle at 88% 12%, rgba(33, 139, 249, .19) 0 6%, transparent 6.2%),
+    radial-gradient(circle at 94% 95%, rgba(67, 210, 195, .22) 0 18%, transparent 18.2%),
+    radial-gradient(circle at 70% 125%, rgba(179, 157, 251, .23) 0 26%, transparent 26.2%),
+    linear-gradient(110deg, #f7fbff, #e6f3ff);
+}

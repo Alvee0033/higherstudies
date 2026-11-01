@@ -11,17 +11,19 @@ interface DocumentStatusState {
   cv: "Not Submitted" | "Submitted";
 }
 
-export function FormAcademicDocuments() {
+export function FormAcademicDocuments({initial={},onChange}:{initial?:Record<string,string>;onChange?:(value:Record<string,string>)=>void}) {
   const [docStatuses, setDocStatuses] = React.useState<DocumentStatusState>({
-    transcript: "Submitted",
-    lor1: "Submitted",
-    lor2: "Submitted",
-    sop: "Submitted",
-    cv: "Submitted",
+    transcript: "Not Submitted",
+    lor1: "Not Submitted",
+    lor2: "Not Submitted",
+    sop: "Not Submitted",
+    cv: "Not Submitted",
   });
 
+  const initialStatuses=docStatuses;
+  const statuses={...initialStatuses,...initial};
   const toggleDoc = (key: keyof DocumentStatusState, status: "Not Submitted" | "Submitted") => {
-    setDocStatuses((prev) => ({ ...prev, [key]: status }));
+    setDocStatuses((prev) => ({ ...prev, [key]: status }));onChange?.({...statuses,[key]:status});
   };
 
   const docs: { key: keyof DocumentStatusState; label: string }[] = [
@@ -34,14 +36,14 @@ export function FormAcademicDocuments() {
 
   return (
     <div className="bg-white rounded-2xl border border-slate-200/90 p-6 shadow-2xs space-y-4 text-left">
-      <div className="flex items-center gap-2 text-[#4F46E5] font-bold text-sm">
+      <div className="flex items-center gap-2 text-[#1476F2] font-bold text-sm">
         <FileText className="h-4 w-4" />
         <span>4. Academic Documents</span>
       </div>
 
       <div className="space-y-3.5 divide-y divide-slate-100">
         {docs.map((doc, idx) => {
-          const isSubmitted = docStatuses[doc.key] === "Submitted";
+          const isSubmitted = statuses[doc.key] === "Submitted";
 
           return (
             <div

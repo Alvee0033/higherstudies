@@ -32,12 +32,12 @@ export function ProfileAtAGlanceCard({ atAGlance }: ProfileAtAGlanceCardProps) {
           <div>
             <p className="text-xs font-semibold text-[#474556]">Google Scholar</p>
             <a
-              href={atAGlance.scholarUrl}
+              href={atAGlance.scholarUrl||undefined}
               target="_blank"
               rel="noreferrer"
               className="text-sm text-[#440EE8] hover:underline block"
             >
-              View Profile
+              {atAGlance.scholarUrl.includes("/scholar?")?"Find on Scholar":"View Profile"}
             </a>
           </div>
         </div>
@@ -48,12 +48,12 @@ export function ProfileAtAGlanceCard({ atAGlance }: ProfileAtAGlanceCardProps) {
           <div>
             <p className="text-xs font-semibold text-[#474556]">ResearchGate</p>
             <a
-              href={atAGlance.researchGateUrl}
+              href={atAGlance.researchGateUrl||undefined}
               target="_blank"
               rel="noreferrer"
               className="text-sm text-[#440EE8] hover:underline block"
             >
-              View Profile
+              {atAGlance.researchGateUrl?"View Profile":"Not collected"}
             </a>
           </div>
         </div>
@@ -64,12 +64,12 @@ export function ProfileAtAGlanceCard({ atAGlance }: ProfileAtAGlanceCardProps) {
           <div>
             <p className="text-xs font-semibold text-[#474556]">LinkedIn</p>
             <a
-              href={atAGlance.linkedInUrl}
+              href={atAGlance.linkedInUrl||undefined}
               target="_blank"
               rel="noreferrer"
               className="text-sm text-[#440EE8] hover:underline block"
             >
-              View Profile
+              {atAGlance.linkedInUrl?"View Profile":"Not collected"}
             </a>
           </div>
         </div>
@@ -94,12 +94,12 @@ export function ProfileAtAGlanceCard({ atAGlance }: ProfileAtAGlanceCardProps) {
           <div className="min-w-0 flex-1">
             <p className="text-xs font-semibold text-[#474556]">Lab Website</p>
             <a
-              href={atAGlance.labWebsite}
+              href={atAGlance.labWebsite||undefined}
               target="_blank"
               rel="noreferrer"
               className="text-sm text-[#440EE8] hover:underline block truncate"
             >
-              {atAGlance.labWebsite}
+              {atAGlance.labWebsite||"Not collected"}
             </a>
           </div>
         </div>

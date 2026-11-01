@@ -1,6 +1,8 @@
 "use client";
 
 import * as React from "react";
+import {useApi} from "@/hooks/use-api";
+import {type CatalogueRecord,type Page} from "@/lib/student-api";
 import {
   Mail,
   Clock,
@@ -29,7 +31,7 @@ interface EmailTemplate {
   paragraphs: string[];
 }
 
-const EMAIL_TEMPLATES: Record<string, EmailTemplate> = rawAiToolsData.templates;
+const EMAIL_TEMPLATES: Record<string, EmailTemplate> = Object.fromEntries(rawAiToolsData.tabs.map(tab=>[tab.id,{subject:"",paragraphs:[]}]));
 
 const TABS = rawAiToolsData.tabs.map((tab) => ({
   id: tab.id,
@@ -38,10 +40,15 @@ const TABS = rawAiToolsData.tabs.map((tab) => ({
 }));
 
 export function AiToolsView() {
+  const faculty=useApi<Page<CatalogueRecord>>("/v1/faculty?limit=100&offset=0&sort=title-asc");
+  const programmes=useApi<Page<CatalogueRecord>>("/v1/programmes?limit=100&offset=0&sort=title-asc");
+  const [error,setError]=React.useState("");
   const [activeTab, setActiveTab] = React.useState("initial");
-  const [selectedProf, setSelectedProf] = React.useState(rawAiToolsData.professorsList[0] || "John Smith (MIT)");
-  const [selectedProgram, setSelectedProgram] = React.useState(rawAiToolsData.programsList[0] || "PhD in Electrical Engineering");
-  const [researchInterest, setResearchInterest] = React.useState("Deep Learning, Computer Vision");
+  const [selectedProf, setSelectedProf] = React.useState("");
+  const [selectedProgram, setSelectedProgram] = React.useState("");
+  const [researchInterest, setResearchInterest] = React.useState("");
+  const selectedFaculty = faculty.data?.data.find((row) => row.id === selectedProf);
+  const selectedProgramme = programmes.data?.data.find((row) => row.id === selectedProgram);
   
   const [isGenerating, setIsGenerating] = React.useState(false);
   const [isEditing, setIsEditing] = React.useState(false);
@@ -59,17 +66,11 @@ export function AiToolsView() {
   };
 
   const handleGenerate = () => {
-    setIsGenerating(true);
-    setTimeout(() => {
-      setIsGenerating(false);
-      const tmpl = EMAIL_TEMPLATES[activeTab] || EMAIL_TEMPLATES.initial;
-      setCurrentSubject(tmpl.subject);
-      setCurrentBody(tmpl.paragraphs.join("\n\n"));
-    }, 400);
+    setIsGenerating(false);setError('AI generation is not configured. You can write, copy and download your own draft below. No message is sent automatically.');
   };
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(`${currentSubject}\n\n${currentBody}`);
+    void navigator.clipboard.writeText(`${currentSubject}\n\n${currentBody}`).catch(()=>setError("Clipboard unavailable. Select and copy the draft manually."));
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -78,14 +79,16 @@ export function AiToolsView() {
     const element = document.createElement("a");
     const file = new Blob([`${currentSubject}\n\n${currentBody}`], { type: "text/plain" });
     element.href = URL.createObjectURL(file);
-    element.download = `${activeTab}_email_ahmed_rahman.txt`;
+    element.download = `${activeTab}_email.txt`;
     document.body.appendChild(element);
     element.click();
     document.body.removeChild(element);
+    URL.revokeObjectURL(element.href);
   };
 
   return (
     <div className="w-full space-y-8">
+      {error&&<p role="alert" className="text-sm text-amber-700">{error}</p>}
       {/* 1. Email Type Tabs (Matching Figma 588x80 4 Card Buttons) */}
       <div className="flex flex-wrap items-center gap-3">
         {TABS.map((tab) => {
@@ -99,13 +102,13 @@ export function AiToolsView() {
               onClick={() => handleTabChange(tab.id)}
               className={`w-[128px] h-[80px] rounded-xl flex flex-col items-center justify-center gap-2 border transition-all cursor-pointer ${
                 isActive
-                  ? "bg-[#EEF2FF] border-[#4F46E5] text-[#4F46E5] shadow-xs"
+                  ? "bg-[#EAF5FF] border-[#1476F2] text-[#1476F2] shadow-xs"
                   : "bg-white border-slate-200/80 text-slate-700 hover:bg-slate-50"
               }`}
             >
               <div
                 className={`w-7 h-7 rounded-lg flex items-center justify-center ${
-                  isActive ? "text-[#4F46E5]" : "text-slate-500"
+                  isActive ? "text-[#1476F2]" : "text-slate-500"
                 }`}
               >
                 <Icon className="h-5 w-5" />
@@ -133,8 +136,8 @@ export function AiToolsView() {
                   <div className="w-6 h-6 rounded-full overflow-hidden shrink-0 border border-slate-200 bg-slate-100">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src="/images/avatars/prof-jonathan-smith.png"
-                      alt="John Smith"
+                      src="/images/avatar-placeholder.svg"
+                      alt="Faculty"
                       className="w-full h-full object-cover"
                       onError={(e) => {
                         (e.target as HTMLElement).style.display = "none";
@@ -142,7 +145,9 @@ export function AiToolsView() {
                     />
                   </div>
                   <span className="text-sm font-normal text-slate-800 truncate">
-                    {selectedProf}
+                    {selectedFaculty
+                      ? `${selectedFaculty.name || "Unnamed faculty"} (${selectedFaculty.institution_name || "Institution not reported"})`
+                      : "Select a professor"}
                   </span>
                 </div>
                 <ChevronDown className="h-4 w-4 text-slate-400 shrink-0" />
@@ -152,9 +157,10 @@ export function AiToolsView() {
                 onChange={(e) => setSelectedProf(e.target.value)}
                 className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
               >
-                {rawAiToolsData.professorsList.map((prof) => (
-                  <option key={prof} value={prof}>
-                    {prof}
+                <option value="" disabled>Select a professor</option>
+                {(faculty.data?.data ?? []).map((row) => (
+                  <option key={row.id} value={row.id}>
+                    {row.name || "Unnamed faculty"} ({row.institution_name || "Institution not reported"})
                   </option>
                 ))}
               </select>
@@ -169,11 +175,11 @@ export function AiToolsView() {
             <div className="relative">
               <div className="w-full h-10 px-3 bg-white border border-slate-200 rounded-md shadow-2xs flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2.5 min-w-0">
-                  <div className="w-6 h-6 rounded-full bg-indigo-50 text-[#4F46E5] flex items-center justify-center shrink-0">
+                  <div className="w-6 h-6 rounded-full bg-indigo-50 text-[#1476F2] flex items-center justify-center shrink-0">
                     <GraduationCap className="h-3.5 w-3.5" />
                   </div>
                   <span className="text-sm font-normal text-slate-800 truncate">
-                    {selectedProgram}
+                    {selectedProgramme?.title || "Select a programme"}
                   </span>
                 </div>
                 <ChevronDown className="h-4 w-4 text-slate-400 shrink-0" />
@@ -183,9 +189,10 @@ export function AiToolsView() {
                 onChange={(e) => setSelectedProgram(e.target.value)}
                 className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
               >
-                {rawAiToolsData.programsList.map((prog) => (
-                  <option key={prog} value={prog}>
-                    {prog}
+                <option value="" disabled>Select a programme</option>
+                {(programmes.data?.data ?? []).map((row) => (
+                  <option key={row.id} value={row.id}>
+                    {row.title || "Untitled programme"}
                   </option>
                 ))}
               </select>
@@ -201,7 +208,7 @@ export function AiToolsView() {
               <div className="w-full h-10 px-3 bg-white border border-slate-200 rounded-md shadow-2xs flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2.5 min-w-0">
                   <div className="w-6 h-6 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center shrink-0">
-                    <Sparkles className="h-3.5 w-3.5 text-[#4F46E5]" />
+                    <Sparkles className="h-3.5 w-3.5 text-[#1476F2]" />
                   </div>
                   <input
                     type="text"
@@ -221,7 +228,7 @@ export function AiToolsView() {
             type="button"
             disabled={isGenerating}
             onClick={handleGenerate}
-            className="w-full h-10 rounded-md bg-[#4F46E5] hover:bg-[#4338CA] text-white text-sm font-medium shadow-xs transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+            className="w-full h-10 rounded-md bg-[#1476F2] hover:bg-[#0963D6] text-white text-sm font-medium shadow-xs transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
           >
             <span>{isGenerating ? "Generating..." : "Generate Email"}</span>
           </button>
@@ -244,13 +251,13 @@ export function AiToolsView() {
                   type="text"
                   value={currentSubject}
                   onChange={(e) => setCurrentSubject(e.target.value)}
-                  className="w-full px-3 py-1.5 border border-slate-200 rounded bg-white text-sm font-medium text-slate-900 focus:outline-none focus:ring-1 focus:ring-[#4F46E5]"
+                  className="w-full px-3 py-1.5 border border-slate-200 rounded bg-white text-sm font-medium text-slate-900 focus:outline-none focus:ring-1 focus:ring-[#1476F2]"
                 />
                 <textarea
                   rows={10}
                   value={currentBody}
                   onChange={(e) => setCurrentBody(e.target.value)}
-                  className="w-full p-3 border border-slate-200 rounded bg-white text-sm text-slate-700 focus:outline-none focus:ring-1 focus:ring-[#4F46E5] resize-none leading-relaxed"
+                  className="w-full p-3 border border-slate-200 rounded bg-white text-sm text-slate-700 focus:outline-none focus:ring-1 focus:ring-[#1476F2] resize-none leading-relaxed"
                 />
               </div>
             ) : (

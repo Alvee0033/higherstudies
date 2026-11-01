@@ -1,0 +1,182 @@
+/* ==========================================================================
+   Form Controls, Filter Toolbars & Pagination
+   ========================================================================== */
+
+/* Generic Form Inputs */
+input,
+select,
+textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  outline: 0;
+  color: var(--ink);
+  background: #fff;
+  border-radius: 9px;
+  font-size: 13px;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+}
+
+input,
+select {
+  height: 42px;
+  padding: 0 12px;
+}
+
+textarea {
+  min-height: 108px;
+  padding: 11px 12px;
+  resize: vertical;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(23, 105, 224, 0.13);
+}
+
+/* Scoped Field Labels */
+.login-card form label,
+.source-dialog label,
+.confirm-field label,
+.scraper-field label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: #40506a;
+}
+
+/* Operations Filter Toolbar */
+.ops-filter-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px 12px;
+  border-bottom: 1px solid #edf1f7;
+}
+
+.ops-filter-search {
+  position: relative;
+  flex: 1 1 250px;
+}
+
+.ops-filter-search > svg {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: #7d8ba0;
+  pointer-events: none;
+}
+
+.ops-filter-search input {
+  padding-left: 32px;
+}
+
+.ops-search-clear {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 29px;
+  height: 29px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 6px;
+  color: #6b7a90;
+  background: transparent;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.ops-search-clear:hover {
+  color: var(--ink);
+}
+
+.ops-filter-search:has(.ops-search-clear) input {
+  padding-right: 35px;
+}
+
+.ops-filter-select-wrap {
+  position: relative;
+  flex: 0 1 165px;
+  min-width: 128px;
+}
+
+.ops-filter-select-wrap select {
+  height: 36px;
+  padding-left: 31px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.ops-select-icon {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #75869d;
+}
+
+/* Operations Pagination Bar */
+.ops-pagination-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 12px 16px;
+  border-top: 1px solid #edf1f7;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.ops-pagination-controls,
+.ops-page-size,
+.ops-page-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ops-page-size select {
+  width: 64px;
+  height: 29px;
+  padding: 0 6px;
+  font-size: 11px;
+}
+
+.page-btn {
+  display: grid;
+  place-items: center;
+  width: 29px;
+  height: 29px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  color: #51627a;
+  background: #fff;
+  cursor: pointer;
+  transition:
+    color 0.15s,
+    border-color 0.15s;
+}
+
+.page-btn:hover:not(:disabled) {
+  color: var(--blue);
+  border-color: #a8c6f0;
+}
+
+.page-counter {
+  white-space: nowrap;
+}
+
+.ops-pagination-info {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.ops-pagination-info strong {
+  color: var(--ink);
+}

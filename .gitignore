@@ -35,11 +35,14 @@ Thumbs.db
 npm-debug.log*
 yarn-debug.log*
 
-# All Markdown files
+# Keep project documentation; ignore incidental Markdown dumps.
 *.md
 */**/*.md
 !README.md
 !/README.md
+!/docs/
+!/docs/*.md
+!/AGENTS.md
 
 
 # Agent & AI metadata
@@ -53,6 +56,8 @@ skills-lock.json
 */.planning/
 .gemini/
 */.gemini/
-AGENTS.md
 PRD.md
 *.agent.md
+!/docs/PRD.md
+!/web/PRD.md
+!/web/AGENTS.md

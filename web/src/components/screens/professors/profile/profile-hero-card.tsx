@@ -50,19 +50,17 @@ export function ProfileHeroCard({ profile }: ProfileHeroCardProps) {
               </div>
             </div>
 
-            {/* Research tags matching exact Figma #EEF2FF bg and #4F46E5 text */}
+            {/* Research tags matching exact Figma #EAF5FF bg and #1476F2 text */}
             <div className="flex items-center gap-1.5 flex-wrap pt-1">
               {profile.tags.map((topic) => (
                 <span
                   key={topic}
-                  className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#EEF2FF] text-[#4F46E5]"
+                  className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#EAF5FF] text-[#1476F2]"
                 >
                   {topic}
                 </span>
               ))}
-              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-[#EEF2FF] text-[#4F46E5]">
-                +2
-              </span>
+
             </div>
 
             {/* Acceptance badge matching exact Figma green */}
@@ -92,7 +90,7 @@ export function ProfileHeroCard({ profile }: ProfileHeroCardProps) {
             <p className="text-base sm:text-lg font-bold text-slate-900">{profile.metrics.publications}</p>
           </div>
           <div>
-            <p className="text-xs font-medium text-slate-500">Years at MIT</p>
+            <p className="text-xs font-medium text-slate-500">Affiliation tenure</p>
             <p className="text-base sm:text-lg font-bold text-slate-900">{profile.metrics.yearsAtMit}</p>
           </div>
           <div>

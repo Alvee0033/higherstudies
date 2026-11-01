@@ -124,7 +124,7 @@ export function MissionAndCTASection() {
               <g transform="translate(196, 2) rotate(22)">
                 <path
                   d="M0 16 L20 0 L5 11 L0 16 Z"
-                  fill="#4F46E5"
+                  fill="#1476F2"
                   className="drop-shadow-[0_4px_10px_rgba(79,70,229,0.4)]"
                 />
                 <path
@@ -133,15 +133,15 @@ export function MissionAndCTASection() {
                 />
                 <path
                   d="M5 11 L8 13 L6 18 Z"
-                  fill="#4338CA"
+                  fill="#0963D6"
                 />
               </g>
             </svg>
           </div>
 
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 rounded-full bg-white/95 backdrop-blur-md border border-indigo-200/80 px-3.5 py-1 text-xs font-black text-[#4F46E5] tracking-widest shadow-2xs">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#4F46E5]" />
+          <div className="inline-flex items-center gap-2 rounded-full bg-white/95 backdrop-blur-md border border-indigo-200/80 px-3.5 py-1 text-xs font-black text-[#1476F2] tracking-widest shadow-2xs">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#1476F2]" />
             <span className="uppercase font-black text-[11px]">ABOUT US &amp; OUR MISSION</span>
           </div>
 
@@ -149,7 +149,7 @@ export function MissionAndCTASection() {
           <div className="relative inline-block">
             <h2 className="text-2xl sm:text-4xl lg:text-[44px] font-black tracking-[-0.03em] text-slate-900 font-heading leading-[1.18] text-balance">
               We&apos;re on a Mission to Make{" "}
-              <span className="relative inline-block text-[#4F46E5] whitespace-nowrap">
+              <span className="relative inline-block text-[#1476F2] whitespace-nowrap">
                 Study Abroad Simple
                 {/* Hand-Drawn Double Loop Sketch Underline */}
                 <svg
@@ -215,8 +215,8 @@ export function MissionAndCTASection() {
 
             {/* Dual Action CTA Buttons */}
             <div className="flex flex-col sm:flex-row items-center gap-2.5 pt-1">
-              <Link href="/login" className="w-full sm:flex-1">
-                <Button size="sm" className="w-full h-11 sm:h-10 text-xs font-bold justify-center shadow-lg shadow-indigo-600/35 rounded-xl bg-[#4F46E5] hover:bg-[#4338CA] text-white cursor-pointer">
+              <Link href="/register" className="w-full sm:flex-1">
+                <Button size="sm" className="w-full h-11 sm:h-10 text-xs font-bold justify-center shadow-lg shadow-indigo-600/35 rounded-xl bg-[#1476F2] hover:bg-[#0963D6] text-white cursor-pointer">
                   {MISSION_SECTION.ctaBanner.primaryCta}
                   <ArrowRight className="h-3.5 w-3.5 ml-1" />
                 </Button>

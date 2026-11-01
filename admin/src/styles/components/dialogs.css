@@ -1,0 +1,283 @@
+/* ==========================================================================
+   Modals, Drawers, Confirmations & Toast Notifications
+   ========================================================================== */
+
+/* Native HTML <dialog> Base */
+.app-dialog {
+  max-width: none;
+  max-height: none;
+  border: 0;
+  padding: 0;
+  color: var(--ink);
+  background: #fff;
+  box-shadow: 0 24px 64px rgba(6, 25, 58, 0.27);
+}
+
+.app-dialog::backdrop {
+  background: rgba(7, 22, 46, 0.46);
+  backdrop-filter: blur(2px);
+}
+
+/* Sliding Side Drawer Dialog */
+.drawer-dialog[open] {
+  position: fixed;
+  inset: 0 0 0 auto;
+  width: min(520px, 100vw);
+  height: 100dvh;
+  margin: 0;
+  border-radius: 0;
+}
+
+.drawer,
+.source-dialog {
+  height: 100%;
+  overflow-y: auto;
+  padding: 22px;
+}
+
+.drawer-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid #edf1f7;
+}
+
+.drawer h2,
+.source-dialog h2 {
+  margin: 20px 0 8px;
+  font-size: 23px;
+  letter-spacing: -0.035em;
+}
+
+.drawer > p,
+.source-dialog > p {
+  margin: 0 0 20px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.drawer-actions {
+  position: sticky;
+  bottom: -22px;
+  display: flex;
+  gap: 9px;
+  margin: 24px -22px -22px;
+  padding: 14px 22px;
+  border-top: 1px solid #e5ebf3;
+  background: rgba(255, 255, 255, 0.96);
+}
+
+.source-dialog form {
+  margin-top: 22px;
+}
+
+.source-dialog form .button {
+  margin-top: 10px;
+}
+
+.source-box {
+  display: grid;
+  gap: 6px;
+  padding: 12px;
+  border: 1px solid #d7e5fb;
+  border-radius: 10px;
+  background: #f4f8ff;
+}
+
+.source-box span {
+  color: #617998;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.source-box a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  color: #1d5da9;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+/* Scoped Drawer Properties List */
+.details {
+  display: grid;
+  gap: 0;
+  margin: 20px 0;
+  border: 1px solid #e9edf4;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.details > div {
+  display: grid;
+  grid-template-columns: 40% 1fr;
+  gap: 10px;
+  padding: 10px 12px;
+  border-bottom: 1px solid #edf1f7;
+}
+
+.details > div:last-child {
+  border-bottom: 0;
+}
+
+.details dt {
+  color: #718098;
+  font-size: 11px;
+  margin: 0;
+}
+
+.details dd {
+  margin: 0;
+  color: #34445d;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.inspect-quick-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.inspect-subtable {
+  margin-top: 22px;
+}
+
+/* Centered Confirmation Dialog */
+.confirm-dialog[open] {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: min(calc(100vw - 32px), 440px);
+  max-height: min(90dvh, 650px);
+  margin: 0;
+  padding: 25px;
+  overflow-y: auto;
+  border-radius: 15px;
+  transform: translate(-50%, -50%);
+}
+
+.confirm-dialog h2 {
+  margin: 13px 0 7px;
+  font-size: 21px;
+  letter-spacing: -0.03em;
+}
+
+.confirm-dialog p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.confirm-icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+}
+
+.confirm-icon.reject,
+.confirm-icon.delete-danger {
+  color: #aa3240;
+  background: #fff0f1;
+}
+
+.confirm-icon.approve {
+  color: #126e52;
+  background: #e6f8f0;
+}
+
+.confirm-delete-box {
+  display: grid;
+  gap: 4px;
+}
+
+.confirm-record,
+.confirm-item-preview {
+  display: grid;
+  gap: 3px;
+  margin: 18px 0;
+  padding: 12px;
+  border: 1px solid #e5ebf3;
+  border-radius: 10px;
+  background: #f8faff;
+}
+
+.confirm-record span {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.confirm-field {
+  display: grid;
+  gap: 7px;
+  margin: 18px 0;
+}
+
+.confirm-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 9px;
+  margin-top: 22px;
+}
+
+.delete-warning-note {
+  display: flex;
+  gap: 9px;
+  padding: 11px;
+  border-radius: 9px;
+  color: #805306;
+  background: #fff7e7;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+/* Floating Toast Notifications */
+.notification {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 100;
+  width: min(calc(100vw - 40px), 380px);
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  padding: 13px;
+  border: 1px solid;
+  border-radius: 11px;
+  box-shadow: 0 14px 34px rgba(8, 29, 64, 0.18);
+  font-size: 13px;
+}
+
+.notification.success {
+  color: #0d6d50;
+  border-color: #b9ead5;
+  background: #f0fcf6;
+}
+
+.notification.error {
+  color: #9f2f3d;
+  border-color: #f3c1c7;
+  background: #fff4f5;
+}
+
+.notification span {
+  flex: 1;
+}
+
+.notification button {
+  display: grid;
+  place-items: center;
+  margin: -2px -2px 0 0;
+  padding: 2px;
+  border: 0;
+  color: currentColor;
+  background: transparent;
+  cursor: pointer;
+}

@@ -1,0 +1,262 @@
+/* ==========================================================================
+   Badges, Status Pills & Identifier Tags
+   ========================================================================== */
+
+/* Base Pill System */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  max-width: 220px;
+  padding: 3px 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  color: #54647a;
+  background: #eef2f7;
+  font-size: 10px;
+  font-weight: 750;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pill.good {
+  color: #107151;
+  background: #e5f7ef;
+}
+
+.pill.pending {
+  color: #9d620b;
+  background: #fff4dc;
+}
+
+.pill.neutral {
+  color: #64748b;
+  background: #f1f5f9;
+}
+
+.pill.programme,
+.pill.degree-master,
+.pill.degree-phd {
+  color: #195aaa;
+  background: #e8f1ff;
+}
+
+.pill.requirement_claim,
+.pill.funding {
+  color: #8b6012;
+  background: #fff5df;
+}
+
+.pill.faculty,
+.pill.faculty_member {
+  color: #166f72;
+  background: #e0f6f4;
+}
+
+/* Requirement Specific Pills */
+.pill.req-ielts {
+  color: #1d4ed8;
+  background: #eff6ff;
+  border: 1px solid #dbeafe;
+}
+
+.pill.req-toefl {
+  color: #4338ca;
+  background: #eef2ff;
+  border: 1px solid #e0e7ff;
+}
+
+.pill.req-gre-waived {
+  color: #047857;
+  background: #ecfdf5;
+  border: 1px solid #d1fae5;
+}
+
+.pill.req-gre-req {
+  color: #b91c1c;
+  background: #fef2f2;
+  border: 1px solid #fee2e2;
+}
+
+.pill.funding-tag {
+  color: #92400e;
+  background: #fef3c7;
+  border: 1px solid #fde68a;
+  font-weight: 750;
+}
+
+/* Compact Color Badges (Catalogue & Programme Cards) */
+.color-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 7px;
+  border-radius: 6px;
+  font-size: 10.5px;
+  font-weight: 700;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+.color-badge.tuition-free {
+  background: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+}
+
+.color-badge.tuition-paid {
+  background: #f0f9ff;
+  color: #0284c7;
+  border: 1px solid #bae6fd;
+}
+
+.color-badge.funding {
+  background: #fffbeb;
+  color: #b45309;
+  border: 1px solid #fde68a;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.color-badge.ielts {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+}
+
+.color-badge.toefl {
+  background: #f5f3ff;
+  color: #6d28d9;
+  border: 1px solid #ddd6fe;
+}
+
+.color-badge.gre-waived {
+  background: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+}
+
+.color-badge.gre-req {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+
+.color-badge.degree {
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+}
+
+.color-badge.deadline {
+  background: #fff7ed;
+  color: #c2410c;
+  border: 1px solid #ffedd5;
+}
+
+/* Role & User Status Badges */
+.role-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 750;
+  text-transform: capitalize;
+}
+
+.role-badge.admin {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+}
+
+.role-badge.editor {
+  background: #f8fafc;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.status-badge.active {
+  background: #ecfdf5;
+  color: #047857;
+}
+
+.status-badge.disabled {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+/* Identification & Geographic Chips */
+.id-badge {
+  display: inline-block;
+  padding: 2px 5px;
+  border-radius: 4px;
+  color: #718098;
+  background: #f1f4f8;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 9px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.country-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.country-code {
+  color: #76879e;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.country-flag-code {
+  width: 32px;
+  height: 24px;
+  border-radius: 4px;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: #1e293b;
+}
+
+.city-name {
+  display: block;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.filter-reset-pill {
+  border: 1px solid #c7daf8;
+  border-radius: 999px;
+  padding: 3px 8px;
+  color: var(--blue);
+  background: var(--blue-soft);
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.filter-reset-pill:hover {
+  background: #dbe8fc;
+}

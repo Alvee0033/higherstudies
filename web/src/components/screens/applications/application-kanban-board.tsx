@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Plus, GripVertical, ChevronRight, Layers, ArrowRightLeft } from "lucide-react";
+import { Plus, GripVertical, Layers } from "lucide-react";
 import { ApplicationItem, ApplicationStatus } from "./application-types";
 
 interface ApplicationKanbanBoardProps {
@@ -115,7 +115,7 @@ export function ApplicationKanbanBoard({
       <div className="xl:hidden flex flex-col gap-2 bg-white rounded-2xl p-3 border border-slate-200/90 shadow-2xs">
         <div className="flex items-center justify-between px-1 text-xs font-semibold text-slate-600">
           <div className="flex items-center gap-1.5">
-            <Layers className="h-4 w-4 text-[#4F46E5]" />
+            <Layers className="h-4 w-4 text-[#1476F2]" />
             <span>Kanban Stage View</span>
           </div>
           <span className="text-[11px] text-slate-400">Tap tab or swipe</span>
@@ -133,7 +133,7 @@ export function ApplicationKanbanBoard({
                 onClick={() => setMobileActiveTab(col.status)}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
                   isTabActive
-                    ? "bg-[#4F46E5] text-white shadow-xs"
+                    ? "bg-[#1476F2] text-white shadow-xs"
                     : "bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200/60"
                 }`}
               >
@@ -159,7 +159,7 @@ export function ApplicationKanbanBoard({
             onClick={() => setMobileActiveTab("all")}
             className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
               mobileActiveTab === "all"
-                ? "bg-[#4F46E5] text-white shadow-xs"
+                ? "bg-[#1476F2] text-white shadow-xs"
                 : "bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200/60"
             }`}
           >
@@ -205,7 +205,7 @@ export function ApplicationKanbanBoard({
                 </div>
 
                 {isOverThisColumn && (
-                  <span className="text-[11px] font-semibold text-[#4F46E5] animate-pulse">
+                  <span className="text-[11px] font-semibold text-[#1476F2] animate-pulse">
                     Drop here
                   </span>
                 )}
@@ -321,7 +321,7 @@ export function ApplicationKanbanBoard({
                         <button
                           type="button"
                           onClick={() => onViewDetails(app)}
-                          className="px-3 py-1.5 rounded-lg bg-[#4F46E5] hover:bg-[#4338CA] text-white text-xs font-semibold shadow-xs transition-colors cursor-pointer shrink-0"
+                          className="px-3 py-1.5 rounded-lg bg-[#1476F2] hover:bg-[#0963D6] text-white text-xs font-semibold shadow-xs transition-colors cursor-pointer shrink-0"
                         >
                           View Details
                         </button>
@@ -334,7 +334,7 @@ export function ApplicationKanbanBoard({
                 {colApps.length === 0 && (
                   <div
                     className={`py-8 rounded-2xl border-2 border-dashed border-slate-200 text-center text-xs text-slate-400 ${
-                      isOverThisColumn ? "bg-indigo-50 border-[#4F46E5]" : ""
+                      isOverThisColumn ? "bg-indigo-50 border-[#1476F2]" : ""
                     }`}
                   >
                     <span>Drop applications here</span>

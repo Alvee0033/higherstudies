@@ -27,19 +27,9 @@ export function ApplicationDetailsModal({
   onClose,
   onEdit,
 }: ApplicationDetailsModalProps) {
-  const checklistItems = application.checklist || [
-    { task: "Create Account", status: "Completed", date: "Nov 15, 2024" },
-    { task: "Personal Information", status: "Completed", date: "Nov 15, 2024" },
-    { task: "Academic History", status: "Completed", date: "Nov 16, 2024" },
-    { task: "Test Scores", status: "Completed", date: "Nov 16, 2024" },
-    { task: "Statement of Purpose", status: "Completed", date: "Nov 20, 2024" },
-    { task: "LOR 1", status: "Completed", date: "Nov 18, 2024" },
-    { task: "LOR 2", status: "Pending" },
-    { task: "CV/Resume", status: "Pending" },
-    { task: "Review & Submit", status: "Pending" },
-  ];
+  const checklistItems = application.checklist || [];
 
-  const progressPercent = application.progressPercent ?? 60;
+  const progressPercent = application.progressPercent ?? 0;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-900/60 backdrop-blur-xs overflow-y-auto">
@@ -123,10 +113,10 @@ export function ApplicationDetailsModal({
                   </div>
                   <div className="text-right">
                     <span className="font-semibold text-slate-900 block">
-                      {application.deadline || "Dec 15, 2024"}
+                      {application.deadline || "Not recorded"}
                     </span>
                     <span className="text-[11px] text-[#B45309] font-medium">
-                      (30 days left)
+                      Deadline as recorded by you
                     </span>
                   </div>
                 </div>
@@ -161,7 +151,7 @@ export function ApplicationDetailsModal({
                     <span>Application ID</span>
                   </div>
                   <span className="font-semibold text-slate-900">
-                    {application.applicationId || "MIT-F25-EECS-1024"}
+                    {application.applicationId || "Not recorded"}
                   </span>
                 </div>
               </div>

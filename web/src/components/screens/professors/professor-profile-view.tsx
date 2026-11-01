@@ -3,7 +3,10 @@
 import * as React from "react";
 import Link from "next/link";
 import { Bookmark, ChevronLeft } from "lucide-react";
-import { getProfessorProfile } from "./profile/profile-data";
+import {useApi} from "@/hooks/use-api";
+import {useSaved} from "@/hooks/use-saved";
+import {type CatalogueRecord} from "@/lib/student-api";
+import {facultyProfile} from "@/lib/faculty-profile";
 import { ProfileHeroCard } from "./profile/profile-hero-card";
 import { ProfileAboutCard } from "./profile/profile-about-card";
 import { ProfileExperienceCard } from "./profile/profile-experience-card";
@@ -21,11 +24,16 @@ interface ProfessorProfileViewProps {
 }
 
 export function ProfessorProfileView({ id }: ProfessorProfileViewProps) {
-  const profile = getProfessorProfile(id);
-  const [isTracking, setIsTracking] = React.useState(false);
+  const result=useApi<{data:CatalogueRecord}>(id?`/v1/faculty/${id}`:null);
+  const saved=useSaved();
+  if(!result.data)return <p role={result.error?'alert':'status'} className="p-6 text-sm text-slate-500">{result.error||'Loading faculty profile…'}</p>;
+  const profile=facultyProfile(result.data.data);
+  const isTracking=saved.has('faculty',profile.id);
+  const toggleTracking=()=>void saved.toggle('faculty',profile.id);
 
   return (
     <div className="w-full max-w-[960px] mx-auto space-y-6">
+      {saved.error&&<p role="alert" className="text-sm text-rose-600">{saved.error}</p>}
       {/* 1. Top Breadcrumb & Action Button matching Figma */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <nav className="flex items-center gap-2 text-xs font-medium text-slate-500 overflow-x-auto whitespace-nowrap">
@@ -34,7 +42,7 @@ export function ProfessorProfileView({ id }: ProfessorProfileViewProps) {
           </Link>
           <span>&gt;</span>
           <Link href="/professors" className="hover:text-slate-800 transition-colors">
-            Massachusetts Institute of Technology
+            {profile.university}
           </Link>
           <span>&gt;</span>
           <Link href="/professors" className="hover:text-slate-800 transition-colors">
@@ -46,7 +54,7 @@ export function ProfessorProfileView({ id }: ProfessorProfileViewProps) {
 
         <button
           type="button"
-          onClick={() => setIsTracking(!isTracking)}
+          onClick={toggleTracking}
           className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold inline-flex items-center gap-2 transition-colors cursor-pointer shrink-0 ${
             isTracking
               ? "bg-emerald-600 text-white hover:bg-emerald-700"
@@ -54,7 +62,7 @@ export function ProfessorProfileView({ id }: ProfessorProfileViewProps) {
           }`}
         >
           <Bookmark className="h-4 w-4 fill-current" />
-          <span>{isTracking ? "Added to Tracking" : "Add to Tracking"}</span>
+          <span>{isTracking ? "Saved" : "Save Faculty"}</span>
         </button>
       </div>
 
@@ -117,11 +125,11 @@ export function ProfessorProfileView({ id }: ProfessorProfileViewProps) {
         </Link>
         <button
           type="button"
-          onClick={() => setIsTracking(!isTracking)}
+          onClick={toggleTracking}
           className="px-5 py-2.5 rounded-xl bg-[#5D3FD3] hover:bg-[#4E34B5] text-white text-xs sm:text-sm font-semibold inline-flex items-center gap-2 cursor-pointer shadow-xs"
         >
           <Bookmark className="h-4 w-4 fill-current" />
-          <span>{isTracking ? "Added to Tracking" : "Add to Tracking"}</span>
+          <span>{isTracking ? "Saved" : "Save Faculty"}</span>
         </button>
       </div>
     </div>

@@ -2,6 +2,7 @@ import * as React from "react";
 import { ProfessorRanksState, ProfessorOpeningsState } from "../professor-types";
 
 export interface ProfessorFiltersSidebarProps {
+  departments?:string[];areas?:string[];
   mobileFilterOpen: boolean;
   onCloseMobileFilter: () => void;
   filterSearch: string;
@@ -26,6 +27,7 @@ export interface ProfessorFiltersSidebarProps {
 }
 
 export function ProfessorFiltersSidebar({
+  departments=[],areas=[],
   mobileFilterOpen,
   onCloseMobileFilter,
   filterSearch,
@@ -89,10 +91,7 @@ export function ProfessorFiltersSidebar({
             className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs text-slate-800 bg-white focus:outline-none focus:ring-2 focus:ring-[#5D3FD3]/20 focus:border-[#5D3FD3]"
           >
             <option value="All Departments">All Departments</option>
-            <option value="EECS">EECS (Computer Science)</option>
-            <option value="Mechanical">Mechanical Engineering</option>
-            <option value="Physics">Physics</option>
-            <option value="Mathematics">Mathematics</option>
+            {departments.map(value=><option key={value}>{value}</option>)}
           </select>
         </div>
 
@@ -105,10 +104,7 @@ export function ProfessorFiltersSidebar({
             className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs text-slate-800 bg-white focus:outline-none focus:ring-2 focus:ring-[#5D3FD3]/20 focus:border-[#5D3FD3]"
           >
             <option value="All Research Areas">All Research Areas</option>
-            <option value="Machine Learning">Machine Learning</option>
-            <option value="Computer Vision">Computer Vision</option>
-            <option value="Robotics">Robotics</option>
-            <option value="Quantum Computing">Quantum Computing</option>
+            {areas.map(value=><option key={value}>{value}</option>)}
           </select>
         </div>
 
@@ -126,7 +122,7 @@ export function ProfessorFiltersSidebar({
                 />
                 <span>Professor</span>
               </div>
-              <span className="text-slate-400 text-[11px]">(312)</span>
+
             </label>
 
             <label className="flex items-center justify-between cursor-pointer">
@@ -139,7 +135,7 @@ export function ProfessorFiltersSidebar({
                 />
                 <span>Associate Professor</span>
               </div>
-              <span className="text-slate-400 text-[11px]">(478)</span>
+
             </label>
 
             <label className="flex items-center justify-between cursor-pointer">
@@ -152,7 +148,7 @@ export function ProfessorFiltersSidebar({
                 />
                 <span>Assistant Professor</span>
               </div>
-              <span className="text-slate-400 text-[11px]">(356)</span>
+
             </label>
 
             <label className="flex items-center justify-between cursor-pointer">
@@ -165,7 +161,7 @@ export function ProfessorFiltersSidebar({
                 />
                 <span>Lecturer</span>
               </div>
-              <span className="text-slate-400 text-[11px]">(101)</span>
+
             </label>
           </div>
         </div>
@@ -173,7 +169,7 @@ export function ProfessorFiltersSidebar({
         {/* Openings */}
         <div className="space-y-2 text-left pt-1 border-t border-slate-100">
           <label className="text-xs font-semibold text-slate-700 block">Openings</label>
-          <select className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs text-slate-800 bg-white mb-2 focus:outline-none">
+          <select disabled title="Verified opening data is not available" className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs text-slate-800 bg-white mb-2 focus:outline-none">
             <option>All</option>
             <option>Has Available Positions</option>
           </select>
@@ -182,54 +178,55 @@ export function ProfessorFiltersSidebar({
             <label className="flex items-center justify-between cursor-pointer">
               <div className="flex items-center gap-2">
                 <input
-                  type="checkbox"
+                  type="checkbox" disabled title="Opening data is not reported by this source"
                   checked={openings.phd}
                   onChange={(e) => onOpeningChange("phd", e.target.checked)}
                   className="rounded border-slate-300 text-[#5D3FD3] focus:ring-[#5D3FD3]"
                 />
                 <span>PhD</span>
               </div>
-              <span className="text-slate-400 text-[11px]">(240)</span>
+
             </label>
 
             <label className="flex items-center justify-between cursor-pointer">
               <div className="flex items-center gap-2">
                 <input
-                  type="checkbox"
+                  type="checkbox" disabled title="Opening data is not reported by this source"
                   checked={openings.postdoc}
                   onChange={(e) => onOpeningChange("postdoc", e.target.checked)}
                   className="rounded border-slate-300 text-[#5D3FD3] focus:ring-[#5D3FD3]"
                 />
                 <span>Postdoc</span>
               </div>
-              <span className="text-slate-400 text-[11px]">(186)</span>
+
             </label>
 
             <label className="flex items-center justify-between cursor-pointer">
               <div className="flex items-center gap-2">
                 <input
-                  type="checkbox"
+                  type="checkbox" disabled title="Opening data is not reported by this source"
                   checked={openings.researchAssociate}
                   onChange={(e) => onOpeningChange("researchAssociate", e.target.checked)}
                   className="rounded border-slate-300 text-[#5D3FD3] focus:ring-[#5D3FD3]"
                 />
                 <span>Research Associate</span>
               </div>
-              <span className="text-slate-400 text-[11px]">(112)</span>
+
             </label>
           </div>
         </div>
 
-        {/* Years at MIT Slider */}
+        {/* Affiliation tenure Slider */}
         <div className="space-y-1.5 text-left pt-1 border-t border-slate-100">
           <div className="flex items-center justify-between text-xs">
-            <label className="font-semibold text-slate-700">Years at MIT</label>
-            <span className="text-slate-500">{yearsAtMit} yrs</span>
+            <label className="font-semibold text-slate-700">Affiliation tenure</label>
+            <span className="text-slate-500">Not reported</span>
           </div>
           <input
             type="range"
             min="0"
             max="40"
+            disabled title="Affiliation tenure is not reported by the source"
             value={yearsAtMit}
             onChange={(e) => onYearsAtMitChange(Number(e.target.value))}
             className="w-full accent-[#5D3FD3]"
@@ -286,6 +283,7 @@ export function ProfessorFiltersSidebar({
           <span className="text-xs font-semibold text-slate-700">Show only active researchers</span>
           <button
             type="button"
+            disabled title="Current activity status is not verified"
             onClick={onToggleActiveResearchers}
             className={`w-11 h-6 flex items-center rounded-full p-1 cursor-pointer transition-colors ${
               onlyActiveResearchers ? "bg-[#5D3FD3]" : "bg-slate-200"
@@ -304,7 +302,7 @@ export function ProfessorFiltersSidebar({
           <button
             type="button"
             onClick={onCloseMobileFilter}
-            className="w-full py-2.5 rounded-xl border border-[#5D3FD3] text-[#5D3FD3] hover:bg-[#5D3FD3] hover:text-white transition-colors text-xs font-bold cursor-pointer"
+            className="w-full py-2.5 rounded-xl border border-[#5D3FD3] text-[#5D3FD3] hover:bg-[#5D3FD3] hover:text-white transition-colors text-xs font-bold cursor-pointer lg:hidden"
           >
             Apply Filters
           </button>

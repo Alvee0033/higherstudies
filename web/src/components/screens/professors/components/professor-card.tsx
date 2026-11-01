@@ -1,8 +1,9 @@
 import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Bookmark, CheckCircle2, GraduationCap } from "lucide-react";
+import { Bookmark, CheckCircle2 } from "lucide-react";
 import { Professor } from "../professor-types";
+import { UniversityLogo } from "@/components/ui/university-logo";
 
 export interface ProfessorCardProps {
   professor: Professor;
@@ -55,15 +56,18 @@ export function ProfessorCard({
                 {t}
               </span>
             ))}
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-500">
-              +2
-            </span>
+
           </div>
 
-          {/* PhD text */}
-          <div className="flex items-center gap-1.5 pt-2 text-xs text-slate-500">
-            <GraduationCap className="h-4 w-4 text-slate-400" />
-            <span>{prof.phd}</span>
+          {/* Affiliation text */}
+          <div className="flex items-center gap-2 pt-2 text-xs text-slate-700 font-semibold">
+            <UniversityLogo
+              name={prof.phd}
+              domain={prof.institutionOfficialUrl}
+              size={18}
+              className="rounded-md border border-slate-200"
+            />
+            <span className="truncate">{prof.phd}</span>
           </div>
         </div>
       </div>
@@ -96,7 +100,7 @@ export function ProfessorCard({
             <p className="text-sm font-bold text-slate-900">{prof.publications}</p>
           </div>
           <div>
-            <p className="text-[10px] uppercase font-bold tracking-wider text-slate-400">YEARS AT MIT</p>
+            <p className="text-[10px] uppercase font-bold tracking-wider text-slate-400">AFFILIATION TENURE</p>
             <p className="text-sm font-bold text-slate-900">{prof.yearsAtMit}</p>
           </div>
           <div>

@@ -1,0 +1,236 @@
+/* ==========================================================================
+   Responsive Breakpoints & Mobile Overrides (End of Cascade)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Medium Desktop & Large Tablets (<= 1120px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 1120px) {
+  .metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .overview-grid,
+  .scraper-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .scraper-log-panel {
+    position: static;
+  }
+
+  .scraper-log-body {
+    height: 330px;
+    min-height: 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Tablets & Mobile Screens (<= 780px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 780px) {
+  .autopilot-panel {
+    margin: 0 12px 12px;
+    padding: 12px;
+  }
+  .autopilot-fields {
+    grid-template-columns: 1fr;
+  }
+  .autopilot-footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .autopilot-footer .button {
+    width: 100%;
+  }
+  /* Authentication Responsive */
+  .login-screen {
+    grid-template-columns: 1fr;
+  }
+
+  .login-visual {
+    min-height: 300px;
+    padding: 30px;
+  }
+
+  .login-message h1 {
+    font-size: 39px;
+  }
+
+  .login-visual > small {
+    display: none;
+  }
+
+  .login-panel {
+    min-height: calc(100dvh - 300px);
+    padding: 30px 22px;
+  }
+
+  /* Shell & Off-canvas Drawer Navigation */
+  .admin-layout {
+    display: block;
+  }
+
+  .sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: min(278px, 84vw);
+    transform: translateX(-105%);
+    transition: transform 0.2s ease;
+    box-shadow: none;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+    box-shadow: 16px 0 32px rgba(5, 18, 40, 0.28);
+  }
+
+  .scrim {
+    position: fixed;
+    inset: 0;
+    z-index: 25;
+    border: 0;
+    background: rgba(7, 22, 46, 0.46);
+  }
+
+  /* Topbar Header */
+  .topbar {
+    min-height: 60px;
+    padding: 0 17px;
+  }
+
+  .menu-button {
+    display: grid;
+    place-items: center;
+  }
+
+  .crumb-root,
+  .crumb-slash,
+  .admin-info {
+    display: none;
+  }
+
+  /* Main Content Area */
+  .content {
+    padding: 20px 16px 30px;
+  }
+
+  .content-heading {
+    margin-bottom: 17px;
+  }
+
+  .ch-title {
+    font-size: 20px;
+  }
+
+  .heading-date {
+    display: none;
+  }
+
+  /* Metrics & Health */
+  .metrics {
+    gap: 10px;
+  }
+
+  .metric {
+    padding: 13px;
+  }
+
+  .metric strong {
+    margin-top: 10px;
+    font-size: 22px;
+  }
+
+  /* Filters & Pagination */
+  .ops-filter-toolbar {
+    padding: 11px;
+  }
+
+  .ops-filter-select-wrap {
+    flex: 1 1 calc(50% - 4px);
+  }
+
+  .ops-pagination-bar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  /* Scraper Panel */
+  .scraper-config {
+    grid-template-columns: 1fr;
+    padding: 14px;
+  }
+
+  .scraper-btn-row {
+    padding: 0 14px 14px;
+  }
+
+  .scraper-log-body {
+    height: 280px;
+  }
+
+  /* Dialogs & Drawers */
+  .drawer-dialog[open] {
+    width: 100vw;
+  }
+
+  .drawer,
+  .source-dialog {
+    padding: 18px;
+  }
+
+  .drawer-actions {
+    bottom: -18px;
+    margin: 22px -18px -18px;
+    padding: 12px 18px;
+  }
+
+  .details > div {
+    grid-template-columns: 1fr;
+    gap: 3px;
+  }
+
+  .confirm-dialog[open] {
+    padding: 20px;
+  }
+
+  /* Toast Notification */
+  .notification {
+    right: 12px;
+    bottom: 12px;
+    width: calc(100vw - 24px);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Small Handsets (<= 430px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 430px) {
+  .metrics {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .metric small {
+    display: none;
+  }
+
+  .topbar-right {
+    gap: 7px;
+  }
+
+  .ops-filter-select-wrap {
+    flex-basis: 100%;
+  }
+
+  .scraper-btn-row .button {
+    flex: 1 1 auto;
+  }
+
+  .confirm-actions {
+    flex-direction: column-reverse;
+  }
+
+  .confirm-actions .button {
+    width: 100%;
+  }
+}

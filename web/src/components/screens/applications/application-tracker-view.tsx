@@ -1,11 +1,13 @@
 "use client";
 
 import * as React from "react";
-import { Search, Filter, Download, Plus } from "lucide-react";
+import {useApi} from "@/hooks/use-api";
+import {api,workspace,exportCsv} from "@/lib/student-api";
+import { Search, Download, Plus } from "lucide-react";
 import { ApplicationItem, ApplicationStatus } from "./application-types";
 import {
   APPLICATION_METRICS_DATA,
-  INITIAL_APPLICATIONS_DATA,
+
 } from "./application-data";
 import { ApplicationMetrics } from "./application-metrics";
 import { ApplicationKanbanBoard } from "./application-kanban-board";
@@ -13,14 +15,16 @@ import { ApplicationDetailsModal } from "./application-details-modal";
 import { ApplicationFormModal } from "./application-form-modal";
 
 export function ApplicationTrackerView() {
-  const [applications, setApplications] = React.useState<ApplicationItem[]>(
-    INITIAL_APPLICATIONS_DATA
-  );
+  const result=useApi<{data:ApplicationItem[]}>(`${workspace}/applications`);
+  const applications=React.useMemo(()=>result.data?.data??[],[result.data]);
+  const [error,setError]=React.useState('');
+  const [statusFilter,setStatusFilter]=React.useState('');
   const [searchQuery, setSearchQuery] = React.useState("");
 
   // Modal states
   const [selectedAppForDetails, setSelectedAppForDetails] =
     React.useState<ApplicationItem | null>(null);
+  const [editingApp,setEditingApp]=React.useState<ApplicationItem|null>(null);
   const [isAddOpen, setIsAddOpen] = React.useState(false);
   const [addInitialStatus, setAddInitialStatus] =
     React.useState<ApplicationStatus>("Preparing");
@@ -31,27 +35,31 @@ export function ApplicationTrackerView() {
       const search = window.location.search;
       const hash = window.location.hash;
 
-      if (search.includes("add=true") || hash === "#add") {
-        setIsAddOpen(true);
-      } else if (search.includes("details=") || hash === "#details") {
-        const mitApp =
-          applications.find((a) => a.id === "app-mit") || applications[0];
-        setSelectedAppForDetails(mitApp);
-      }
+      const frame = window.requestAnimationFrame(() => {
+        if (search.includes("add=true") || hash === "#add") {
+          setIsAddOpen(true);
+        } else if (search.includes("details=") || hash === "#details") {
+          const mitApp =
+            applications.find((a) => a.id === new URLSearchParams(search).get("details")) || applications[0];
+          setSelectedAppForDetails(mitApp??null);
+        }
+      });
+      return () => window.cancelAnimationFrame(frame);
     }
   }, [applications]);
 
   const filteredApplications = React.useMemo(() => {
-    if (!searchQuery.trim()) return applications;
+    const visible=statusFilter?applications.filter(app=>app.status===statusFilter):applications;
+    if (!searchQuery.trim()) return visible;
     const q = searchQuery.toLowerCase();
-    return applications.filter(
+    return visible.filter(
       (app) =>
         app.universityName.toLowerCase().includes(q) ||
         app.program.toLowerCase().includes(q) ||
         app.country.toLowerCase().includes(q) ||
         app.status.toLowerCase().includes(q)
     );
-  }, [applications, searchQuery]);
+  }, [applications, searchQuery,statusFilter]);
 
   const dynamicMetrics = React.useMemo(() => {
     const total = applications.length || 1;
@@ -69,10 +77,8 @@ export function ApplicationTrackerView() {
     });
   }, [applications]);
 
-  const handleStatusChange = (appId: string, newStatus: ApplicationStatus) => {
-    setApplications((prev) =>
-      prev.map((app) => (app.id === appId ? { ...app, status: newStatus } : app))
-    );
+  const handleStatusChange = async (appId:string,newStatus:ApplicationStatus) => {
+    setError('');try{await api(`${workspace}/applications/${appId}`,{method:'PATCH',body:JSON.stringify({data:{status:newStatus}})});result.reload();}catch(e){setError(e instanceof Error?e.message:'Unable to update');}
   };
 
   const handleOpenAdd = (status?: ApplicationStatus) => {
@@ -80,12 +86,15 @@ export function ApplicationTrackerView() {
     setIsAddOpen(true);
   };
 
-  const handleAddApplication = (newApp: ApplicationItem) => {
-    setApplications((prev) => [newApp, ...prev]);
+  const handleAddApplication = async (newApp:ApplicationItem) => {
+    const payload={...newApp};delete (payload as Partial<ApplicationItem>).id;
+    await api(`${workspace}/applications${editingApp?`/${editingApp.id}`:""}`,{method:editingApp?"PATCH":"POST",body:JSON.stringify({data:payload})});setEditingApp(null);result.reload();
   };
 
   return (
     <div className="w-full space-y-7 text-left">
+      {(error||result.error)&&<p role="alert" className="text-sm text-rose-600">{error||result.error}</p>}
+      {result.loading&&<p role="status">Loading applications…</p>}
       {/* 1. Header & Action Row matching Figma Screen 09 */}
       <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4">
         <div>
@@ -107,21 +116,15 @@ export function ApplicationTrackerView() {
               placeholder="Search applications..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full h-10 pl-9.5 pr-3.5 rounded-xl border border-slate-200 text-xs text-slate-800 placeholder:text-slate-400 bg-white focus:outline-none focus:ring-1 focus:ring-[#4F46E5] shadow-2xs"
+              className="w-full h-10 pl-9.5 pr-3.5 rounded-xl border border-slate-200 text-xs text-slate-800 placeholder:text-slate-400 bg-white focus:outline-none focus:ring-1 focus:ring-[#1476F2] shadow-2xs"
             />
           </div>
 
-          {/* Filter Button */}
-          <button
-            type="button"
-            className="h-10 px-4 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold flex items-center gap-1.5 shadow-2xs transition-colors cursor-pointer"
-          >
-            <Filter className="h-3.5 w-3.5 text-slate-500" />
-            <span>Filter</span>
-          </button>
+          <select aria-label="Application status" value={statusFilter} onChange={e=>setStatusFilter(e.target.value)} className="h-10 px-4 rounded-xl border border-slate-200 bg-white text-xs"><option value="">All statuses</option>{APPLICATION_METRICS_DATA.map(row=><option key={row.type}>{row.type}</option>)}</select>
 
           {/* Export Button */}
           <button
+            onClick={()=>exportCsv("applications.csv",filteredApplications.map(row=>({...row,checklist:undefined})))}
             type="button"
             className="h-10 px-4 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold flex items-center gap-1.5 shadow-2xs transition-colors cursor-pointer"
           >
@@ -133,7 +136,7 @@ export function ApplicationTrackerView() {
           <button
             type="button"
             onClick={() => handleOpenAdd("Preparing")}
-            className="h-10 px-5 rounded-xl bg-[#4F46E5] hover:bg-[#4338CA] text-white text-xs font-semibold flex items-center gap-1.5 shadow-xs transition-colors cursor-pointer"
+            className="h-10 px-5 rounded-xl bg-[#1476F2] hover:bg-[#0963D6] text-white text-xs font-semibold flex items-center gap-1.5 shadow-xs transition-colors cursor-pointer"
           >
             <Plus className="h-4 w-4" />
             <span>Add Application</span>
@@ -159,7 +162,7 @@ export function ApplicationTrackerView() {
           onClose={() => setSelectedAppForDetails(null)}
           onEdit={(app) => {
             setSelectedAppForDetails(null);
-            handleOpenAdd(app.status);
+            setEditingApp(app);handleOpenAdd(app.status);
           }}
         />
       )}
@@ -167,8 +170,9 @@ export function ApplicationTrackerView() {
       {/* 5. Add Application Modal matching Figma Screen 11 */}
       {isAddOpen && (
         <ApplicationFormModal
+          initialApplication={editingApp??undefined}
           initialStatus={addInitialStatus}
-          onClose={() => setIsAddOpen(false)}
+          onClose={() => {setIsAddOpen(false);setEditingApp(null);}}
           onAdd={handleAddApplication}
         />
       )}

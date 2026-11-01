@@ -30,14 +30,14 @@ export function ServicesSection() {
         {/* Section Header */}
         <ScrollReveal variant="fade-up">
           <div className="text-center max-w-2xl mx-auto space-y-3.5 mb-12 sm:mb-18">
-            <div className="inline-flex items-center gap-2 rounded-full bg-white/95 backdrop-blur-md border border-indigo-200/80 px-3.5 py-1 text-xs font-black text-[#4F46E5] tracking-widest shadow-2xs hover:border-indigo-400 hover:shadow-xs transition-all duration-300">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#4F46E5]" />
+            <div className="inline-flex items-center gap-2 rounded-full bg-white/95 backdrop-blur-md border border-indigo-200/80 px-3.5 py-1 text-xs font-black text-[#1476F2] tracking-widest shadow-2xs hover:border-indigo-400 hover:shadow-xs transition-all duration-300">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#1476F2]" />
               <span className="uppercase font-black text-[11px]">OUR SERVICES</span>
             </div>
 
             <h2 className="text-2xl sm:text-4xl lg:text-[42px] font-extrabold tracking-[-0.03em] text-slate-900 font-heading leading-[1.18] text-balance">
               We Help you to reach Your Dream{" "}
-              <span className="text-[#4F46E5] block sm:inline">
+              <span className="text-[#1476F2] block sm:inline">
                 Anywhere In The World
               </span>
             </h2>
@@ -248,7 +248,7 @@ export function ServicesSection() {
                 {/* Bottom Row: CTA Button + Metrics Chips In The Empty Area */}
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
                   <Link href="/login" className="w-full sm:w-auto inline-block">
-                    <button className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 sm:px-7 sm:py-3.5 rounded-full bg-gradient-to-r from-[#4F46E5] to-violet-600 text-white text-xs sm:text-sm font-black shadow-[0_10px_26px_rgba(79,70,229,0.38)] hover:shadow-[0_14px_32px_rgba(79,70,229,0.48)] hover:scale-[1.03] active:scale-[0.98] transition-all cursor-pointer">
+                    <button className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 sm:px-7 sm:py-3.5 rounded-full bg-gradient-to-r from-[#1476F2] to-violet-600 text-white text-xs sm:text-sm font-black shadow-[0_10px_26px_rgba(79,70,229,0.38)] hover:shadow-[0_14px_32px_rgba(79,70,229,0.48)] hover:scale-[1.03] active:scale-[0.98] transition-all cursor-pointer">
                       <span>Enquire Now</span>
                       <ArrowUpRight className="h-4 w-4" />
                     </button>

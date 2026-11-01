@@ -1,6 +1,8 @@
 import * as React from "react";
 import { Suspense } from "react";
-import { DashboardSidebar, DashboardHeader } from "@/components/layout/dashboard-nav";
+import { DashboardSidebar, DashboardHeader, ClientPageBanner } from "@/components/layout/dashboard-nav";
+
+import { StudentSession } from "@/components/layout/student-session";
 
 export default function DashboardLayout({
   children,
@@ -8,23 +10,24 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-[#FAF9FE] flex text-slate-900">
+    <StudentSession><div className="client-workspace min-h-screen flex text-slate-900">
       {/* Desktop Persistent Left Sidebar */}
       <div className="hidden lg:block shrink-0">
-        <Suspense fallback={<div className="w-64 bg-white border-r border-slate-100 h-screen" />}>
+        <Suspense fallback={<div className="w-56 bg-white h-screen" />}>
           <DashboardSidebar />
         </Suspense>
       </div>
 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0">
-        <Suspense fallback={<div className="h-20 bg-white border-b border-slate-100" />}>
+        <Suspense fallback={<div className="h-16 bg-white" />}>
           <DashboardHeader />
         </Suspense>
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 w-full">
+        <main className="client-workspace-main flex-1 p-4 sm:p-5 lg:p-6 w-full">
+          <ClientPageBanner />
           {children}
         </main>
       </div>
-    </div>
+    </div></StudentSession>
   );
 }

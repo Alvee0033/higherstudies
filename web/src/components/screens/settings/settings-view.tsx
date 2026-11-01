@@ -1,7 +1,11 @@
 "use client";
 
 import * as React from "react";
+import {useApi} from "@/hooks/use-api";
+import {useStudent} from "@/components/layout/student-session";
+import {api,workspace} from "@/lib/student-api";
 import Link from "next/link";
+import {useRouter} from "next/navigation";
 import {
   Settings,
   User,
@@ -29,38 +33,60 @@ const SETTINGS_TABS = rawSettingsData.tabs.map((tab) => ({
 }));
 
 export function SettingsView() {
+  const {user,refresh}=useStudent();
+  const router=useRouter();
+  const result=useApi<{data:Record<string,unknown>}>(`${workspace}/settings`);
+  const [error,setError]=React.useState("");
+  const [saving,setSaving]=React.useState(false);
   const [activeTab, setActiveTab] = React.useState("general");
   const [savedSuccess, setSavedSuccess] = React.useState(false);
 
   // Form State
-  const [name, setName] = React.useState(rawSettingsData.defaultAccount.name);
-  const [email, setEmail] = React.useState(rawSettingsData.defaultAccount.email);
-  const [phone, setPhone] = React.useState(rawSettingsData.defaultAccount.phone);
-  const [timezone, setTimezone] = React.useState(rawSettingsData.defaultAccount.timezone);
+  const [name, setName] = React.useState("");
+  const email=user.email;
+  const [phone, setPhone] = React.useState("");
+  const [timezone, setTimezone] = React.useState("");
 
   // Notification Toggles
-  const [emailAlerts, setEmailAlerts] = React.useState(rawSettingsData.defaultNotifications.emailAlerts);
-  const [deadlineReminders, setDeadlineReminders] = React.useState(rawSettingsData.defaultNotifications.deadlineReminders);
-  const [weeklyDigest, setWeeklyDigest] = React.useState(rawSettingsData.defaultNotifications.weeklyDigest);
-  const [professorReplies, setProfessorReplies] = React.useState(rawSettingsData.defaultNotifications.professorReplies);
+  const [emailAlerts, setEmailAlerts] = React.useState(false);
+  const [deadlineReminders, setDeadlineReminders] = React.useState(false);
+  const [weeklyDigest, setWeeklyDigest] = React.useState(false);
+  const [professorReplies, setProfessorReplies] = React.useState(false);
 
   // Password
   const [currentPassword, setCurrentPassword] = React.useState("");
   const [newPassword, setNewPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
 
-  const handleSave = () => {
-    setSavedSuccess(true);
-    setTimeout(() => setSavedSuccess(false), 2500);
+  React.useEffect(()=>{if(!result.data)return;const data=result.data.data;const frame=requestAnimationFrame(()=>{setName(typeof data.name==='string'?data.name : user.displayName);
+setPhone(typeof data.phone==='string'?data.phone : '');
+setTimezone(typeof data.timezone==='string'?data.timezone : '');
+setEmailAlerts(Boolean(data.emailAlerts));
+setDeadlineReminders(Boolean(data.deadlineReminders));
+setWeeklyDigest(Boolean(data.weeklyDigest));
+setProfessorReplies(Boolean(data.professorReplies));});return ()=>cancelAnimationFrame(frame);},[result.data,user.displayName]);
+  const handleSave = async () => {
+    setSaving(true);setError('');
+    try {
+      if(activeTab==='security'){
+        if(newPassword!==confirmPassword)throw new Error('New passwords do not match');
+        await api('/v1/student/auth/password',{method:'POST',body:JSON.stringify({currentPassword,newPassword})});
+        router.replace('/login');return;
+      }
+      await api(`${workspace}/settings`,{method:'PUT',body:JSON.stringify({data:{name,phone,timezone,emailAlerts,deadlineReminders,weeklyDigest,professorReplies}})});
+      refresh();setSavedSuccess(true);
+    }catch(e){setError(e instanceof Error?e.message:'Unable to save');}finally{setSaving(false);}
   };
 
   return (
     <div className="w-full max-w-5xl mx-auto space-y-8 text-left">
+      {(error||result.error)&&<p role="alert" className="text-sm text-rose-600">{error||result.error}</p>}
+      {result.loading&&<p role="status">Loading settings…</p>}
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="p-2 rounded-xl bg-indigo-50 text-[#4F46E5]">
+            <span className="p-2 rounded-xl bg-indigo-50 text-[#1476F2]">
               <Settings className="h-5 w-5" />
             </span>
             <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight font-heading">
@@ -74,8 +100,9 @@ export function SettingsView() {
 
         <button
           type="button"
+          disabled={saving||result.loading}
           onClick={handleSave}
-          className="h-10 px-5 rounded-xl bg-[#4F46E5] hover:bg-[#4338CA] text-white text-xs font-semibold flex items-center gap-2 shadow-xs transition-colors cursor-pointer"
+          className="h-10 px-5 rounded-xl bg-[#1476F2] hover:bg-[#0963D6] text-white text-xs font-semibold flex items-center gap-2 shadow-xs transition-colors cursor-pointer"
         >
           {savedSuccess ? <Check className="h-4 w-4" /> : <Save className="h-4 w-4" />}
           <span>{savedSuccess ? "Saved!" : "Save Changes"}</span>
@@ -95,7 +122,7 @@ export function SettingsView() {
               onClick={() => setActiveTab(tab.id)}
               className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all whitespace-nowrap cursor-pointer ${
                 isActive
-                  ? "bg-[#4F46E5] text-white shadow-xs"
+                  ? "bg-[#1476F2] text-white shadow-xs"
                   : "bg-white text-slate-600 hover:bg-slate-50 border border-slate-200"
               }`}
             >
@@ -125,27 +152,13 @@ export function SettingsView() {
               <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-indigo-200 shrink-0">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={rawSettingsData.defaultAccount.avatar}
+                  src="/images/avatar-placeholder.svg"
                   alt={name}
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="space-y-1">
-                <div className="flex items-center gap-2">
-                  <button
-                    type="button"
-                    className="px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold shadow-2xs cursor-pointer"
-                  >
-                    Change Avatar
-                  </button>
-                  <button
-                    type="button"
-                    className="px-3 py-1.5 rounded-lg text-slate-400 hover:text-rose-600 text-xs font-medium cursor-pointer"
-                  >
-                    Remove
-                  </button>
-                </div>
-                <p className="text-[11px] text-slate-400">JPG, PNG or WEBP under 2MB.</p>
+                <p className="text-xs text-slate-500">Avatar uploads are not available yet.</p>
               </div>
             </div>
 
@@ -156,7 +169,7 @@ export function SettingsView() {
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full h-10 px-3 rounded-xl border border-slate-200 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-[#4F46E5]"
+                  className="w-full h-10 px-3 rounded-xl border border-slate-200 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-[#1476F2]"
                 />
               </div>
 
@@ -165,8 +178,8 @@ export function SettingsView() {
                 <input
                   type="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full h-10 px-3 rounded-xl border border-slate-200 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-[#4F46E5]"
+                  readOnly
+                  className="w-full h-10 px-3 rounded-xl border border-slate-200 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-[#1476F2]"
                 />
               </div>
 
@@ -176,7 +189,7 @@ export function SettingsView() {
                   type="text"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="w-full h-10 px-3 rounded-xl border border-slate-200 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-[#4F46E5]"
+                  className="w-full h-10 px-3 rounded-xl border border-slate-200 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-[#1476F2]"
                 />
               </div>
 
@@ -185,7 +198,7 @@ export function SettingsView() {
                 <select
                   value={timezone}
                   onChange={(e) => setTimezone(e.target.value)}
-                  className="w-full h-10 px-3 rounded-xl border border-slate-200 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-[#4F46E5] bg-white"
+                  className="w-full h-10 px-3 rounded-xl border border-slate-200 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-[#1476F2] bg-white"
                 >
                   {rawSettingsData.timezoneOptions.map((tz) => (
                     <option key={tz} value={tz}>{tz}</option>
@@ -218,7 +231,7 @@ export function SettingsView() {
                   type="checkbox"
                   checked={deadlineReminders}
                   onChange={(e) => setDeadlineReminders(e.target.checked)}
-                  className="w-4 h-4 rounded text-[#4F46E5] focus:ring-[#4F46E5] cursor-pointer"
+                  className="w-4 h-4 rounded text-[#1476F2] focus:ring-[#1476F2] cursor-pointer"
                 />
               </div>
 
@@ -231,7 +244,7 @@ export function SettingsView() {
                   type="checkbox"
                   checked={professorReplies}
                   onChange={(e) => setProfessorReplies(e.target.checked)}
-                  className="w-4 h-4 rounded text-[#4F46E5] focus:ring-[#4F46E5] cursor-pointer"
+                  className="w-4 h-4 rounded text-[#1476F2] focus:ring-[#1476F2] cursor-pointer"
                 />
               </div>
 
@@ -244,7 +257,7 @@ export function SettingsView() {
                   type="checkbox"
                   checked={emailAlerts}
                   onChange={(e) => setEmailAlerts(e.target.checked)}
-                  className="w-4 h-4 rounded text-[#4F46E5] focus:ring-[#4F46E5] cursor-pointer"
+                  className="w-4 h-4 rounded text-[#1476F2] focus:ring-[#1476F2] cursor-pointer"
                 />
               </div>
 
@@ -257,7 +270,7 @@ export function SettingsView() {
                   type="checkbox"
                   checked={weeklyDigest}
                   onChange={(e) => setWeeklyDigest(e.target.checked)}
-                  className="w-4 h-4 rounded text-[#4F46E5] focus:ring-[#4F46E5] cursor-pointer"
+                  className="w-4 h-4 rounded text-[#1476F2] focus:ring-[#1476F2] cursor-pointer"
                 />
               </div>
             </div>
@@ -284,7 +297,7 @@ export function SettingsView() {
                   value={currentPassword}
                   onChange={(e) => setCurrentPassword(e.target.value)}
                   placeholder="••••••••••••"
-                  className="w-full h-10 px-3 rounded-xl border border-slate-200 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-[#4F46E5]"
+                  className="w-full h-10 px-3 rounded-xl border border-slate-200 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-[#1476F2]"
                 />
               </div>
 
@@ -294,8 +307,8 @@ export function SettingsView() {
                   type="password"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
-                  placeholder="Min 8 characters"
-                  className="w-full h-10 px-3 rounded-xl border border-slate-200 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-[#4F46E5]"
+                  placeholder="At least 6 characters"
+                  className="w-full h-10 px-3 rounded-xl border border-slate-200 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-[#1476F2]"
                 />
               </div>
 
@@ -306,14 +319,15 @@ export function SettingsView() {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder="Repeat new password"
-                  className="w-full h-10 px-3 rounded-xl border border-slate-200 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-[#4F46E5]"
+                  className="w-full h-10 px-3 rounded-xl border border-slate-200 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-[#1476F2]"
                 />
               </div>
 
               <div className="pt-2">
                 <button
                   type="button"
-                  onClick={handleSave}
+                  disabled={saving||result.loading}
+          onClick={handleSave}
                   className="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs transition-colors cursor-pointer"
                 >
                   Update Password
@@ -331,28 +345,28 @@ export function SettingsView() {
                 Subscription Plan & Invoicing
               </h2>
               <p className="text-xs text-slate-500 mt-0.5">
-                You are currently on the {rawSettingsData.billing.currentPlan}.
+                You are currently on the No active subscription.
               </p>
             </div>
 
             <div className="p-5 rounded-2xl border border-indigo-200 bg-indigo-50/50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
-                <span className="px-2.5 py-0.5 rounded-full bg-indigo-100 text-[#4F46E5] text-[10px] font-bold">
-                  {rawSettingsData.billing.status}
+                <span className="px-2.5 py-0.5 rounded-full bg-indigo-100 text-[#1476F2] text-[10px] font-bold">
+                  Not subscribed
                 </span>
                 <h3 className="text-lg font-bold text-slate-900 mt-1 font-heading">
-                  {rawSettingsData.billing.currentPlan}
+                  No active subscription
                 </h3>
                 <p className="text-xs text-slate-500 mt-0.5">
-                  {rawSettingsData.billing.summary}
+                  No paid subscription or billing history is configured.
                 </p>
               </div>
 
               <Link
                 href="/pricing"
-                className="h-10 px-4 rounded-xl bg-[#4F46E5] hover:bg-[#4338CA] text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors shadow-xs"
+                className="h-10 px-4 rounded-xl bg-[#1476F2] hover:bg-[#0963D6] text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors shadow-xs"
               >
-                <span>Upgrade to {rawSettingsData.billing.upgradeTarget}</span>
+                <span>Upgrade to a plan</span>
                 <ExternalLink className="h-3.5 w-3.5" />
               </Link>
             </div>

@@ -1,0 +1,16 @@
+:8080 {
+	@api path /api /api/*
+	handle @api {
+		uri strip_prefix /api
+		reverse_proxy e0vjto08mzreene7ptgarsse:4100
+	}
+
+	@admin path /admin /admin/*
+	handle @admin {
+		reverse_proxy dxhfpx75focyjhm4bvf1vmbn:3000
+	}
+
+	handle {
+		reverse_proxy ayvu0v6f7njfgdgavdyhsxvt:3000
+	}
+}

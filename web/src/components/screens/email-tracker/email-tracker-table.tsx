@@ -4,6 +4,7 @@ import * as React from "react";
 import Image from "next/image";
 import { MessageSquare, MoreVertical, ChevronLeft, ChevronRight } from "lucide-react";
 import { EmailRecord, EmailStatus } from "./email-tracker-types";
+import { UniversityLogo } from "@/components/ui/university-logo";
 
 interface EmailTrackerTableProps {
   records: EmailRecord[];
@@ -16,6 +17,8 @@ export function EmailTrackerTable({
   selectedId,
   onSelect,
 }: EmailTrackerTableProps) {
+  const [page,setPage]=React.useState(1);
+  const currentPage=Math.min(page,Math.max(1,Math.ceil(records.length/10)));
   const renderStatusBadge = (status: EmailStatus) => {
     switch (status) {
       case "Positive Reply":
@@ -57,42 +60,6 @@ export function EmailTrackerTable({
     }
   };
 
-  const renderUniversityLogo = (type: EmailRecord["universityLogoType"]) => {
-    switch (type) {
-      case "stanford":
-        return (
-          <div className="w-5 h-5 rounded bg-[#8C1515] text-white text-[11px] font-bold flex items-center justify-center shrink-0">
-            S
-          </div>
-        );
-      case "mit":
-        return (
-          <div className="text-[#A31F34] font-bold text-[11px] tracking-tighter shrink-0">
-            MIT
-          </div>
-        );
-      case "toronto":
-        return (
-          <div className="w-5 h-5 rounded bg-[#002A5C]/15 text-[#002A5C] text-[10px] font-bold flex items-center justify-center shrink-0">
-            U
-          </div>
-        );
-      case "berkeley":
-        return (
-          <div className="text-[#003262] font-bold text-[11px] shrink-0">
-            Cal
-          </div>
-        );
-      case "eth":
-        return (
-          <div className="text-black font-extrabold text-[11px] shrink-0">
-            ETH
-          </div>
-        );
-      default:
-        return null;
-    }
-  };
 
   return (
     <div className="bg-white rounded-2xl border border-slate-200/90 shadow-2xs overflow-hidden text-left">
@@ -121,7 +88,7 @@ export function EmailTrackerTable({
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
-            {records.map((row) => {
+            {records.slice((currentPage-1)*10,currentPage*10).map((row) => {
               const isSelected = selectedId === row.id;
 
               return (
@@ -129,7 +96,7 @@ export function EmailTrackerTable({
                   key={row.id}
                   onClick={() => onSelect(row)}
                   className={`hover:bg-slate-50/80 transition-colors cursor-pointer ${
-                    isSelected ? "bg-[#EEF2FF]/40" : ""
+                    isSelected ? "bg-[#EAF5FF]/40" : ""
                   }`}
                 >
                   {/* Professor */}
@@ -157,8 +124,13 @@ export function EmailTrackerTable({
 
                   {/* University */}
                   <td className="py-3.5 px-4">
-                    <div className="flex items-center gap-2">
-                      {renderUniversityLogo(row.universityLogoType)}
+                    <div className="flex items-center gap-2.5">
+                      <UniversityLogo
+                        name={row.universityName}
+                        domain={row.universityUrl}
+                        size={22}
+                        className="rounded-md border border-slate-200"
+                      />
                       <div>
                         <p className="font-semibold text-slate-800 text-xs leading-tight">
                           {row.universityName}
@@ -261,62 +233,7 @@ export function EmailTrackerTable({
         </table>
       </div>
 
-      {/* Pagination Footer */}
-      <div className="px-5 py-3.5 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
-        <p>Showing 1 to 5 of 126 entries</p>
-
-        <div className="flex items-center gap-1.5">
-          <button
-            type="button"
-            className="w-7 h-7 rounded-lg border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-50 cursor-pointer"
-          >
-            <ChevronLeft className="h-3.5 w-3.5" />
-          </button>
-          <button
-            type="button"
-            className="w-7 h-7 rounded-lg bg-[#4F46E5] text-white font-semibold flex items-center justify-center cursor-pointer shadow-xs"
-          >
-            1
-          </button>
-          <button
-            type="button"
-            className="w-7 h-7 rounded-lg hover:bg-slate-50 text-slate-600 font-medium flex items-center justify-center cursor-pointer"
-          >
-            2
-          </button>
-          <button
-            type="button"
-            className="w-7 h-7 rounded-lg hover:bg-slate-50 text-slate-600 font-medium flex items-center justify-center cursor-pointer"
-          >
-            3
-          </button>
-          <button
-            type="button"
-            className="w-7 h-7 rounded-lg hover:bg-slate-50 text-slate-600 font-medium flex items-center justify-center cursor-pointer"
-          >
-            4
-          </button>
-          <button
-            type="button"
-            className="w-7 h-7 rounded-lg hover:bg-slate-50 text-slate-600 font-medium flex items-center justify-center cursor-pointer"
-          >
-            5
-          </button>
-          <span className="text-slate-400 px-1">...</span>
-          <button
-            type="button"
-            className="w-7 h-7 rounded-lg hover:bg-slate-50 text-slate-600 font-medium flex items-center justify-center cursor-pointer"
-          >
-            26
-          </button>
-          <button
-            type="button"
-            className="w-7 h-7 rounded-lg border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-50 cursor-pointer"
-          >
-            <ChevronRight className="h-3.5 w-3.5" />
-          </button>
-        </div>
-      </div>
+      <div className="flex items-center justify-between p-4 text-xs text-slate-500"><span>{records.length?((currentPage-1)*10+1):0}–{Math.min(currentPage*10,records.length)} of {records.length}</span><div className="flex gap-3"><button aria-label="Previous page" disabled={currentPage<=1} onClick={()=>setPage(currentPage-1)} className="p-2 border rounded-lg disabled:opacity-40"><ChevronLeft className="h-4 w-4"/></button><button aria-label="Next page" disabled={currentPage*10>=records.length} onClick={()=>setPage(currentPage+1)} className="p-2 border rounded-lg disabled:opacity-40"><ChevronRight className="h-4 w-4"/></button></div></div>
     </div>
   );
 }

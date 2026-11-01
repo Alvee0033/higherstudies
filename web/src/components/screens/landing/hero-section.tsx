@@ -16,7 +16,7 @@ export function HeroSection() {
           <div className="order-2 lg:order-1 lg:col-span-5 xl:col-span-5 space-y-5 sm:space-y-7 lg:pr-2 xl:pr-6 text-center lg:text-left">
             {/* Top Tag */}
             <ScrollReveal variant="fade-up" delay={0}>
-              <div className="inline-flex items-center gap-2 rounded-full bg-white/90 backdrop-blur-md border border-indigo-200/80 px-3.5 py-1.5 sm:px-4 text-xs sm:text-sm font-bold text-[#4F46E5] shadow-xs hover:border-indigo-400 hover:shadow-sm transition-all duration-300 cursor-default">
+              <div className="inline-flex items-center gap-2 rounded-full bg-white/90 backdrop-blur-md border border-indigo-200/80 px-3.5 py-1.5 sm:px-4 text-xs sm:text-sm font-bold text-[#1476F2] shadow-xs hover:border-indigo-400 hover:shadow-sm transition-all duration-300 cursor-default">
                 <MapPin className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                 <span>{HERO_CONTENT.badge}</span>
               </div>
@@ -26,7 +26,7 @@ export function HeroSection() {
             <ScrollReveal variant="fade-up" delay={80}>
               <h1 className="text-3xl sm:text-5xl lg:text-[52px] xl:text-[60px] font-black tracking-[-0.03em] text-slate-900 leading-[1.15] sm:leading-[1.12] font-heading">
                 Find the Right University. Connect with the{" "}
-                <span className="text-[#4F46E5]">Right Professor.</span>
+                <span className="text-[#1476F2]">Right Professor.</span>
               </h1>
             </ScrollReveal>
 
@@ -40,7 +40,7 @@ export function HeroSection() {
             {/* Dual Action Buttons */}
             <ScrollReveal variant="fade-up" delay={200}>
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center lg:justify-start gap-3 sm:gap-4 pt-1 sm:pt-2">
-                <Link href="/login" className="w-full sm:w-auto">
+                <Link href="/register" className="w-full sm:w-auto">
                   <Button size="lg" className="w-full sm:w-auto h-12 sm:h-13 px-7 sm:px-8 text-sm sm:text-base font-bold justify-center gap-2 shadow-[0_8px_24px_rgba(79,70,229,0.3)] hover:shadow-[0_12px_28px_rgba(79,70,229,0.4)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-200">
                     {HERO_CONTENT.primaryCta}
                     <ArrowRight className="h-4 sm:h-4.5 w-4 sm:w-4.5 group-hover:translate-x-1 transition-transform" />

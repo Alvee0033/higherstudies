@@ -5,26 +5,31 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Mail, Lock, Eye, EyeOff, ShieldCheck, ArrowRight, X } from "lucide-react";
 
+import { api } from "@/lib/student-api";
+
 interface LoginFormProps {
+  register?: boolean;
   onClose?: () => void;
   isModal?: boolean;
 }
 
-export function LoginForm({ onClose, isModal = false }: LoginFormProps) {
+export function LoginForm({ onClose, isModal = false, register = false }: LoginFormProps) {
   const router = useRouter();
-  const [email, setEmail] = React.useState("studentX@gmail.com");
-  const [password, setPassword] = React.useState("password123");
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
   const [showPassword, setShowPassword] = React.useState(false);
-  const [rememberMe, setRememberMe] = React.useState(true);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    // Redirect to dashboard
-    setTimeout(() => {
-      router.push("/dashboard");
-    }, 400);
+  const [displayName,setDisplayName] = React.useState("");
+  const [error,setError] = React.useState("");
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();setIsSubmitting(true);setError("");
+    try {
+      await api(`/v1/student/auth/${register?'register':'login'}`,{method:'POST',body:JSON.stringify({email,password,...(register?{displayName}:{})})});
+      onClose?.();
+      window.location.href = '/dashboard';
+    } catch(error) {setError(error instanceof Error?error.message:'Unable to sign in');}
+    finally {setIsSubmitting(false);}
   };
 
   return (
@@ -52,11 +57,11 @@ export function LoginForm({ onClose, isModal = false }: LoginFormProps) {
       {/* Header */}
       <div className="text-center space-y-1.5 mb-8">
         <h1 className="text-2xl sm:text-[28px] font-black text-slate-900 tracking-tight font-heading flex items-center justify-center gap-2">
-          <span>Welcome Back!</span>
+          <span>{register ? "Create your account" : "Welcome Back!"}</span>
           <span className="text-2xl">👋</span>
         </h1>
         <p className="text-xs sm:text-sm text-slate-500 font-medium">
-          Log in to continue your journey with HigherStudy.
+          {register ? "Create an account to start your HigherStudy journey." : "Log in to continue your journey with HigherStudy."}
         </p>
       </div>
 
@@ -64,6 +69,7 @@ export function LoginForm({ onClose, isModal = false }: LoginFormProps) {
       <div className="grid grid-cols-2 gap-3 mb-6">
         <button
           type="button"
+          onClick={()=>setError("Social sign-in is not configured. Use your email and password.")}
           className="flex items-center justify-center gap-2.5 h-12 px-4 rounded-xl border border-slate-200/90 hover:border-slate-300 hover:bg-slate-50/80 transition-all text-xs font-semibold text-slate-700 shadow-2xs cursor-pointer group"
         >
           <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24">
@@ -89,6 +95,7 @@ export function LoginForm({ onClose, isModal = false }: LoginFormProps) {
 
         <button
           type="button"
+          onClick={()=>setError("Social sign-in is not configured. Use your email and password.")}
           className="flex items-center justify-center gap-2.5 h-12 px-4 rounded-xl border border-slate-200/90 hover:border-slate-300 hover:bg-slate-50/80 transition-all text-xs font-semibold text-slate-700 shadow-2xs cursor-pointer group"
         >
           <svg className="w-4 h-4 shrink-0 fill-current text-slate-900" viewBox="0 0 24 24">
@@ -108,6 +115,8 @@ export function LoginForm({ onClose, isModal = false }: LoginFormProps) {
 
       {/* Form */}
       <form onSubmit={handleSubmit} className="space-y-4">
+        {error && <p role="alert" className="text-sm text-rose-600">{error}</p>}
+        {register && <label className="block text-xs font-bold text-slate-700">Full name<input required minLength={2} maxLength={100} value={displayName} onChange={e=>setDisplayName(e.target.value)} autoComplete="name" className="mt-2 w-full h-11 px-3 rounded-xl border border-slate-200" /></label>}
         {/* Email Field */}
         <div className="space-y-1.5">
           <label htmlFor="email" className="block text-xs font-bold text-slate-700">
@@ -124,7 +133,7 @@ export function LoginForm({ onClose, isModal = false }: LoginFormProps) {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="studentX@gmail.com"
-              className="w-full h-11.5 pl-10 pr-3.5 rounded-xl border border-slate-200 bg-white text-slate-900 text-xs sm:text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#4F46E5] focus:border-transparent transition-all shadow-2xs"
+              className="w-full h-11.5 pl-10 pr-3.5 rounded-xl border border-slate-200 bg-white text-slate-900 text-xs sm:text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1476F2] focus:border-transparent transition-all shadow-2xs"
             />
           </div>
         </div>
@@ -142,10 +151,13 @@ export function LoginForm({ onClose, isModal = false }: LoginFormProps) {
               id="password"
               type={showPassword ? "text" : "password"}
               required
+              minLength={6}
+              maxLength={128}
+              autoComplete={register?"new-password":"current-password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••••••"
-              className="w-full h-11.5 pl-10 pr-10 rounded-xl border border-slate-200 bg-white text-slate-900 text-xs sm:text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#4F46E5] focus:border-transparent transition-all shadow-2xs"
+              className="w-full h-11.5 pl-10 pr-10 rounded-xl border border-slate-200 bg-white text-slate-900 text-xs sm:text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1476F2] focus:border-transparent transition-all shadow-2xs"
             />
             <button
               type="button"
@@ -160,38 +172,32 @@ export function LoginForm({ onClose, isModal = false }: LoginFormProps) {
 
         {/* Remember me & Forgot Password */}
         <div className="flex items-center justify-between pt-1 pb-1">
-          <label className="flex items-center gap-2 cursor-pointer select-none">
-            <input
-              type="checkbox"
-              checked={rememberMe}
-              onChange={(e) => setRememberMe(e.target.checked)}
-              className="h-4 w-4 rounded border-slate-300 text-[#4F46E5] focus:ring-[#4F46E5] cursor-pointer"
-            />
-            <span className="text-xs font-medium text-slate-600">Remember me</span>
-          </label>
-          <a
-            href="#"
-            onClick={(e) => e.preventDefault()}
-            className="text-xs font-bold text-[#4F46E5] hover:text-[#4338CA] transition-colors"
-          >
-            Forgot Password?
-          </a>
+          <span className="text-xs font-medium text-slate-600">Sessions last 30 days</span>
+          {!register && (
+            <button
+              type="button"
+              onClick={() => setError("Password recovery is not configured. Contact support for account assistance.")}
+              className="border-0 bg-transparent p-0 text-xs font-bold text-[#1476F2] hover:text-[#0963D6] transition-colors"
+            >
+              Forgot Password?
+            </button>
+          )}
         </div>
 
         {/* Submit Button */}
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full h-12 rounded-xl bg-[#5244E3] hover:bg-[#4338CA] text-white font-bold text-xs sm:text-sm shadow-md shadow-indigo-500/20 flex items-center justify-center gap-2 transition-all cursor-pointer active:scale-[0.99] disabled:opacity-70 mt-2"
+          className="w-full h-12 rounded-xl bg-[#5244E3] hover:bg-[#0963D6] text-white font-bold text-xs sm:text-sm shadow-md shadow-indigo-500/20 flex items-center justify-center gap-2 transition-all cursor-pointer active:scale-[0.99] disabled:opacity-70 mt-2"
         >
-          <span>{isSubmitting ? "Logging in..." : "Log In"}</span>
+          <span>{isSubmitting ? "Please wait..." : register ? "Create Account" : "Log In"}</span>
           <ArrowRight className="h-4 w-4" />
         </button>
       </form>
 
       {/* Security Disclaimer Box */}
       <div className="mt-6 p-3.5 rounded-2xl bg-indigo-50/70 border border-indigo-100/80 flex items-center gap-3 text-left">
-        <div className="h-7 w-7 rounded-lg bg-white border border-indigo-100 text-[#4F46E5] flex items-center justify-center shrink-0 shadow-2xs">
+        <div className="h-7 w-7 rounded-lg bg-white border border-indigo-100 text-[#1476F2] flex items-center justify-center shrink-0 shadow-2xs">
           <ShieldCheck className="h-4 w-4" />
         </div>
         <p className="text-[11.5px] leading-snug text-indigo-900/80 font-medium">
@@ -201,14 +207,13 @@ export function LoginForm({ onClose, isModal = false }: LoginFormProps) {
 
       {/* Sign Up Footer */}
       <div className="mt-8 text-center text-xs text-slate-600">
-        Don&apos;t have an account?{" "}
-        <a
-          href="#"
-          onClick={(e) => e.preventDefault()}
-          className="font-bold text-[#4F46E5] hover:text-[#4338CA] transition-colors"
+        {register ? "Already have an account? " : "Don't have an account? "}
+        <Link
+          href={register ? "/login" : "/register"}
+          className="font-bold text-[#1476F2] hover:text-[#0963D6] transition-colors"
         >
-          Sign up
-        </a>
+          {register ? "Log in" : "Sign up"}
+        </Link>
       </div>
     </div>
   );

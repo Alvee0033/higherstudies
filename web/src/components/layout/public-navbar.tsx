@@ -84,7 +84,7 @@ export function PublicNavbar() {
               Log in
             </Button>
           </Link>
-          <Link href="/login">
+          <Link href="/register">
             <Button
               variant="primary"
               size="sm"
@@ -127,7 +127,7 @@ export function PublicNavbar() {
                   Log in
                 </Button>
               </Link>
-              <Link href="/login" onClick={() => setMobileMenuOpen(false)} className="w-full">
+              <Link href="/register" onClick={() => setMobileMenuOpen(false)} className="w-full">
                 <Button variant="primary" className="w-full h-11 text-xs font-bold justify-center rounded-xl shadow-md shadow-indigo-500/25 bg-[#4F46E5] hover:bg-[#4338CA] text-white">
                   Sign Up
                 </Button>

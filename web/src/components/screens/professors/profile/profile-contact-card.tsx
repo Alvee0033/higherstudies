@@ -20,8 +20,8 @@ export function ProfileContactCard({ contact }: ProfileContactCardProps) {
       <div className="space-y-2.5 text-xs text-slate-600">
         <div className="flex items-center gap-2.5">
           <Mail className="h-4 w-4 text-slate-400 shrink-0" />
-          <a href={`mailto:${contact.email}`} className="text-[#4F46E5] hover:underline">
-            {contact.email}
+          <a href={contact.email?`mailto:${contact.email}`:undefined} className="text-[#1476F2] hover:underline">
+            {contact.email||"Public email not collected"}
           </a>
         </div>
         <div className="flex items-center gap-2.5">
@@ -35,12 +35,12 @@ export function ProfileContactCard({ contact }: ProfileContactCardProps) {
         <div className="flex items-center gap-2.5">
           <Globe className="h-4 w-4 text-slate-400 shrink-0" />
           <a
-            href={contact.website}
+            href={contact.website||undefined}
             target="_blank"
             rel="noreferrer"
-            className="text-[#4F46E5] hover:underline truncate"
+            className="text-[#1476F2] hover:underline truncate"
           >
-            {contact.website}
+            {contact.website||"Official profile not collected"}
           </a>
         </div>
       </div>
@@ -51,11 +51,11 @@ export function ProfileContactCard({ contact }: ProfileContactCardProps) {
       </div>
 
       <Link
-        href="/email-tracker"
-        className="w-full py-2.5 rounded-xl bg-[#4F46E5] hover:bg-[#4338CA] text-white text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 shadow-xs transition-colors cursor-pointer"
+        href="/email-tracker?add=true"
+        className="w-full py-2.5 rounded-xl bg-[#1476F2] hover:bg-[#0963D6] text-white text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 shadow-xs transition-colors cursor-pointer"
       >
         <Send className="h-4 w-4" />
-        <span>Send Email</span>
+        <span>Track outreach</span>
       </Link>
     </div>
   );

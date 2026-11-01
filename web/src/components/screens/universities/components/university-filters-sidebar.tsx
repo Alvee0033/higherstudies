@@ -1,201 +1,134 @@
 import * as React from "react";
-import { ChevronUp, Bookmark } from "lucide-react";
-import { FilterAcademicPreferences } from "./filter-academic-preferences";
-import { FilterLocationPreferences } from "./filter-location-preferences";
-import { FilterAccordionSection } from "./filter-accordion-section";
+import { Search, Globe2, ChevronDown, ChevronUp, RotateCcw } from "lucide-react";
+import { countryName } from "@/lib/student-api";
 
 export interface UniversityFiltersSidebarProps {
+  countries?: { code: string; count: number }[];
+  searchQuery: string;
+  onSearchQueryChange: (val: string) => void;
+  selectedCountry: string;
+  onSelectedCountryChange: (val: string) => void;
   mobileFilterOpen: boolean;
   sidebarHidden: boolean;
   onToggleSidebarHidden: () => void;
-  // Academic
-  academicOpen: boolean;
-  onToggleAcademicOpen: () => void;
-  degreeLevel: string;
-  onDegreeLevelChange: (val: string) => void;
-  fieldOfStudy: string;
-  onFieldOfStudyChange: (val: string) => void;
-  specialization: string;
-  onSpecializationChange: (val: string) => void;
-  gpaMin: number;
-  onGpaMinChange: (val: number) => void;
-  ieltsMin: number;
-  onIeltsMinChange: (val: number) => void;
-  // Location
-  locationOpen: boolean;
-  onToggleLocationOpen: () => void;
-  studyDestination: string;
-  onStudyDestinationChange: (val: string) => void;
-  selectedCountries: string[];
-  onRemoveCountry: (country: string) => void;
-  excludeCountry: string;
-  onExcludeCountryChange: (val: string) => void;
-  // Accordions
-  financialOpen: boolean;
-  onToggleFinancialOpen: () => void;
-  universityPrefOpen: boolean;
-  onToggleUniversityPrefOpen: () => void;
-  programPrefOpen: boolean;
-  onToggleProgramPrefOpen: () => void;
+  onClearAll: () => void;
 }
 
 export function UniversityFiltersSidebar({
+  countries = [],
+  searchQuery,
+  onSearchQueryChange,
+  selectedCountry,
+  onSelectedCountryChange,
   mobileFilterOpen,
   sidebarHidden,
   onToggleSidebarHidden,
-  academicOpen,
-  onToggleAcademicOpen,
-  degreeLevel,
-  onDegreeLevelChange,
-  fieldOfStudy,
-  onFieldOfStudyChange,
-  specialization,
-  onSpecializationChange,
-  gpaMin,
-  onGpaMinChange,
-  ieltsMin,
-  onIeltsMinChange,
-  locationOpen,
-  onToggleLocationOpen,
-  studyDestination,
-  onStudyDestinationChange,
-  selectedCountries,
-  onRemoveCountry,
-  excludeCountry,
-  onExcludeCountryChange,
-  financialOpen,
-  onToggleFinancialOpen,
-  universityPrefOpen,
-  onToggleUniversityPrefOpen,
-  programPrefOpen,
-  onToggleProgramPrefOpen,
+  onClearAll,
 }: UniversityFiltersSidebarProps) {
+  const [locationOpen, setLocationOpen] = React.useState(true);
+
   return (
     <aside
       className={`${
         mobileFilterOpen ? "block" : "hidden"
-      } lg:block w-full lg:w-[300px] xl:w-[320px] shrink-0 space-y-3 pr-1 pb-4`}
+      } lg:block w-full lg:w-[280px] xl:w-[300px] shrink-0 space-y-4 pr-1 pb-4`}
     >
-      {/* Header Title block */}
+      {/* Title & Introduction */}
       <div className="text-left space-y-1">
-        <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight font-heading leading-tight">
-          Find Universities
+        <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight font-heading leading-tight">
+          Universities
         </h1>
         <p className="text-xs text-slate-500 leading-relaxed font-normal">
-          Discover universities that match your academic profile and preferences
+          Explore accredited universities, research hubs, and partner institutions worldwide.
         </p>
       </div>
 
-      {/* Filters Title + Hide Button */}
-      <div className="flex items-center justify-between pt-1">
-        <h2 className="text-sm font-bold text-slate-900">Filters</h2>
-        <button
-          type="button"
-          onClick={onToggleSidebarHidden}
-          className="text-xs text-slate-500 hover:text-slate-800 flex items-center gap-1 cursor-pointer transition-colors"
-        >
-          <span>{sidebarHidden ? "Show" : "Hide"}</span>
-          <ChevronUp
-            className={`h-3.5 w-3.5 text-slate-400 transition-transform ${
-              sidebarHidden ? "rotate-180" : ""
-            }`}
-          />
-        </button>
+      {/* Filters Title + Hide/Show Toggle */}
+      <div className="flex items-center justify-between pt-1 border-t border-slate-100">
+        <h2 className="text-sm font-bold text-slate-900">Search & Filters</h2>
+        <div className="flex items-center gap-2">
+          {(searchQuery || selectedCountry) && (
+            <button
+              type="button"
+              onClick={onClearAll}
+              className="text-xs text-indigo-600 hover:text-indigo-800 flex items-center gap-1 cursor-pointer font-semibold"
+            >
+              <RotateCcw className="h-3 w-3" />
+              <span>Reset</span>
+            </button>
+          )}
+          <button
+            type="button"
+            onClick={onToggleSidebarHidden}
+            className="text-xs text-slate-500 hover:text-slate-800 flex items-center gap-1 cursor-pointer transition-colors"
+          >
+            <span>{sidebarHidden ? "Show" : "Hide"}</span>
+            <ChevronUp
+              className={`h-3.5 w-3.5 text-slate-400 transition-transform ${
+                sidebarHidden ? "rotate-180" : ""
+              }`}
+            />
+          </button>
+        </div>
       </div>
 
       {!sidebarHidden && (
-        <div className="space-y-2.5">
-          {/* 1. Academic Preferences Box */}
-          <FilterAcademicPreferences
-            isOpen={academicOpen}
-            onToggle={onToggleAcademicOpen}
-            degreeLevel={degreeLevel}
-            onDegreeLevelChange={onDegreeLevelChange}
-            fieldOfStudy={fieldOfStudy}
-            onFieldOfStudyChange={onFieldOfStudyChange}
-            specialization={specialization}
-            onSpecializationChange={onSpecializationChange}
-            gpaMin={gpaMin}
-            onGpaMinChange={onGpaMinChange}
-            ieltsMin={ieltsMin}
-            onIeltsMinChange={onIeltsMinChange}
-          />
+        <div className="space-y-4">
+          {/* Keyword Search by University Name */}
+          <div className="bg-white rounded-xl border border-slate-200 p-4 text-left space-y-2 shadow-2xs">
+            <label htmlFor="university-search" className="block text-xs font-bold text-slate-700">
+              Institution Name
+            </label>
+            <div className="relative">
+              <Search className="h-4 w-4 text-slate-400 absolute left-3 top-3 pointer-events-none" />
+              <input
+                id="university-search"
+                type="text"
+                value={searchQuery}
+                onChange={(e) => onSearchQueryChange(e.target.value)}
+                placeholder="e.g. Washington, Michigan, Toronto..."
+                className="w-full h-10 pl-9 pr-3 rounded-lg border border-slate-200 bg-white text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-[#1476F2] shadow-2xs"
+              />
+            </div>
+          </div>
 
-          {/* 2. Location Preferences Box */}
-          <FilterLocationPreferences
-            isOpen={locationOpen}
-            onToggle={onToggleLocationOpen}
-            studyDestination={studyDestination}
-            onStudyDestinationChange={onStudyDestinationChange}
-            selectedCountries={selectedCountries}
-            onRemoveCountry={onRemoveCountry}
-            excludeCountry={excludeCountry}
-            onExcludeCountryChange={onExcludeCountryChange}
-          />
-
-          {/* 3. Financial Preferences Box (Accordion) */}
-          <FilterAccordionSection
-            title="Financial Preferences"
-            isOpen={financialOpen}
-            onToggle={onToggleFinancialOpen}
-          >
-            <label className="flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" defaultChecked className="rounded text-[#5D3FD3] accent-[#5D3FD3]" />
-              <span>Full Tuition Waiver</span>
-            </label>
-            <label className="flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" defaultChecked className="rounded text-[#5D3FD3] accent-[#5D3FD3]" />
-              <span>Assistantship (RA/TA) Available</span>
-            </label>
-          </FilterAccordionSection>
-
-          {/* 4. University Preferences Box (Accordion) */}
-          <FilterAccordionSection
-            title="University Preferences"
-            isOpen={universityPrefOpen}
-            onToggle={onToggleUniversityPrefOpen}
-          >
-            <label className="flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" defaultChecked className="rounded text-[#5D3FD3] accent-[#5D3FD3]" />
-              <span>Top 100 QS Ranked</span>
-            </label>
-            <label className="flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" defaultChecked className="rounded text-[#5D3FD3] accent-[#5D3FD3]" />
-              <span>High Research Output (R1)</span>
-            </label>
-          </FilterAccordionSection>
-
-          {/* 5. Program Preferences Box (Accordion) */}
-          <FilterAccordionSection
-            title="Program Preferences"
-            isOpen={programPrefOpen}
-            onToggle={onToggleProgramPrefOpen}
-          >
-            <label className="flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" defaultChecked className="rounded text-[#5D3FD3] accent-[#5D3FD3]" />
-              <span>Fall 2025 Intake</span>
-            </label>
-            <label className="flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" className="rounded text-[#5D3FD3] accent-[#5D3FD3]" />
-              <span>Spring 2026 Intake</span>
-            </label>
-          </FilterAccordionSection>
-
-          {/* Sidebar Action Buttons */}
-          <div className="pt-2 space-y-2.5">
+          {/* Location Preferences */}
+          <div className="bg-white rounded-xl border border-slate-200 p-4 text-left space-y-3.5 shadow-2xs">
             <button
               type="button"
-              className="w-full h-10 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-medium text-xs flex items-center justify-center gap-2 transition-colors cursor-pointer"
+              onClick={() => setLocationOpen(!locationOpen)}
+              className="w-full flex items-center justify-between text-xs font-bold text-slate-900 cursor-pointer"
             >
-              <Bookmark className="h-3.5 w-3.5 text-slate-400" />
-              <span>Save Search</span>
+              <div className="flex items-center gap-1.5">
+                <Globe2 className="h-4 w-4 text-indigo-600" />
+                <span>Country / Destination</span>
+              </div>
+              <ChevronUp
+                className={`h-4 w-4 text-slate-400 transition-transform ${
+                  locationOpen ? "" : "rotate-180"
+                }`}
+              />
             </button>
-            <button
-              type="button"
-              className="w-full h-10 rounded-lg bg-[#5D3FD3] hover:bg-[#4E34B5] text-white font-medium text-xs shadow-xs transition-colors cursor-pointer"
-            >
-              Apply Filters (12)
-            </button>
+
+            {locationOpen && (
+              <div className="space-y-2 pt-1">
+                <div className="relative">
+                  <select
+                    value={selectedCountry}
+                    onChange={(e) => onSelectedCountryChange(e.target.value)}
+                    className="w-full h-10 px-3 pr-8 rounded-lg border border-slate-200 bg-white text-slate-800 text-xs font-medium focus:outline-none focus:ring-1 focus:ring-[#1476F2] appearance-none cursor-pointer"
+                  >
+                    <option value="">All Countries ({countries.reduce((acc, c) => acc + c.count, 0)})</option>
+                    {countries.map(({ code, count }) => (
+                      <option key={code} value={code}>
+                        {countryName(code)} ({count})
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDown className="h-3.5 w-3.5 text-slate-400 absolute right-3 top-3.5 pointer-events-none" />
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}

@@ -6,6 +6,8 @@ export const metadata: Metadata = {
   description: "Manage your account, notification preferences, security, and subscription.",
 };
 
+export const instant = false;
+
 export default function SettingsPage() {
   return <SettingsView />;
 }

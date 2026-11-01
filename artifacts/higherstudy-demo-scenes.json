@@ -1,0 +1,87 @@
+[
+  {
+    "name": "Welcome",
+    "path": "/",
+    "durationMs": 3200
+  },
+  {
+    "name": "Sign in",
+    "path": "/login",
+    "durationMs": 2800
+  },
+  {
+    "name": "Student dashboard",
+    "path": "/dashboard",
+    "durationMs": 3400
+  },
+  {
+    "name": "University explorer",
+    "path": "/universities",
+    "durationMs": 3400
+  },
+  {
+    "name": "Programme discovery",
+    "path": "/programs",
+    "durationMs": 3400
+  },
+  {
+    "name": "Faculty directory",
+    "path": "/professors",
+    "durationMs": 3400
+  },
+  {
+    "name": "Faculty profile",
+    "path": "/professors",
+    "durationMs": 2000
+  },
+  {
+    "name": "Saved items",
+    "path": "/saved-items",
+    "durationMs": 3200
+  },
+  {
+    "name": "Application tracker",
+    "path": "/applications",
+    "durationMs": 2800
+  },
+  {
+    "name": "Add application workflow",
+    "path": "/applications",
+    "durationMs": 3200
+  },
+  {
+    "name": "Email outreach tracker",
+    "path": "/email-tracker",
+    "durationMs": 2800
+  },
+  {
+    "name": "Add outreach workflow",
+    "path": "/email-tracker",
+    "durationMs": 3200
+  },
+  {
+    "name": "Student profile",
+    "path": "/profile",
+    "durationMs": 3200
+  },
+  {
+    "name": "Account settings",
+    "path": "/settings",
+    "durationMs": 3200
+  },
+  {
+    "name": "AI tools availability",
+    "path": "/ai-tools",
+    "durationMs": 3500
+  },
+  {
+    "name": "Plans and limits",
+    "path": "/pricing",
+    "durationMs": 3200
+  },
+  {
+    "name": "Wrap up",
+    "path": "/dashboard",
+    "durationMs": 3000
+  }
+]

@@ -4,6 +4,7 @@ import { Search, SlidersHorizontal, LayoutGrid, List } from "lucide-react";
 export type ProfessorTab = "all" | "department" | "research" | "recent";
 
 export interface ProfessorSearchControlsProps {
+  total?: number;
   activeTab: ProfessorTab;
   onTabChange: (tab: ProfessorTab) => void;
   mobileFilterOpen: boolean;
@@ -17,6 +18,7 @@ export interface ProfessorSearchControlsProps {
 }
 
 export function ProfessorSearchControls({
+  total=0,
   activeTab,
   onTabChange,
   mobileFilterOpen,
@@ -42,7 +44,7 @@ export function ProfessorSearchControls({
                 : "border-transparent text-slate-500 hover:text-slate-800"
             }`}
           >
-            All Professors (1,247)
+            All Faculty ({total})
           </button>
           <button
             type="button"
@@ -75,7 +77,7 @@ export function ProfessorSearchControls({
                 : "border-transparent text-slate-500 hover:text-slate-800"
             }`}
           >
-            Recently Joined
+            Recently Added
           </button>
         </div>
 
@@ -83,7 +85,12 @@ export function ProfessorSearchControls({
         <button
           type="button"
           onClick={onToggleMobileFilter}
-          className="lg:hidden shrink-0 mb-2 px-3 py-1.5 rounded-lg border border-slate-200 bg-white text-xs font-semibold text-slate-700 flex items-center gap-1.5 shadow-2xs cursor-pointer"
+          aria-expanded={mobileFilterOpen}
+          className={`lg:hidden shrink-0 mb-2 px-3 py-1.5 rounded-lg border text-xs font-semibold flex items-center gap-1.5 shadow-2xs cursor-pointer ${
+            mobileFilterOpen
+              ? "border-[#5D3FD3] bg-purple-50 text-[#5D3FD3]"
+              : "border-slate-200 bg-white text-slate-700"
+          }`}
         >
           <SlidersHorizontal className="h-3.5 w-3.5 text-[#5D3FD3]" />
           <span>Filters</span>
@@ -111,10 +118,9 @@ export function ProfessorSearchControls({
               onChange={(e) => onSortByChange(e.target.value)}
               className="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-800 font-medium text-xs focus:outline-none cursor-pointer"
             >
-              <option value="Relevance">Relevance</option>
+              <option value="Name">Name: A to Z</option>
               <option value="H-Index">H-Index (Highest)</option>
               <option value="Citations">Citations</option>
-              <option value="Openings">Most Openings</option>
             </select>
           </div>
 

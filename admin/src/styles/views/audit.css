@@ -1,0 +1,13 @@
+.audit-log-panel { padding: 22px; }
+.audit-log-table-wrap { width: 100%; overflow-x: auto; }
+.audit-log-table { width: 100%; border-collapse: collapse; min-width: 760px; }
+.audit-log-table th, .audit-log-table td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--border, #e5eaf1); vertical-align: top; }
+.audit-log-table th { color: var(--muted, #64748b); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; }
+.audit-log-table td { font-size: 13px; }
+.audit-log-table details summary { cursor: pointer; color: var(--primary, #2563eb); }
+.audit-log-table pre { max-width: 360px; max-height: 220px; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; font-size: 11px; }
+.audit-log-error, .audit-log-state { padding: 16px; color: var(--muted, #64748b); }
+.audit-log-error { color: var(--danger, #b91c1c); }
+.audit-log-pagination { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-top: 16px; }
+.audit-log-pagination > div { display: flex; gap: 8px; }
+@media (max-width: 600px) { .audit-log-panel { padding: 14px; } .audit-log-pagination { align-items: flex-start; flex-direction: column; } }

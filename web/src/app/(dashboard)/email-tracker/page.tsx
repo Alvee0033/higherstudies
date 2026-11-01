@@ -6,6 +6,8 @@ export const metadata = {
   description: "Track your cold emails, reminder schedules, and professor responses in one place.",
 };
 
+export const instant = false;
+
 export default function EmailTrackerPage() {
   return <EmailTrackerView />;
 }

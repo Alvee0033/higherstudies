@@ -10,12 +10,12 @@ import {
   ExternalLink,
   Trash2,
   Mail,
-  GraduationCap,
   MapPin,
-  Sparkles,
 } from "lucide-react";
 
-import rawSavedItems from "@/data/json/saved-items/saved-items.json";
+import {useSaved} from "@/hooks/use-saved";
+import {countryName,placeholderAvatar,safeUrl} from "@/lib/student-api";
+import { UniversityLogo } from "@/components/ui/university-logo";
 
 interface SavedUniversity {
   id: string;
@@ -26,6 +26,7 @@ interface SavedUniversity {
   minGpa: string;
   deadline: string;
   logo: string;
+  officialUrl?: string;
 }
 
 interface SavedProfessor {
@@ -33,21 +34,22 @@ interface SavedProfessor {
   name: string;
   university: string;
   department: string;
-  hIndex: number;
-  citations: number;
+  hIndex: number|string;
+  citations: number|string;
   funding: boolean;
   research: string[];
   avatar: string;
+  officialUrl?: string;
 }
 
-const SAVED_UNIS: SavedUniversity[] = rawSavedItems.savedUniversities;
-const SAVED_PROFS: SavedProfessor[] = rawSavedItems.savedProfessors;
+
 
 export function SavedItemsView() {
   const [activeTab, setActiveTab] = React.useState<"all" | "unis" | "profs">("all");
   const [searchQuery, setSearchQuery] = React.useState("");
-  const [unis, setUnis] = React.useState(SAVED_UNIS);
-  const [profs, setProfs] = React.useState(SAVED_PROFS);
+  const saved=useSaved();
+  const unis:SavedUniversity[]=(saved.data?.data??[]).filter(item=>item.kind!=='faculty').map(({id,record:row})=>({id,name:row.title||row.name||'Unnamed record',location:[row.institution_name,countryName(row.country_code)].filter(Boolean).join(' · '),ranking:'Not reported',acceptanceRate:'Not reported',minGpa:'Not reported',deadline:row.next_deadline||'Not reported',logo:placeholderAvatar,officialUrl:safeUrl(row.institution_official_url||row.official_url)}));
+  const profs:SavedProfessor[]=(saved.data?.data??[]).filter(item=>item.kind==='faculty').map(({id,record:row})=>({id,name:row.name||'Unnamed researcher',university:row.institution_name||'',department:row.academic_unit||'Not reported',hIndex:row.research_metadata?.hIndex??'—',citations:row.research_metadata?.citedByCount??'—',funding:false,research:row.research_topics??[],avatar:placeholderAvatar,officialUrl:safeUrl(row.institution_official_url)}));
 
   const filteredUnis = unis.filter((u) =>
     u.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -61,20 +63,22 @@ export function SavedItemsView() {
   );
 
   const removeUni = (id: string) => {
-    setUnis(unis.filter((u) => u.id !== id));
+    const item=saved.data?.data.find(row=>row.id===id);if(item)void saved.toggle(item.kind,id);
   };
 
   const removeProf = (id: string) => {
-    setProfs(profs.filter((p) => p.id !== id));
+    void saved.toggle('faculty',id);
   };
 
   return (
     <div className="w-full max-w-7xl mx-auto space-y-8 text-left">
+      {saved.error&&<p role="alert" className="text-sm text-rose-600">{saved.error}</p>}
+      {saved.loading&&<p role="status">Loading saved items…</p>}
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="p-2 rounded-xl bg-indigo-50 text-[#4F46E5]">
+            <span className="p-2 rounded-xl bg-indigo-50 text-[#1476F2]">
               <Bookmark className="h-5 w-5" />
             </span>
             <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight font-heading">
@@ -94,7 +98,7 @@ export function SavedItemsView() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search saved items..."
-            className="w-full h-10 pl-10 pr-4 rounded-xl border border-slate-200 bg-white text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#4F46E5] shadow-2xs"
+            className="w-full h-10 pl-10 pr-4 rounded-xl border border-slate-200 bg-white text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1476F2] shadow-2xs"
           />
         </div>
       </div>
@@ -106,7 +110,7 @@ export function SavedItemsView() {
           onClick={() => setActiveTab("all")}
           className={`px-4 py-2.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
             activeTab === "all"
-              ? "bg-[#4F46E5] text-white shadow-xs"
+              ? "bg-[#1476F2] text-white shadow-xs"
               : "bg-white text-slate-600 hover:bg-slate-50 border border-slate-200"
           }`}
         >
@@ -118,7 +122,7 @@ export function SavedItemsView() {
           onClick={() => setActiveTab("unis")}
           className={`px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
             activeTab === "unis"
-              ? "bg-[#4F46E5] text-white shadow-xs"
+              ? "bg-[#1476F2] text-white shadow-xs"
               : "bg-white text-slate-600 hover:bg-slate-50 border border-slate-200"
           }`}
         >
@@ -131,7 +135,7 @@ export function SavedItemsView() {
           onClick={() => setActiveTab("profs")}
           className={`px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
             activeTab === "profs"
-              ? "bg-[#4F46E5] text-white shadow-xs"
+              ? "bg-[#1476F2] text-white shadow-xs"
               : "bg-white text-slate-600 hover:bg-slate-50 border border-slate-200"
           }`}
         >
@@ -145,12 +149,12 @@ export function SavedItemsView() {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2 font-heading">
-              <Building2 className="h-5 w-5 text-[#4F46E5]" />
+              <Building2 className="h-5 w-5 text-[#1476F2]" />
               <span>Shortlisted Universities ({filteredUnis.length})</span>
             </h2>
             <Link
               href="/universities"
-              className="text-xs font-semibold text-[#4F46E5] hover:underline"
+              className="text-xs font-semibold text-[#1476F2] hover:underline"
             >
               Explore More →
             </Link>
@@ -165,16 +169,14 @@ export function SavedItemsView() {
                 <div>
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-xl bg-slate-100 overflow-hidden shrink-0 border border-slate-200">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src={uni.logo}
-                          alt={uni.name}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
+                      <UniversityLogo
+                        name={uni.name}
+                        domain={uni.officialUrl}
+                        size={48}
+                        className="w-12 h-12 rounded-xl border border-slate-200 shrink-0"
+                      />
                       <div>
-                        <span className="px-2 py-0.5 rounded-full bg-indigo-50 text-[#4F46E5] text-[10px] font-bold">
+                        <span className="px-2 py-0.5 rounded-full bg-indigo-50 text-[#1476F2] text-[10px] font-bold">
                           {uni.ranking}
                         </span>
                         <h3 className="text-sm font-bold text-slate-900 mt-1 leading-snug">
@@ -225,7 +227,7 @@ export function SavedItemsView() {
                 <div className="pt-2 flex items-center gap-2">
                   <Link
                     href={`/applications`}
-                    className="flex-1 h-9 rounded-xl bg-[#4F46E5] hover:bg-[#4338CA] text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors shadow-2xs"
+                    className="flex-1 h-9 rounded-xl bg-[#1476F2] hover:bg-[#0963D6] text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors shadow-2xs"
                   >
                     <span>Start Application</span>
                   </Link>
@@ -247,12 +249,12 @@ export function SavedItemsView() {
         <div className="space-y-4 pt-4">
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2 font-heading">
-              <Users className="h-5 w-5 text-[#4F46E5]" />
+              <Users className="h-5 w-5 text-[#1476F2]" />
               <span>Bookmarked Professors ({filteredProfs.length})</span>
             </h2>
             <Link
               href="/professors"
-              className="text-xs font-semibold text-[#4F46E5] hover:underline"
+              className="text-xs font-semibold text-[#1476F2] hover:underline"
             >
               Discover Faculty →
             </Link>
@@ -326,7 +328,7 @@ export function SavedItemsView() {
                 <div className="pt-2 flex items-center gap-2">
                   <Link
                     href={`/ai-tools`}
-                    className="flex-1 h-9 rounded-xl bg-[#4F46E5] hover:bg-[#4338CA] text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors shadow-2xs"
+                    className="flex-1 h-9 rounded-xl bg-[#1476F2] hover:bg-[#0963D6] text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors shadow-2xs"
                   >
                     <Mail className="h-3.5 w-3.5" />
                     <span>AI Cold Email</span>

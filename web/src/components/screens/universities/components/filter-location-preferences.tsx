@@ -1,8 +1,9 @@
 import * as React from "react";
 import { ChevronDown, ChevronUp, X } from "lucide-react";
-import { UNIVERSITY_FILTER_OPTIONS } from "../university-data";
+import {countryName} from "@/lib/student-api";
 
 export interface FilterLocationPreferencesProps {
+  countries?:{code:string;count:number}[];
   isOpen: boolean;
   onToggle: () => void;
   studyDestination: string;
@@ -14,6 +15,7 @@ export interface FilterLocationPreferencesProps {
 }
 
 export function FilterLocationPreferences({
+  countries=[],
   isOpen,
   onToggle,
   studyDestination,
@@ -49,9 +51,7 @@ export function FilterLocationPreferences({
                 onChange={(e) => onStudyDestinationChange(e.target.value)}
                 className="w-full h-9.5 px-3 pr-8 rounded-lg border border-slate-200 bg-white text-slate-800 text-xs focus:outline-none focus:ring-1 focus:ring-[#5D3FD3] appearance-none"
               >
-                {UNIVERSITY_FILTER_OPTIONS.studyDestinations.map((dest) => (
-                  <option key={dest}>{dest}</option>
-                ))}
+                <option value="Any Country">Any Country</option>{countries.map(({code,count})=><option key={code} value={code}>{countryName(code)} ({count})</option>)}
               </select>
               <ChevronDown className="h-3.5 w-3.5 text-slate-400 absolute right-3 top-3 pointer-events-none" />
             </div>
@@ -64,7 +64,7 @@ export function FilterLocationPreferences({
               {selectedCountries.map((country) => (
                 <span
                   key={country}
-                  className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-[#EDE9FE] text-[#5D3FD3] text-[11px] font-medium"
+                  className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-[#E1F0FF] text-[#5D3FD3] text-[11px] font-medium"
                 >
                   <span>{country}</span>
                   <button
@@ -90,11 +90,7 @@ export function FilterLocationPreferences({
                 onChange={(e) => onExcludeCountryChange(e.target.value)}
                 className="w-full h-9.5 px-3 pr-8 rounded-lg border border-slate-200 bg-white text-slate-400 text-xs focus:outline-none focus:ring-1 focus:ring-[#5D3FD3] appearance-none"
               >
-                {UNIVERSITY_FILTER_OPTIONS.excludeOptions.map((opt) => (
-                  <option key={opt.value} value={opt.value}>
-                    {opt.label}
-                  </option>
-                ))}
+                <option value="">None</option>{countries.map(({code})=><option key={code} value={code}>{countryName(code)}</option>)}
               </select>
               <ChevronDown className="h-3.5 w-3.5 text-slate-400 absolute right-3 top-3 pointer-events-none" />
             </div>

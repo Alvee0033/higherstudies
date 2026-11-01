@@ -3,7 +3,6 @@
 import * as React from "react";
 import Image from "next/image";
 import {
-  Building2,
   MapPin,
   Mail,
   Link as LinkIcon,
@@ -11,16 +10,19 @@ import {
   Undo2,
   Calendar,
   Pencil,
-  FileText,
   Download,
 } from "lucide-react";
 import { EmailRecord } from "./email-tracker-types";
+import { UniversityLogo } from "@/components/ui/university-logo";
 
 interface EmailTrackerDetailViewProps {
   record: EmailRecord;
+  onUpdate?:(data:Record<string,unknown>)=>Promise<void>;
 }
 
-export function EmailTrackerDetailView({ record }: EmailTrackerDetailViewProps) {
+export function EmailTrackerDetailView({ record,onUpdate }: EmailTrackerDetailViewProps) {
+  const [editing,setEditing]=React.useState(false);
+  const [notes,setNotes]=React.useState(record.notes);
   return (
     <div className="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-8 shadow-xs max-w-[960px] mx-auto text-left">
       <h2 className="text-2xl font-bold text-slate-900 font-heading mb-6">
@@ -62,20 +64,25 @@ export function EmailTrackerDetailView({ record }: EmailTrackerDetailViewProps) 
 
             <div className="pt-4 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-slate-700">
               <div className="flex items-center gap-2.5">
-                <Building2 className="h-4 w-4 text-slate-400 shrink-0" />
-                <span>
+                <UniversityLogo
+                  name={record.universityName}
+                  domain={record.universityUrl}
+                  size={18}
+                  className="rounded-md border border-slate-200"
+                />
+                <span className="font-semibold text-slate-800">
                   {record.universityName} {record.universitySub}
                 </span>
               </div>
               <div className="flex items-center gap-2.5">
                 <MapPin className="h-4 w-4 text-slate-400 shrink-0" />
-                <span>{record.location || "Stanford, CA, USA"}</span>
+                <span>{record.location || "Not recorded"}</span>
               </div>
               <div className="flex items-center gap-2.5">
                 <Mail className="h-4 w-4 text-slate-400 shrink-0" />
                 <a
                   href={`mailto:${record.email}`}
-                  className="text-[#4F46E5] hover:underline truncate"
+                  className="text-[#1476F2] hover:underline truncate"
                 >
                   {record.email}
                 </a>
@@ -83,12 +90,12 @@ export function EmailTrackerDetailView({ record }: EmailTrackerDetailViewProps) 
               <div className="flex items-center gap-2.5">
                 <LinkIcon className="h-4 w-4 text-slate-400 shrink-0" />
                 <a
-                  href={record.website || "#"}
+                  href={record.website||undefined}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-[#4F46E5] hover:underline truncate"
+                  className="text-[#1476F2] hover:underline truncate"
                 >
-                  {record.website || `https://cs.stanford.edu/~jsmith`}
+                  {record.website || "Not recorded"}
                 </a>
               </div>
             </div>
@@ -133,7 +140,7 @@ export function EmailTrackerDetailView({ record }: EmailTrackerDetailViewProps) 
 
               {/* Step 3: Reply Received */}
               <div className="relative">
-                <span className="absolute -left-7 top-0.5 w-6 h-6 rounded-full bg-[#EEF2FF] flex items-center justify-center text-[#4F46E5] ring-2 ring-white">
+                <span className="absolute -left-7 top-0.5 w-6 h-6 rounded-full bg-[#EAF5FF] flex items-center justify-center text-[#1476F2] ring-2 ring-white">
                   <Undo2 className="h-3.5 w-3.5" />
                 </span>
                 <div>
@@ -141,15 +148,15 @@ export function EmailTrackerDetailView({ record }: EmailTrackerDetailViewProps) 
                     Reply Received
                   </p>
                   <p className="text-xs text-slate-500 mt-0.5">
-                    {record.replyDate || "May 18, 2024"} at{" "}
-                    {record.replyTime || "02:15 PM"}
+                    {record.replyDate || "Not recorded"} at{" "}
+                    {record.replyTime || "Not recorded"}
                   </p>
                 </div>
               </div>
 
               {/* Step 4: Interview Scheduled */}
               <div className="relative">
-                <span className="absolute -left-7 top-0.5 w-6 h-6 rounded-full bg-[#EEF2FF] flex items-center justify-center text-[#4F46E5] ring-2 ring-white">
+                <span className="absolute -left-7 top-0.5 w-6 h-6 rounded-full bg-[#EAF5FF] flex items-center justify-center text-[#1476F2] ring-2 ring-white">
                   <Calendar className="h-3.5 w-3.5" />
                 </span>
                 <div>
@@ -157,8 +164,8 @@ export function EmailTrackerDetailView({ record }: EmailTrackerDetailViewProps) 
                     Interview Scheduled
                   </p>
                   <p className="text-xs text-slate-500 mt-0.5">
-                    {record.interviewDate || "May 25, 2024"} at{" "}
-                    {record.interviewTime || "11:00 AM"}
+                    {record.interviewDate || "Not recorded"} at{" "}
+                    {record.interviewTime || "Not recorded"}
                   </p>
                 </div>
               </div>
@@ -178,13 +185,14 @@ export function EmailTrackerDetailView({ record }: EmailTrackerDetailViewProps) 
                 type="button"
                 className="text-slate-400 hover:text-slate-600 transition-colors cursor-pointer"
                 title="Edit Notes"
+                onClick={()=>setEditing(!editing)}
               >
                 <Pencil className="h-4 w-4" />
               </button>
             </div>
-            <p className="text-xs text-slate-600 leading-relaxed">
-              {record.notes}
-            </p>
+            {editing?<><textarea aria-label="Notes" value={notes} onChange={e=>setNotes(e.target.value)} maxLength={5000} className="w-full border border-slate-200 rounded-lg p-2 text-xs"/><button onClick={()=>void onUpdate?.({notes}).then(()=>setEditing(false))} className="text-xs text-indigo-600">Save notes</button></>:<p className="text-xs text-slate-600 leading-relaxed">{record.notes||'No notes yet.'}</p>}
+            <label className="block text-xs text-slate-500">Tracking status<select aria-label="Tracking status" value={record.status} onChange={e=>{const map:Record<string,string>={'Not Sent':'draft','No Response':'sent','Waiting':'waiting','Positive Reply':'positive_reply','Negative Reply':'negative_reply','Interview':'interview'};void onUpdate?.({status:map[e.target.value]});}} className="block mt-2 border border-slate-200 rounded-lg p-2 w-full">{['Not Sent','No Response','Waiting','Positive Reply','Negative Reply','Interview'].map(value=><option key={value}>{value}</option>)}</select></label>
+            <label className="block text-xs text-slate-500">Follow-up date<input aria-label="Follow-up date" type="datetime-local" onChange={e=>{if(e.target.value)void onUpdate?.({followUpAt:new Date(e.target.value).toISOString()});}} className="block mt-2 border border-slate-200 rounded-lg p-2 w-full"/></label>
           </div>
 
           {/* Attachments Card */}
@@ -195,10 +203,7 @@ export function EmailTrackerDetailView({ record }: EmailTrackerDetailViewProps) 
 
             <div className="space-y-2.5">
               {(
-                record.attachments || [
-                  { name: "MY_CV.pdf", size: "2.4 MB", type: "pdf" },
-                  { name: "Research_Proposal.pdf", size: "1.8 MB", type: "pdf" },
-                ]
+                record.attachments || []
               ).map((att) => (
                 <div
                   key={att.name}
@@ -232,10 +237,10 @@ export function EmailTrackerDetailView({ record }: EmailTrackerDetailViewProps) 
           <div className="px-1 text-xs space-y-0.5 text-left">
             <p className="font-bold text-slate-900">Last Updated</p>
             <p className="text-slate-500">
-              {record.lastUpdated?.date || "May 18, 2024 at 02:20 PM"}
+              {record.lastUpdated?.date || "Not recorded"}
             </p>
             <p className="text-slate-500">
-              by {record.lastUpdated?.author || "Sahriar Wahid"}
+              by {record.lastUpdated?.author || "Not recorded"}
             </p>
           </div>
         </div>

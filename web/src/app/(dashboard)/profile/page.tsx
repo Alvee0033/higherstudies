@@ -6,6 +6,8 @@ export const metadata = {
   description: "Manage your academic history, test scores, research background, and study abroad preferences.",
 };
 
+export const instant = false;
+
 export default function ProfilePage() {
   return <StudentProfileView />;
 }

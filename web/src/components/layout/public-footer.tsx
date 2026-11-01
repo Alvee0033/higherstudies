@@ -155,34 +155,18 @@ export function PublicFooter() {
             </p>
             {/* Social Icons */}
             <div className="flex items-center gap-2.5 pt-1 sm:pt-2">
-              <a
-                href="#"
-                className="flex h-9 w-9 sm:h-8 sm:w-8 items-center justify-center rounded-full bg-indigo-500/20 text-indigo-100 transition-colors hover:bg-white hover:text-[#322BB3]"
-                aria-label="Facebook"
-              >
+              <span aria-hidden="true" className="flex h-9 w-9 sm:h-8 sm:w-8 items-center justify-center rounded-full bg-indigo-500/20 text-indigo-100">
                 <FacebookIcon className="h-4 w-4" />
-              </a>
-              <a
-                href="#"
-                className="flex h-9 w-9 sm:h-8 sm:w-8 items-center justify-center rounded-full bg-indigo-500/20 text-indigo-100 transition-colors hover:bg-white hover:text-[#322BB3]"
-                aria-label="Twitter"
-              >
+              </span>
+              <span aria-hidden="true" className="flex h-9 w-9 sm:h-8 sm:w-8 items-center justify-center rounded-full bg-indigo-500/20 text-indigo-100">
                 <TwitterIcon className="h-4 w-4" />
-              </a>
-              <a
-                href="#"
-                className="flex h-9 w-9 sm:h-8 sm:w-8 items-center justify-center rounded-full bg-indigo-500/20 text-indigo-100 transition-colors hover:bg-white hover:text-[#322BB3]"
-                aria-label="LinkedIn"
-              >
+              </span>
+              <span aria-hidden="true" className="flex h-9 w-9 sm:h-8 sm:w-8 items-center justify-center rounded-full bg-indigo-500/20 text-indigo-100">
                 <LinkedinIcon className="h-4 w-4" />
-              </a>
-              <a
-                href="#"
-                className="flex h-9 w-9 sm:h-8 sm:w-8 items-center justify-center rounded-full bg-indigo-500/20 text-indigo-100 transition-colors hover:bg-white hover:text-[#322BB3]"
-                aria-label="YouTube"
-              >
+              </span>
+              <span aria-hidden="true" className="flex h-9 w-9 sm:h-8 sm:w-8 items-center justify-center rounded-full bg-indigo-500/20 text-indigo-100">
                 <YoutubeIcon className="h-4 w-4" />
-              </a>
+              </span>
             </div>
           </div>
 

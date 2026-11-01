@@ -1,0 +1,22 @@
+/* ==========================================================================
+   HigherStudy Admin Design Tokens & CSS Custom Properties
+   ========================================================================== */
+
+:root {
+  --navy: #0b1b3a;
+  --ink: #12213b;
+  --muted: #66758c;
+  --line: #dbe3ef;
+  --surface: #ffffff;
+  --canvas: #f5f8fc;
+  --blue: #1769e0;
+  --blue-dark: #1153b7;
+  --blue-soft: #eaf2ff;
+  --green: #16825d;
+  --amber: #a76108;
+  --red: #c83d4b;
+  --radius: 14px;
+
+  color: var(--ink);
+  background: var(--canvas);
+}

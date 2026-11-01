@@ -153,3 +153,9 @@ higher-studies/
 - **TypeScript 5.x** with 100% strict type safety
 - **ESLint 9** with zero warnings or errors policy
 - **Desktop Invariance**: Zero modifications allowed to desktop layouts (`lg:*`, `xl:*`) when doing mobile optimization.
+
+### Campus imagery in the student catalogue
+
+University and programme cards request campus photographs by institution name from the Wikimedia Commons API. The lookup is bounded to the current 20 records, runs at three upstream requests at a time, caches upstream results for seven days, and only displays landscape files whose titles match the institution and whose metadata reports a supported Commons licence. Each displayed image links to its source and licence and credits its author. If no suitable image is found, the card displays its normal text and institution emblem without a stock or generated replacement. Images are presentation media only; they do not verify admission or institution facts.
+
+The decorative dashboard and researcher banners are generated artwork stored under `public/images/dashboard/`; they do not depict or claim to depict a listed institution. University and programme page banners use CSS shapes only.

@@ -1,0 +1,879 @@
+/* ==========================================================================
+   Card Architectures & Grid Layouts
+   ========================================================================== */
+
+/* Panels & Card Containers */
+.panel {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: 0 3px 10px rgba(19, 41, 75, 0.025);
+}
+
+.panel-header {
+  min-height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 18px;
+  border-bottom: 1px solid #edf1f7;
+}
+
+.panel-header h2 {
+  margin: 0;
+  font-size: 14px;
+  letter-spacing: -0.01em;
+}
+
+/* Standard Catalogue Cards Grid */
+.catalogue-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 12px;
+  padding: 12px;
+}
+
+.programme-list {
+  display: grid;
+  gap: 10px;
+  padding: 14px 16px;
+}
+
+.programme-row {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(210px, 1.25fr) minmax(300px, 1.5fr) auto;
+  align-items: center;
+  gap: 20px;
+  padding: 15px 17px;
+  border: 1px solid #e5ebf3;
+  border-radius: 13px;
+  background: #fff;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.programme-row:hover {
+  border-color: #bfd2ef;
+  box-shadow: 0 5px 16px rgba(25, 57, 100, 0.06);
+}
+
+.programme-row-identity {
+  min-width: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.programme-row-mark {
+  width: 40px;
+  height: 40px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border: 1px solid #dce7f7;
+  border-radius: 11px;
+  background: #f2f7ff;
+  color: #245bb2;
+  font-size: 15px;
+  font-weight: 750;
+}
+
+.programme-row-mark img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.programme-row-title {
+  min-width: 0;
+}
+.programme-row-title p {
+  margin: 0 0 4px;
+  color: #718098;
+  font-size: 11px;
+  font-weight: 650;
+}
+.programme-row-title h3 {
+  margin: 0;
+  overflow: hidden;
+  color: #172943;
+  font-size: 15px;
+  font-weight: 720;
+  letter-spacing: -0.02em;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+}
+.programme-row-title > span {
+  display: block;
+  margin-top: 4px;
+  overflow: hidden;
+  color: #8793a5;
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.programme-row-facts {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.programme-row-facts > div {
+  min-width: 0;
+  display: grid;
+  gap: 5px;
+}
+.programme-row-facts small {
+  color: #94a0b1;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+.programme-row-facts span {
+  overflow: hidden;
+  color: #40516a;
+  font-size: 11px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.programme-row-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.programme-apply-btn {
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 0 11px;
+  border: 1px solid #225fc4;
+  border-radius: 8px;
+  background: #2468d6;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.programme-apply-btn:hover {
+  background: #1859c1;
+  color: #fff;
+}
+.programme-no-link {
+  color: #8b97a8;
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.catalogue-card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e3eaf4;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #fff, #fbfdff);
+  box-shadow: 0 2px 7px rgba(19, 41, 75, 0.025);
+  overflow: hidden;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+}
+
+.catalogue-card:hover {
+  border-color: #b9d0f4;
+  box-shadow: 0 9px 22px rgba(19, 62, 126, 0.08);
+}
+
+.catalogue-card-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 14px 14px 0;
+}
+
+.institution-mark {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid #d6e4f7;
+  border-radius: 11px;
+  color: #175bb1;
+  background: #eef5ff;
+  font-weight: 800;
+  font-size: 17px;
+}
+
+.institution-mark img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+.catalogue-card-actions {
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
+}
+
+.catalogue-card-main {
+  padding: 12px 14px;
+}
+
+.catalogue-card-main h3 {
+  margin: 5px 0 5px;
+  overflow: hidden;
+  color: #182843;
+  font-size: 16px;
+  letter-spacing: -0.025em;
+  line-height: 1.27;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.card-institution {
+  margin: 0;
+  color: #3569aa;
+  font-size: 11px;
+  font-weight: 750;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.card-subtitle {
+  min-height: 18px;
+  margin: 0;
+  color: #6f7e94;
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.catalogue-card-meta {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0 14px 14px;
+}
+
+.catalogue-card-meta > div {
+  display: grid;
+  gap: 4px;
+  padding-top: 9px;
+  border-top: 1px solid #edf1f6;
+}
+
+.catalogue-card-meta dt {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #7c8ba0;
+  font-size: 10px;
+  font-weight: 750;
+}
+
+.catalogue-card-meta dd {
+  margin: 0;
+  color: #3d4d65;
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.catalogue-card-meta .card-topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  white-space: normal;
+}
+
+.catalogue-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: auto;
+  padding: 10px 14px;
+  border-top: 1px solid #edf1f6;
+  color: #8492a5;
+  font-size: 10px;
+}
+
+.catalogue-card-footer a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--blue);
+  font-weight: 750;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.catalogue-card-footer a:hover {
+  text-decoration: underline;
+}
+
+.catalogue-source-warning {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 0 12px 2px;
+  padding: 9px 11px;
+  border: 1px solid #f2d8aa;
+  border-radius: 8px;
+  color: #775318;
+  background: #fff9ed;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.catalogue-source-warning svg {
+  flex: 0 0 auto;
+}
+
+.catalogue-provenance {
+  min-width: 0;
+  flex: 1 1 140px;
+  display: grid;
+  gap: 3px;
+}
+
+.catalogue-provenance > span,
+.catalogue-provenance a {
+  max-width: 240px;
+  overflow: hidden;
+  color: #8492a5;
+  font-size: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.catalogue-provenance .source-access-pending {
+  color: #a16207;
+  font-weight: 700;
+}
+.catalogue-provenance .source-access-approved {
+  color: #14805e;
+  font-weight: 700;
+}
+
+/* Tuition Block & Apply Button */
+.card-tuition-block {
+  background: #f0fbf5;
+  border: 1px solid #d1f2e1;
+  border-radius: 8px;
+  padding: 7px 9px;
+  margin-top: 2px;
+}
+
+.card-tuition-block dt {
+  color: #0f766e;
+  font-weight: 800;
+}
+
+.card-tuition-block dd {
+  color: #064e3b;
+  font-weight: 750;
+  font-size: 12px;
+}
+
+.card-apply-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: #1769e0 !important;
+  color: #ffffff !important;
+  font-size: 11px;
+  font-weight: 750;
+  text-decoration: none !important;
+  line-height: 1.2;
+  transition: opacity 0.15s, background-color 0.15s;
+}
+
+.card-apply-btn span {
+  color: #ffffff !important;
+  font-weight: 750;
+}
+
+.card-apply-btn svg {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+  flex-shrink: 0;
+}
+
+.card-apply-btn:hover {
+  background: #1153b7 !important;
+  color: #ffffff !important;
+  text-decoration: none !important;
+}
+
+.card-apply-btn.secondary,
+.card-apply-btn.candidate-btn {
+  background: #6366f1;
+  color: #ffffff !important;
+  border: 1px solid #4f46e5;
+  box-shadow: 0 1px 3px rgba(99, 102, 241, 0.25);
+  font-weight: 750;
+}
+
+.card-apply-btn.secondary:hover,
+.card-apply-btn.candidate-btn:hover {
+  background: #4f46e5;
+  color: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.35);
+  transform: translateY(-1px);
+  opacity: 1;
+}
+
+/* Compact & Color-Coded Programme Cards */
+.catalogue-card.programmes {
+  min-height: 270px;
+  padding: 0;
+  border-radius: 16px;
+  background: #fff;
+  border: 1px solid #e2eaf4;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.catalogue-card.programmes:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 34px rgba(15, 34, 64, 0.1);
+  border-color: #b6cff2;
+}
+
+.prog-card-header {
+  min-height: 104px;
+  padding: 17px 17px 13px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  border-bottom: 1px solid #edf2f8;
+}
+
+.prog-card-header .inst-logo {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  border: 1px solid #e5ebf3;
+  background: #f8faff;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 16px;
+  color: #245bb2;
+  overflow: hidden;
+}
+
+.prog-card-header .inst-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.prog-card-header .inst-name {
+  font-size: 11px;
+  font-weight: 650;
+  color: #718098;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+}
+
+.prog-card-header .prog-title {
+  font-size: 16px;
+  font-weight: 720;
+  color: #14243b;
+  letter-spacing: -0.025em;
+  line-height: 1.3;
+  margin: 5px 0 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.prog-chips-area {
+  flex: 1;
+  padding: 14px 17px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.prog-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px;
+}
+
+.catalogue-card.programmes .color-badge {
+  max-width: 100%;
+  min-height: 27px;
+  padding: 5px 9px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 650;
+  white-space: normal;
+}
+
+.catalogue-card.programmes .color-badge > span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.catalogue-card.programmes .tuition-unknown {
+  color: #58677d;
+  background: #f5f7fa;
+  border: 1px solid #e6ebf2;
+}
+
+.catalogue-card.programmes .prog-card-header .pill {
+  flex-shrink: 0;
+  text-transform: capitalize;
+}
+
+.catalogue-card.programmes .catalogue-card-footer {
+  min-height: 49px;
+  margin-top: auto;
+  padding: 10px 17px;
+  background: #fbfcfe;
+  flex-wrap: wrap;
+}
+
+.catalogue-card.programmes .catalogue-card-footer > div {
+  margin-left: auto;
+  flex-wrap: wrap;
+}
+
+/* Region Breakdown Cards */
+.region-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 16px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.region-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.region-card-top h4 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 750;
+  color: #0f172a;
+}
+
+.region-card-count {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--blue);
+  background: var(--blue-soft);
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.region-card-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+/* Programme catalogue: full identities, quiet metadata, clear actions. */
+.programme-card-grid {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+  gap: 16px;
+  padding: 16px;
+}
+.catalogue-card.programmes {
+  border-radius: 12px;
+  min-height: 290px;
+}
+.catalogue-card.programmes:hover { transform: none; }
+.catalogue-card.programmes .prog-card-header {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 12px;
+  padding: 20px;
+  border-bottom: 0;
+}
+.catalogue-card.programmes .inst-name {
+  color: #466181;
+  font-size: 12px;
+  line-height: 1.5;
+  white-space: normal;
+  overflow: visible;
+  overflow-wrap: anywhere;
+  text-overflow: clip;
+}
+.catalogue-card.programmes .prog-title {
+  display: block;
+  margin-top: 8px;
+  font-size: 19px;
+  line-height: 1.4;
+  white-space: normal;
+  overflow: visible;
+  overflow-wrap: anywhere;
+  text-overflow: clip;
+  -webkit-line-clamp: unset;
+}
+.prog-card-controls {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+}
+.catalogue-card.programmes .prog-chips-area {
+  padding: 0 20px 20px;
+  gap: 10px;
+}
+.catalogue-card.programmes .prog-chip-row:empty { display: none; }
+.catalogue-card.programmes .catalogue-card-footer {
+  padding: 14px 20px;
+  align-items: flex-start;
+  gap: 12px;
+}
+.catalogue-card.programmes .catalogue-provenance > span,
+.catalogue-card.programmes .catalogue-provenance a {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  overflow: visible;
+}
+.catalogue-card.programmes .catalogue-card-footer .card-apply-btn {
+  min-height: 34px;
+  padding: 7px 12px;
+  color: #fff;
+}
+
+.programme-compact-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 10px;
+  background: #f8faff;
+  border: 1px solid #e2eaf4;
+  border-radius: 8px;
+}
+.programme-compact-tuition {
+  min-width: 0;
+}
+.programme-compact-tuition strong {
+  color: #1e3a5f;
+  font-size: 13px;
+  font-weight: 750;
+  line-height: 1.3;
+  white-space: normal;
+  overflow-wrap: break-word;
+  display: block;
+}
+
+.programme-source-facts.compact-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px 10px;
+  padding: 6px 0;
+  border-block: 1px solid #f1f5f9;
+}
+.programme-source-facts.compact-facts > div { display: flex; flex-direction: column; gap: 1px; }
+.programme-source-facts.compact-facts small { color: #64748b; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.02em; }
+.programme-source-facts.compact-facts strong { color: #1e293b; font-size: 11.5px; font-weight: 650; line-height: 1.3; overflow-wrap: break-word; white-space: normal; }
+
+/* Uniform programme catalogue rhythm - half-height, compact, fully legible without ellipsis */
+.programme-card-grid {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+  gap: 14px;
+  padding: 14px;
+  align-items: stretch;
+}
+.catalogue-card.programmes {
+  height: 100%;
+  min-height: auto !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 12px;
+  background: #ffffff;
+  border: 1px solid #e2eaf4;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.catalogue-card.programmes:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(15, 34, 64, 0.08);
+  border-color: #cbdcf2;
+}
+.catalogue-card.programmes .prog-card-header {
+  padding: 12px 14px 8px;
+  min-height: auto;
+  display: grid;
+  grid-template-columns: 32px 1fr auto;
+  gap: 8px;
+  align-items: start;
+  border-bottom: 1px solid #f1f5f9;
+}
+.catalogue-card.programmes .inst-logo {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  font-size: 13px;
+}
+.catalogue-card.programmes .inst-name {
+  color: #475569;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.3;
+  white-space: normal;
+  overflow: visible;
+  overflow-wrap: break-word;
+  text-overflow: clip;
+}
+.catalogue-card.programmes .prog-title {
+  margin-top: 2px;
+  font-size: 14.5px;
+  font-weight: 750;
+  color: #0f172a;
+  line-height: 1.3;
+  white-space: normal;
+  overflow: visible;
+  overflow-wrap: break-word;
+  text-overflow: clip;
+  -webkit-line-clamp: unset;
+  display: block;
+}
+.catalogue-card.programmes .prog-card-controls {
+  grid-column: 3;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding-top: 0;
+}
+.catalogue-card.programmes .prog-chips-area {
+  padding: 8px 14px 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+.catalogue-card.programmes .prog-chip-row.compact-chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+}
+.catalogue-card.programmes .color-badge {
+  padding: 3px 6px;
+  font-size: 10px;
+  border-radius: 5px;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+.catalogue-card.programmes .catalogue-card-footer {
+  margin-top: auto;
+  min-height: auto;
+  padding: 8px 14px;
+  background: #fbfcfe;
+  border-top: 1px solid #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.catalogue-card.programmes .catalogue-card-footer .card-apply-btn {
+  min-height: 28px;
+  padding: 5px 10px;
+  font-size: 11px;
+}
+.programme-details-button { display: inline-flex; align-items: center; gap: 4px; padding: 4px 0; border: 0; background: transparent; color: #475569; font-size: 11.5px; font-weight: 650; cursor: pointer; }
+.programme-details-button:hover { color: #1d4ed8; }
+.programme-details-button:focus-visible { outline: 2px solid #2563eb; outline-offset: 3px; border-radius: 3px; }
+.programme-link-unavailable {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 6px;
+  background: #fffbeb;
+  color: #b45309;
+  border: 1px solid #fde68a;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 650;
+  white-space: nowrap;
+}
+@media (max-width: 480px) {
+  .programme-card-grid { padding: 10px; gap: 12px; grid-auto-rows: auto; }
+  .catalogue-card.programmes .prog-card-header { min-height: auto; }
+}
+
+.faculty-research-stats { padding: 0 14px 14px; }
+.faculty-research-stats dl { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 7px; margin: 0; }
+.faculty-stat { display: grid; gap: 7px; padding: 12px 8px; border: 1px solid; border-radius: 9px; }
+.faculty-stat dt { font-size: 10px; font-weight: 650; }
+.faculty-stat dd { margin: 0; font-size: 19px; line-height: 1.25; font-weight: 750; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.faculty-stat.blue { background: #eff6ff; border-color: #dbeafe; color: #1d4ed8; }
+.faculty-stat.violet { background: #f5f3ff; border-color: #ede9fe; color: #6d28d9; }
+.faculty-stat.teal { background: #f0fdfa; border-color: #ccfbf1; color: #0f766e; }
+.faculty-research-stats > small { display: block; margin-top: 7px; color: #7b8798; font-size: 10px; }
+.catalogue-card.faculty .catalogue-card-main h3,
+.catalogue-card.faculty .card-institution { white-space: normal; overflow-wrap: anywhere; }
+
+/* Compact faculty catalogue, with a persistent Scholar action on every card. */
+.faculty-card-grid { grid-template-columns: repeat(auto-fill,minmax(min(100%,270px),1fr)); gap: 12px; padding: 12px; align-items: stretch; }
+.catalogue-card.faculty { border-radius: 10px; background: #fff; }
+.catalogue-card.faculty .catalogue-card-top { padding: 12px 12px 0; }
+.catalogue-card.faculty .institution-mark { width: 32px; height: 32px; border-radius: 8px; font-size: 13px; }
+.catalogue-card.faculty .institution-mark img { width: 20px; height: 20px; }
+.catalogue-card.faculty .catalogue-card-main { padding: 9px 12px 10px; }
+.catalogue-card.faculty .catalogue-card-main h3 { font-size: 15px; line-height: 1.4; margin: 5px 0 2px; }
+.catalogue-card.faculty .card-institution { font-size: 10px; line-height: 1.4; }
+.catalogue-card.faculty .card-subtitle { font-size: 10px; min-height: 0; }
+.catalogue-card.faculty .faculty-research-stats { padding: 0 12px 10px; }
+.catalogue-card.faculty .faculty-stat { padding: 8px 7px; gap: 4px; border-radius: 7px; }
+.catalogue-card.faculty .faculty-stat dd { font-size: 16px; }
+.catalogue-card.faculty .faculty-stat dt { font-size: 9px; }
+.catalogue-card.faculty .faculty-research-stats > small { font-size: 9px; margin-top: 5px; }
+.catalogue-card.faculty .catalogue-card-meta { padding: 0 12px 12px; gap: 8px; }
+.catalogue-card.faculty .catalogue-card-meta > div { padding-top: 7px; }
+.catalogue-card.faculty .catalogue-card-meta dd { white-space: normal; overflow-wrap: anywhere; font-size: 11px; }
+.catalogue-card.faculty .card-topics .pill { font-size: 9px; padding: 3px 6px; line-height: 1.4; }
+.catalogue-card.faculty .catalogue-card-footer { padding: 8px 12px; min-height: 45px; gap: 6px; }
+.faculty-profile-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 9px; }
+.faculty-profile-actions .faculty-scholar-link { padding: 6px 8px; border: 1px solid #dbeafe; border-radius: 6px; background: #eff6ff; color: #1d4ed8; font-size: 10px; }
+.faculty-contact-email { color: #245bb2; font-weight: 650; text-decoration: none; }
+.faculty-contact-missing { color: #7b8798; }
+
+.faculty-contact-value { display:flex; flex-wrap:wrap; align-items:center; gap:5px 9px; }
+.faculty-contact-source { display:inline-flex; align-items:center; gap:3px; color:#6b7c91; font-size:10px; text-decoration:none; }
+
+.programme-university-link { font-size:11px; display:inline-flex; align-items:center; gap:4px; }

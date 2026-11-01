@@ -10,6 +10,8 @@ export type ApplicationStatus =
 
 export interface ApplicationItem {
   id: string;
+  details?:Record<string,string>;
+  documents?:Record<string,string>;
   universityName: string;
   program: string;
   department?: string;

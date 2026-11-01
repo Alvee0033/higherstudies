@@ -26,7 +26,7 @@ export function FormImportantDates({
 }: FormImportantDatesProps) {
   return (
     <div className="bg-white rounded-2xl border border-slate-200/90 p-6 shadow-2xs space-y-4 text-left">
-      <div className="flex items-center gap-2 text-[#4F46E5] font-bold text-sm">
+      <div className="flex items-center gap-2 text-[#1476F2] font-bold text-sm">
         <Calendar className="h-4 w-4" />
         <span>2. Important Dates</span>
       </div>
@@ -43,7 +43,7 @@ export function FormImportantDates({
               value={appDate}
               onChange={(e) => setAppDate(e.target.value)}
               placeholder="Select date"
-              className="w-full h-10 pl-3.5 pr-8 rounded-xl border border-slate-200 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-[#4F46E5]"
+              className="w-full h-10 pl-3.5 pr-8 rounded-xl border border-slate-200 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-[#1476F2]"
             />
             <Calendar className="h-4 w-4 text-slate-400 absolute right-3 top-3 pointer-events-none" />
           </div>
@@ -59,7 +59,7 @@ export function FormImportantDates({
               value={deadline}
               onChange={(e) => setDeadline(e.target.value)}
               placeholder="Select date"
-              className="w-full h-10 pl-3.5 pr-8 rounded-xl border border-slate-200 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-[#4F46E5]"
+              className="w-full h-10 pl-3.5 pr-8 rounded-xl border border-slate-200 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-[#1476F2]"
             />
             <Calendar className="h-4 w-4 text-slate-400 absolute right-3 top-3 pointer-events-none" />
           </div>
@@ -78,7 +78,7 @@ export function FormImportantDates({
               value={decisionDate}
               onChange={(e) => setDecisionDate(e.target.value)}
               placeholder="Select date"
-              className="w-full h-10 pl-3.5 pr-8 rounded-xl border border-slate-200 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-[#4F46E5]"
+              className="w-full h-10 pl-3.5 pr-8 rounded-xl border border-slate-200 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-[#1476F2]"
             />
             <Calendar className="h-4 w-4 text-slate-400 absolute right-3 top-3 pointer-events-none" />
           </div>
@@ -94,7 +94,7 @@ export function FormImportantDates({
               value={enrollmentDate}
               onChange={(e) => setEnrollmentDate(e.target.value)}
               placeholder="Select date"
-              className="w-full h-10 pl-3.5 pr-8 rounded-xl border border-slate-200 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-[#4F46E5]"
+              className="w-full h-10 pl-3.5 pr-8 rounded-xl border border-slate-200 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-[#1476F2]"
             />
             <Calendar className="h-4 w-4 text-slate-400 absolute right-3 top-3 pointer-events-none" />
           </div>

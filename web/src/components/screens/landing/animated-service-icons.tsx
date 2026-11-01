@@ -34,18 +34,18 @@ export function UniversityShortlistingIcon({ className }: IconProps) {
           {/* Graduation Cap Base (Underlay) */}
           <path
             d="M13 25.5V31C13 34.5 18 36.5 24 36.5C30 36.5 35 34.5 35 31V25.5"
-            stroke="#4338CA"
+            stroke="#0963D6"
             strokeWidth="2.5"
             strokeLinecap="round"
             strokeLinejoin="round"
-            fill="#EEF2FF"
+            fill="#EAF5FF"
           />
 
           {/* Graduation Cap Diamond (Upper Mortarboard) */}
           <polygon
             points="24,13 41,20 24,27 7,20"
             fill="url(#cap-gradient)"
-            stroke="#4F46E5"
+            stroke="#1476F2"
             strokeWidth="2"
             className="group-hover:-translate-y-1 transition-transform duration-300"
           />
@@ -73,7 +73,7 @@ export function UniversityShortlistingIcon({ className }: IconProps) {
           <defs>
             <linearGradient id="cap-gradient" x1="7" y1="13" x2="41" y2="27" gradientUnits="userSpaceOnUse">
               <stop stopColor="#6366F1" />
-              <stop offset="1" stopColor="#4F46E5" />
+              <stop offset="1" stopColor="#1476F2" />
             </linearGradient>
           </defs>
         </svg>
@@ -327,7 +327,7 @@ export function VisaSupportIcon({ className }: IconProps) {
             width="16"
             height="20"
             rx="3"
-            fill="#EDE9FE"
+            fill="#E1F0FF"
             stroke="#7C3AED"
             strokeWidth="1.5"
             transform="rotate(-8 8 22)"

@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   HigherStudy Admin Master Stylesheet
+   Modularized Architecture
+   ========================================================================== */
+
+/* 1. Design Tokens & CSS Variables */
+@import "../styles/tokens.css";
+
+/* 2. Base Resets & Element Defaults */
+@import "../styles/base.css";
+
+/* 3. App Shell, Navigation & Layout */
+@import "../styles/layout.css";
+
+/* 4. Shared Component System */
+@import "../styles/components/buttons.css";
+@import "../styles/components/badges.css";
+@import "../styles/components/forms.css";
+@import "../styles/components/cards.css";
+@import "../styles/components/tables.css";
+@import "../styles/components/dialogs.css";
+
+/* 5. Feature Views */
+@import "../styles/views/auth.css";
+@import "../styles/views/overview.css";
+@import "../styles/views/scraper.css";
+@import "../styles/views/settings.css";
+@import "../styles/views/audit.css";
+
+/* 6. Keyframes & Animation Utilities */
+@import "../styles/utilities.css";
+
+/* 7. Responsive Breakpoint Overrides (Bottom of Cascade) */
+@import "../styles/responsive.css";

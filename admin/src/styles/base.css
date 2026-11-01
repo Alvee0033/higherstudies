@@ -1,0 +1,94 @@
+/* ==========================================================================
+   Base Styles, Element Resets & Common Atoms
+   ========================================================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--canvas);
+  color: var(--ink);
+  font-size: 14px;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button,
+a,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+a {
+  color: inherit;
+}
+
+/* Loading & Branding Atoms */
+.loading-screen {
+  min-height: 100dvh;
+  display: grid;
+  place-content: center;
+  gap: 14px;
+  text-align: center;
+  color: var(--muted);
+}
+
+.brand-logo,
+.login-mark {
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: linear-gradient(145deg, #2779eb, #124aa3);
+  font-weight: 800;
+  box-shadow: 0 10px 24px rgba(22, 105, 224, 0.22);
+}
+
+.brand-logo {
+  width: 42px;
+  height: 42px;
+  margin: auto;
+  border-radius: 12px;
+  font-size: 20px;
+}
+
+.brand-logo.compact {
+  margin: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  font-size: 15px;
+}
+
+/* Inline Message Alerts */
+.message {
+  padding: 10px 12px;
+  border-radius: 9px;
+  font-size: 13px;
+}
+
+.message.error {
+  color: #982b38;
+  background: #fff0f1;
+  border: 1px solid #ffd4d8;
+}

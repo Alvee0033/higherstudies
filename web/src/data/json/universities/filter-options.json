@@ -1,8 +1,7 @@
 {
   "degreeLevels": [
     "Master's",
-    "PhD / Doctorate",
-    "Undergraduate"
+    "PhD / Doctorate"
   ],
   "fieldsOfStudy": [
     "Computer Science",
@@ -12,10 +11,10 @@
   ],
   "specializations": [
     { "value": "", "label": "Select specialization" },
-    { "value": "ml", "label": "Machine Learning & Deep Learning" },
-    { "value": "systems", "label": "Distributed Systems & Cloud" },
-    { "value": "security", "label": "Cybersecurity & Cryptography" },
-    { "value": "robotics", "label": "Robotics & Autonomous Systems" }
+    { "value": "Machine Learning", "label": "Machine Learning" },
+    { "value": "Distributed Systems", "label": "Distributed Systems" },
+    { "value": "Cybersecurity", "label": "Cybersecurity" },
+    { "value": "Robotics", "label": "Robotics" }
   ],
   "studyDestinations": [
     "Any Country",

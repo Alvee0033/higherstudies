@@ -6,6 +6,8 @@ export const metadata: Metadata = {
   description: "Manage your shortlisted universities and bookmarked professors.",
 };
 
+export const instant = false;
+
 export default function SavedItemsPage() {
   return <SavedItemsView />;
 }

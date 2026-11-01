@@ -26,7 +26,7 @@ export function FormAdditionalInfo({
 }: FormAdditionalInfoProps) {
   return (
     <div className="bg-white rounded-2xl border border-slate-200/90 p-6 shadow-2xs space-y-4 text-left max-w-[640px] mx-auto w-full">
-      <div className="flex items-center gap-2 text-[#4F46E5] font-bold text-sm">
+      <div className="flex items-center gap-2 text-[#1476F2] font-bold text-sm">
         <Info className="h-4 w-4" />
         <span>6. Additional Information</span>
       </div>
@@ -41,7 +41,7 @@ export function FormAdditionalInfo({
             <select
               value={feeStatus}
               onChange={(e) => setFeeStatus(e.target.value)}
-              className="w-full h-10 pl-3.5 pr-8 rounded-xl border border-slate-200 text-xs text-slate-800 bg-white appearance-none focus:outline-none focus:ring-1 focus:ring-[#4F46E5]"
+              className="w-full h-10 pl-3.5 pr-8 rounded-xl border border-slate-200 text-xs text-slate-800 bg-white appearance-none focus:outline-none focus:ring-1 focus:ring-[#1476F2]"
             >
               <option value="">Select status</option>
               <option value="Paid">Paid</option>
@@ -61,7 +61,7 @@ export function FormAdditionalInfo({
             value={feeAmount}
             onChange={(e) => setFeeAmount(e.target.value)}
             placeholder="e.g., 100"
-            className="w-full h-10 px-3.5 rounded-xl border border-slate-200 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-[#4F46E5]"
+            className="w-full h-10 px-3.5 rounded-xl border border-slate-200 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-[#1476F2]"
           />
         </div>
       </div>
@@ -76,7 +76,7 @@ export function FormAdditionalInfo({
             <select
               value={appMethod}
               onChange={(e) => setAppMethod(e.target.value)}
-              className="w-full h-10 pl-3.5 pr-8 rounded-xl border border-slate-200 text-xs text-slate-800 bg-white appearance-none focus:outline-none focus:ring-1 focus:ring-[#4F46E5]"
+              className="w-full h-10 pl-3.5 pr-8 rounded-xl border border-slate-200 text-xs text-slate-800 bg-white appearance-none focus:outline-none focus:ring-1 focus:ring-[#1476F2]"
             >
               <option value="">Select method</option>
               <option value="Online Portal">University Online Portal</option>
@@ -96,7 +96,7 @@ export function FormAdditionalInfo({
             value={trackingId}
             onChange={(e) => setTrackingId(e.target.value)}
             placeholder="Enter tracking ID or reference"
-            className="w-full h-10 px-3.5 rounded-xl border border-slate-200 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-[#4F46E5]"
+            className="w-full h-10 px-3.5 rounded-xl border border-slate-200 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-[#1476F2]"
           />
         </div>
       </div>

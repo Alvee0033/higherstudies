@@ -6,6 +6,8 @@ export const metadata = {
   description: "Choose the perfect plan to supercharge your study abroad journey.",
 };
 
+export const instant = false;
+
 export default function PricingPage() {
   return <PurchasePlanView />;
 }

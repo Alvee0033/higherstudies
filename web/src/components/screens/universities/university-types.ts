@@ -1,25 +1,22 @@
 export interface UniversityItem {
   id: string;
   name: string;
+  countryCode?: string;
+  countryName?: string;
+  city?: string;
   location: string;
-  badge?: string;
-  qsRank: number;
-  acceptanceRate: string;
-  annualTuition: string;
-  matchScore: number;
-  greRequired: boolean;
-  ieltsScore: string;
-  fundingAvailable: boolean;
+  officialUrl?: string;
+  verifiedAt?: string;
+  programmeCount: number;
+  facultyCount: number;
+  evidenceUrl?: string;
+  sourceName?: string;
   logo: string;
+  badge?: string;
 }
 
 export interface UniversityFiltersState {
-  degreeLevel: string;
-  fieldOfStudy: string;
-  specialization: string;
-  gpaMin: number;
-  ieltsMin: number;
-  studyDestination: string;
+  searchQuery: string;
   selectedCountries: string[];
-  excludeCountry: string;
+  sortBy: string;
 }

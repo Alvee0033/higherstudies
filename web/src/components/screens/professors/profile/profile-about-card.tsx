@@ -32,7 +32,7 @@ export function ProfileAboutCard({
           <ul className="space-y-2 text-xs text-slate-700">
             {degrees.map((deg) => (
               <li key={deg.degree} className="flex items-start gap-2">
-                <GraduationCap className="h-4 w-4 text-[#4F46E5] shrink-0 mt-0.5" />
+                <GraduationCap className="h-4 w-4 text-[#1476F2] shrink-0 mt-0.5" />
                 <div>
                   <p className="font-semibold text-slate-900">{deg.degree}</p>
                   <p className="text-slate-500">
@@ -59,7 +59,7 @@ export function ProfileAboutCard({
       <button
         type="button"
         onClick={() => setExpanded(!expanded)}
-        className="text-xs font-semibold text-[#4F46E5] hover:underline cursor-pointer"
+        className="text-xs font-semibold text-[#1476F2] hover:underline cursor-pointer"
       >
         {expanded ? "Read less" : "Read more"}
       </button>

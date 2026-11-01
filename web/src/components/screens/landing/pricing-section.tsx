@@ -46,14 +46,14 @@ export function PricingSection() {
         {/* Section Header */}
         <ScrollReveal variant="fade-up">
           <div className="text-center max-w-2xl mx-auto space-y-3 mb-10 sm:mb-14">
-            <div className="inline-flex items-center gap-2 rounded-full bg-white/95 border border-indigo-200/80 px-3.5 py-1 text-xs font-black text-[#4F46E5] tracking-widest shadow-2xs hover:border-indigo-400 hover:shadow-xs transition-all duration-300">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#4F46E5]" />
+            <div className="inline-flex items-center gap-2 rounded-full bg-white/95 border border-indigo-200/80 px-3.5 py-1 text-xs font-black text-[#1476F2] tracking-widest shadow-2xs hover:border-indigo-400 hover:shadow-xs transition-all duration-300">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#1476F2]" />
               <span className="uppercase font-black text-[11px]">TRANSPARENT PRICING</span>
             </div>
 
             <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-slate-900 font-heading leading-tight text-balance">
               Choose the Perfect Plan for{" "}
-              <span className="text-[#4F46E5]">
+              <span className="text-[#1476F2]">
                 Your Journey
               </span>
             </h2>
@@ -81,7 +81,7 @@ export function PricingSection() {
                   onClick={() => setIsAnnual(true)}
                   className={`inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
                     isAnnual
-                      ? "bg-[#4F46E5] text-white shadow-2xs"
+                      ? "bg-[#1476F2] text-white shadow-2xs"
                       : "text-slate-600 hover:text-slate-900"
                   }`}
                 >
@@ -122,14 +122,14 @@ export function PricingSection() {
                 <div
                   className={`relative z-10 flex flex-col justify-between h-full rounded-3xl p-5 sm:p-7 transition-all duration-300 ${
                     plan.isPopular
-                      ? "bg-white border-2 border-[#4F46E5] shadow-[0_12px_36px_rgba(79,70,229,0.14)] lg:-translate-y-2 lg:group-hover:-translate-y-3"
+                      ? "bg-white border-2 border-[#1476F2] shadow-[0_12px_36px_rgba(79,70,229,0.14)] lg:-translate-y-2 lg:group-hover:-translate-y-3"
                       : "bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:border-indigo-300 hover:shadow-[0_14px_32px_rgba(79,70,229,0.09)] group-hover:-translate-y-1.5"
                   }`}
                 >
                   {/* Popular Pill Floating on Top */}
                   {plan.isPopular && (
                     <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
-                      <span className="inline-block bg-[#4F46E5] text-white text-[10px] font-black uppercase tracking-wider px-3.5 py-1 rounded-full shadow-md">
+                      <span className="inline-block bg-[#1476F2] text-white text-[10px] font-black uppercase tracking-wider px-3.5 py-1 rounded-full shadow-md">
                         MOST POPULAR
                       </span>
                     </div>
@@ -167,7 +167,7 @@ export function PricingSection() {
                         <button
                           className={`w-full inline-flex items-center justify-center gap-1.5 h-11 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                             plan.isPopular
-                              ? "bg-[#4F46E5] hover:bg-[#4338CA] text-white shadow-md shadow-indigo-500/20"
+                              ? "bg-[#1476F2] hover:bg-[#0963D6] text-white shadow-md shadow-indigo-500/20"
                               : "bg-slate-900 hover:bg-slate-800 text-white"
                           }`}
                         >
@@ -185,7 +185,7 @@ export function PricingSection() {
                       <ul className="space-y-2 sm:space-y-2.5">
                         {plan.features.map((feature, idx) => (
                           <li key={idx} className="flex items-start gap-2 text-xs text-slate-600 leading-snug">
-                            <Check className="h-3.5 w-3.5 text-[#4F46E5] shrink-0 mt-0.5" />
+                            <Check className="h-3.5 w-3.5 text-[#1476F2] shrink-0 mt-0.5" />
                             <span>{feature}</span>
                           </li>
                         ))}
@@ -234,14 +234,14 @@ export function PricingSection() {
                   <div
                     className={`relative z-10 flex flex-col justify-between h-full rounded-3xl p-5 sm:p-6 transition-all duration-300 ${
                       plan.isPopular
-                        ? "bg-white border-2 border-[#4F46E5] shadow-[0_12px_36px_rgba(79,70,229,0.14)]"
+                        ? "bg-white border-2 border-[#1476F2] shadow-[0_12px_36px_rgba(79,70,229,0.14)]"
                         : "bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-[0_4px_20px_rgba(0,0,0,0.03)]"
                     }`}
                   >
                     {/* Popular Pill */}
                     {plan.isPopular && (
                       <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                        <span className="inline-block bg-[#4F46E5] text-white text-[9.5px] font-black uppercase tracking-wider px-3 py-0.5 rounded-full shadow-md">
+                        <span className="inline-block bg-[#1476F2] text-white text-[9.5px] font-black uppercase tracking-wider px-3 py-0.5 rounded-full shadow-md">
                           MOST POPULAR
                         </span>
                       </div>
@@ -279,7 +279,7 @@ export function PricingSection() {
                           <button
                             className={`w-full inline-flex items-center justify-center gap-1.5 h-11 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                               plan.isPopular
-                                ? "bg-[#4F46E5] hover:bg-[#4338CA] text-white shadow-md shadow-indigo-500/20"
+                                ? "bg-[#1476F2] hover:bg-[#0963D6] text-white shadow-md shadow-indigo-500/20"
                                 : "bg-slate-900 hover:bg-slate-800 text-white"
                             }`}
                           >
@@ -297,7 +297,7 @@ export function PricingSection() {
                         <ul className="space-y-2">
                           {plan.features.map((feature, idx) => (
                             <li key={idx} className="flex items-start gap-2 text-xs text-slate-600 leading-snug">
-                              <Check className="h-3.5 w-3.5 text-[#4F46E5] shrink-0 mt-0.5" />
+                              <Check className="h-3.5 w-3.5 text-[#1476F2] shrink-0 mt-0.5" />
                               <span>{feature}</span>
                             </li>
                           ))}
@@ -322,7 +322,7 @@ export function PricingSection() {
                 <span
                   className={`h-1.5 rounded-full transition-all duration-300 ${
                     activeCardIndex === idx
-                      ? "w-7 bg-[#4F46E5] shadow-[0_0_8px_rgba(79,70,229,0.6)]"
+                      ? "w-7 bg-[#1476F2] shadow-[0_0_8px_rgba(79,70,229,0.6)]"
                       : "w-2 bg-indigo-200/80 hover:bg-indigo-300"
                   }`}
                 />

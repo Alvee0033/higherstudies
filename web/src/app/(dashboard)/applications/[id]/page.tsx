@@ -6,14 +6,7 @@ export const metadata: Metadata = {
   description: "Review your university application status, checklist, and deadlines.",
 };
 
-export function generateStaticParams() {
-  return [
-    { id: "1" },
-    { id: "mit" },
-    { id: "stanford" },
-    { id: "harvard" },
-  ];
-}
+export const instant = false;
 
 export default async function ApplicationDetailsPage({
   params,

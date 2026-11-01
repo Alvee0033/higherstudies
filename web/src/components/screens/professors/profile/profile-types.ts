@@ -46,12 +46,12 @@ export interface ProfessorProfileData {
   acceptingStudents: boolean;
   tags: string[];
   metrics: {
-    hIndex: number;
+    hIndex: number | string;
     citations: string;
-    publications: number;
-    yearsAtMit: number;
+    publications: number | string;
+    yearsAtMit: number | string;
     avgResponseTime: string;
-    currentStudents: number;
+    currentStudents: number | string;
   };
   about: string;
   degrees: AcademicDegree[];

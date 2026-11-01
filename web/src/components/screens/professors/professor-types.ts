@@ -6,11 +6,12 @@ export interface Professor {
   department: string;
   topics: string[];
   phd: string;
-  hIndex: number;
+  institutionOfficialUrl?: string;
+  hIndex: number | string;
   citations: string;
-  publications: number;
-  yearsAtMit: number;
-  currentStudents: number;
+  publications: number | string;
+  yearsAtMit: number | string;
+  currentStudents: number | string;
   openings: string;
   avatar: string;
 }

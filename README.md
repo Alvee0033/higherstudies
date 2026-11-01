@@ -2,6 +2,12 @@
 
 A full-stack higher education and study-abroad guidance platform designed to connect prospective graduate and undergraduate scholars with universities, academic mentors, faculty research opportunities, and application tracking workflows.
 
+## Data-platform architecture and documentation
+
+**Current state:** `web/` is a Next.js student UI backed by local example JSON. `apis/` now has a Fastify-backed NestJS API and PostgreSQL migration for catalogue, staff sessions, source registration, staging and review. `admin/` is a separate Next.js editorial dashboard. Redis/BullMQ scheduling, Python collection workers, and student-site API integration remain planned. The data platform keeps master's/PhD programmes, admission requirement claims, funding opportunities, and faculty members as separate, source-backed records. Staff review collected changes before publication.
+
+Start with [project context](docs/CONTEXT.md) and the repository [agent instructions](AGENTS.md). The specification is split into [product requirements](docs/PRD.md), [admin design](docs/DESIGN.md), [technical architecture](docs/TECHNICAL.md), [database and indexes](docs/DATABASE.md), [API contracts](docs/API.md), [ingestion workflow](docs/INGESTION.md), [security](docs/SECURITY.md), and [operations](docs/OPERATIONS.md). [Backend research](docs/data-platform-backend-design.md) records the ScholarPass comparison and sources. The existing [student UI PRD](web/PRD.md) remains the reference for current student screens.
+
 ---
 
 ## Repository Directory Structure
@@ -10,6 +16,8 @@ A full-stack higher education and study-abroad guidance platform designed to con
 higherstudies/
 ├── README.md                                  # Repository documentation and architecture guide
 ├── .gitignore                                 # Git ignore rules
+├── admin/                                     # Separate Next.js editorial dashboard
+├── docs/                                      # Product, design, API, database and operations contracts
 │
 ├── apis/                                      # NestJS Backend API Service
 │   ├── nest-cli.json                          # Nest CLI configurations

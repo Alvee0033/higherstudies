@@ -18,7 +18,7 @@ interface FormStatusStepperProps {
 }
 
 const STAGES: { stage: ApplicationProgressStage; label: string; ringColor?: string }[] = [
-  { stage: "Not Started", label: "Not Started", ringColor: "border-[#4F46E5] text-[#4F46E5]" },
+  { stage: "Not Started", label: "Not Started", ringColor: "border-[#1476F2] text-[#1476F2]" },
   { stage: "Preparing", label: "Preparing" },
   { stage: "Submitted", label: "Submitted" },
   { stage: "Under Review", label: "Under Review" },
@@ -52,7 +52,7 @@ export function FormStatusStepper({
               <div
                 className={`w-5 h-5 rounded-full flex items-center justify-center transition-all bg-white ${
                   isSelected
-                    ? "border-2 border-[#4F46E5] ring-2 ring-[#4F46E5]/20"
+                    ? "border-2 border-[#1476F2] ring-2 ring-[#1476F2]/20"
                     : s.stage === "Accepted"
                     ? "border-2 border-emerald-500"
                     : s.stage === "Rejected"
@@ -61,7 +61,7 @@ export function FormStatusStepper({
                 }`}
               >
                 {isSelected && (
-                  <div className="w-2 h-2 rounded-full bg-[#4F46E5]" />
+                  <div className="w-2 h-2 rounded-full bg-[#1476F2]" />
                 )}
               </div>
 

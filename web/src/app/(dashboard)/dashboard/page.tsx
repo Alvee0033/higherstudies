@@ -3,8 +3,10 @@ import { StudentDashboardView } from "@/components/screens/dashboard/student-das
 
 export const metadata = {
   title: "Dashboard | HigherStudy",
-  description: "Overview of your universities, professors, emails, and applications.",
+  description: "Live overview of the reviewed HigherStudy catalogue.",
 };
+
+export const instant = false;
 
 export default function DashboardPage() {
   return <StudentDashboardView />;

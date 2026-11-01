@@ -7,22 +7,22 @@ export interface UniversityMobileHeaderProps {
 }
 
 export function UniversityMobileHeader({
-  totalResults = 120,
+  totalResults = 0,
   onToggleMobileFilter,
 }: UniversityMobileHeaderProps) {
   return (
     <div className="lg:hidden flex items-center justify-between pb-2">
       <div>
-        <h1 className="text-xl font-bold text-slate-900 font-heading">Find Universities</h1>
-        <p className="text-xs text-slate-500">{totalResults} Results Found</p>
+        <h1 className="text-xl font-bold text-slate-900 font-heading">Universities</h1>
+        <p className="text-xs text-slate-500">{totalResults.toLocaleString()} Institutions</p>
       </div>
       <button
         type="button"
         onClick={onToggleMobileFilter}
         className="px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-xs font-bold text-slate-700 flex items-center gap-1.5 shadow-2xs cursor-pointer"
       >
-        <SlidersHorizontal className="h-3.5 w-3.5 text-[#5D3FD3]" />
-        <span>Filters (12)</span>
+        <SlidersHorizontal className="h-3.5 w-3.5 text-[#1476F2]" />
+        <span>Filters</span>
       </button>
     </div>
   );
@@ -36,7 +36,7 @@ export interface UniversityResultsHeaderProps {
 }
 
 export function UniversityResultsHeader({
-  totalResults = 120,
+  totalResults = 0,
   sortBy,
   onSortByChange,
   onClearAll,
@@ -44,16 +44,16 @@ export function UniversityResultsHeader({
   return (
     <div className="flex items-center justify-between pb-1 flex-wrap gap-3">
       <div className="flex items-center gap-3">
+        <div className="hidden lg:flex h-8 px-3.5 rounded-lg bg-indigo-50 border border-indigo-100 items-center text-xs font-bold text-[#1476F2]">
+          {totalResults.toLocaleString()} Universities Found
+        </div>
         <button
           type="button"
           onClick={onClearAll}
-          className="text-xs font-normal text-[#5D3FD3] hover:underline cursor-pointer"
+          className="text-xs font-semibold text-slate-500 hover:text-indigo-600 transition-colors cursor-pointer"
         >
-          Clear All
+          Reset Filters
         </button>
-        <div className="hidden lg:flex h-8 px-3.5 rounded-lg bg-[#E8E4FF] border border-[#C7D2FE] items-center text-xs font-medium text-[#5D3FD3]">
-          {totalResults} Results Found
-        </div>
       </div>
 
       <div className="flex items-center gap-2">
@@ -62,12 +62,12 @@ export function UniversityResultsHeader({
           <select
             value={sortBy}
             onChange={(e) => onSortByChange(e.target.value)}
-            className="h-8 pl-3 pr-7 rounded-lg border border-slate-200 bg-white text-xs font-medium text-slate-800 focus:outline-none cursor-pointer appearance-none"
+            className="h-8 pl-3 pr-7 rounded-lg border border-slate-200 bg-white text-xs font-medium text-slate-800 focus:outline-none cursor-pointer appearance-none shadow-2xs"
           >
-            <option>Best Match</option>
-            <option>QS Rank: Low to High</option>
-            <option>Tuition: Low to High</option>
-            <option>Acceptance Rate</option>
+            <option value="newest">Recently Added</option>
+            <option value="title-asc">Name: A to Z</option>
+            <option value="title-desc">Name: Z to A</option>
+            <option value="country">Country</option>
           </select>
           <ChevronDown className="h-3.5 w-3.5 text-slate-400 absolute right-2 top-2.5 pointer-events-none" />
         </div>
